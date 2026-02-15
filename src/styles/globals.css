@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@import "@fontsource/stack-sans-headline";
+@import "@fontsource/stack-sans-text";
+
+@theme {
+  --color-primary: oklch(0.4 0.9 200);
+  --color-secondary: oklch(0.35 0.9 200);
+
+  --color-background-dark: oklch(0% 0 0);
+  --color-background: oklch(15.5% 0 0);
+  --color-background-light: oklch(20% 0 0);
+
+  --color-text: oklch(90% 0 0);
+  --color-text-muted: oklch(70% 0 0);
+
+  --font-primary: "Stack Sans Headline";
+  --font-secondary: "Stack Sans Text";
+}
