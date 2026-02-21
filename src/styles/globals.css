@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "@fontsource/stack-sans-headline";
 @import "@fontsource/stack-sans-text";
+@import "./loader.css";
 
 @theme {
   --color-primary: oklch(0.4 0.9 200);
@@ -15,4 +16,31 @@
 
   --font-primary: "Stack Sans Headline";
   --font-secondary: "Stack Sans Text";
+}
+
+.styled-scrollbar {
+  --sb-track-color: #232e33;
+  --sb-thumb-color: #0d6ee4;
+  --sb-size: 11px;
+}
+
+.styled-scrollbar::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+.styled-scrollbar::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 10px;
+}
+
+.styled-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 10px;
+  border: 2px solid #232e33;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .styled-scrollbar {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
 }

@@ -4,11 +4,19 @@ import logoImg from "@/assets/logo.webp";
 
 import {
   RiAlbumLine,
+  RiAlbumFill,
   RiFireLine,
   RiHome2Line,
+  RiHome2Fill,
   RiMusic2Line,
+  RiMusic2Fill,
   RiPlayList2Line,
   RiUser2Line,
+  RiUser2Fill,
+  RiPlayList2Fill,
+  RiFireFill,
+  RiBardFill,
+  RiBardLine,
 } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -18,12 +26,43 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const menuLinks = [
-    { icon: RiHome2Line, label: "Inicio", url: "/" },
-    { icon: RiMusic2Line, label: "Canciones", url: "/songs" },
-    { icon: RiAlbumLine, label: "Álbumes", url: "/albums" },
-    { icon: RiPlayList2Line, label: "Playlists", url: "/playlists" },
-    { icon: RiUser2Line, label: "Artistas", url: "/artists" },
-    { icon: RiFireLine, label: "Charts", url: "/charts" },
+    { icon: RiHome2Line, accentIcon: RiHome2Fill, label: "Inicio", url: "/" },
+    {
+      icon: RiMusic2Line,
+      accentIcon: RiMusic2Fill,
+      label: "Canciones",
+      url: "/songs",
+    },
+    {
+      icon: RiAlbumLine,
+      accentIcon: RiAlbumFill,
+      label: "Álbumes",
+      url: "/albums",
+    },
+    {
+      icon: RiUser2Line,
+      accentIcon: RiUser2Fill,
+      label: "Artistas",
+      url: "/artists",
+    },
+    {
+      icon: RiPlayList2Line,
+      accentIcon: RiPlayList2Fill,
+      label: "Playlists",
+      url: "/playlists",
+    },
+    {
+      icon: RiFireLine,
+      accentIcon: RiFireFill,
+      label: "Charts",
+      url: "/charts",
+    },
+    {
+      icon: RiBardLine,
+      accentIcon: RiBardFill,
+      label: "IA",
+      url: "/ia",
+    },
   ];
 
   return (
@@ -49,6 +88,7 @@ export default function Sidebar() {
         <ul>
           {menuLinks.map((item) => {
             const Icon = item.icon;
+            const AccentIcon = item.accentIcon;
 
             return (
               <li key={item.label}>
@@ -63,7 +103,11 @@ export default function Sidebar() {
                   )}
 
                   <div>
-                    <Icon size={20} />
+                    {pathname === item.url ? (
+                      <AccentIcon size={20} />
+                    ) : (
+                      <Icon size={20} />
+                    )}
                   </div>
 
                   <p>{item.label}</p>

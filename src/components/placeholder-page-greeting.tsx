@@ -15,7 +15,7 @@ export default function PlaceholderPageGreeting({
   const Icon = icon;
 
   return (
-    <div className="text-neutral-700 flex flex-col justify-center items-center">
+    <div className="text-neutral-700 flex flex-col justify-center items-center h-full">
       <motion.div
         initial={{ x: 20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}

@@ -1,5 +1,3 @@
-import FloatAssistant from "@/components/float-assistant";
-import SearchBar from "@/components/search-bar";
 import Sidebar from "@/components/sidebar";
 import "@/styles/globals.css";
 
@@ -9,20 +7,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>MusifyX</title>
       </head>
       <body className="relative flex font-secondary bg-background-dark h-dvh text-text overflow-hidden">
         <Sidebar />
-        <div className="grow p-5 relative">
-          <SearchBar />
 
+        <main className="flex flex-col size-full styled-scrollbar relative overflow-y-auto">
           {children}
-        </div>
-
-        <FloatAssistant />
+        </main>
       </body>
     </html>
   );

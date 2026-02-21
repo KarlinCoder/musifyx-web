@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:host": "next dev",
+    "dev:host": "next dev -h",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -12,6 +12,9 @@
   "dependencies": {
     "@fontsource/stack-sans-headline": "^5.2.1",
     "@fontsource/stack-sans-text": "^5.2.1",
+    "axios": "^1.13.5",
+    "fast-average-color": "^9.5.0",
+    "fast-average-color-node": "^3.2.0",
     "motion": "^12.26.2",
     "next": "16.1.1",
     "react": "19.2.3",
