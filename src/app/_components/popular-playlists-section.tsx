@@ -4,10 +4,10 @@ import { DeezerPlaylist } from "@/types/deezer/types";
 import PlaylistCard from "@/components/playlist-card";
 
 interface Props {
-  songs: DeezerPlaylist[];
+  playlists: DeezerPlaylist[];
 }
 
-export default function PopularPlaylistsSection({ songs }: Props) {
+export default function PopularPlaylistsSection({ playlists }: Props) {
   return (
     <div className="mt-8">
       <p className="text-lg flex items-center gap-2">
@@ -16,8 +16,8 @@ export default function PopularPlaylistsSection({ songs }: Props) {
 
       <Hr className="mb-4 mt-3" />
 
-      <div className="grid grid-cols-2 gap-3 w-full overflow-hidden overflow-x-auto styled-scrollbar">
-        {songs.map((item) => {
+      <div className="grid grid-cols-5 gap-3 w-full overflow-hidden overflow-x-auto styled-scrollbar">
+        {playlists.map((item) => {
           return (
             <PlaylistCard
               key={item.id}

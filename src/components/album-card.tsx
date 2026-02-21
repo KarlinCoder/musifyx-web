@@ -51,12 +51,7 @@ export default function AlbumCard({
 
       <div className="p-3 -space-y-0.5">
         <p className="font-primary text-[15px] font-medium">{title}</p>
-        <Link
-          href={`/artists/${artistId}`}
-          className="block text-text-muted text-[13px] hover:underline underline-offset-2"
-        >
-          {artistName}
-        </Link>
+        <p className="block text-text-muted text-[13px]">{artistName}</p>
       </div>
     </Link>
   );

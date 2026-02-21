@@ -105,8 +105,8 @@ export interface DeezerChartItem<T> {
 }
 
 export interface DeezerCharts {
-  tracks: { data: DeezerChartItem<DeezerTrack>[] };
-  albums: { data: DeezerChartItem<DeezerAlbum>[] };
-  artists: { data: DeezerChartItem<DeezerArtist>[] };
-  playlists: { data: DeezerChartItem<DeezerPlaylist>[] };
+  tracks: { data: DeezerTrack[]; total: number };
+  albums: { data: DeezerAlbum[]; total: number };
+  artists: { data: DeezerArtist[]; total: number };
+  playlists: { data: DeezerPlaylist[]; total: number };
 }

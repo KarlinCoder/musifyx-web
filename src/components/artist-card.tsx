@@ -6,14 +6,13 @@ interface Props {
   id: number;
   name: string;
   coverUrl: string;
-  listeners: number;
 }
 
-export default function ArtistCard({ id, name, coverUrl, listeners }: Props) {
+export default function ArtistCard({ id, name, coverUrl }: Props) {
   const artistUrl = `/artists/${id}`;
 
   return (
-    <Link href={artistUrl} className="group inline-block">
+    <Link href={artistUrl} className="group inline-block p-3">
       <div className="overflow-hidden rounded-full">
         <Image
           src={coverUrl}
@@ -28,7 +27,6 @@ export default function ArtistCard({ id, name, coverUrl, listeners }: Props) {
 
       <div className="text-center mt-2">
         <p className="font-primary text-[15px] font-medium">{name}</p>
-        <p className="block text-text-muted text-[13px]">{listeners} oyentes</p>
       </div>
     </Link>
   );

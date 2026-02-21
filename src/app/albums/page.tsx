@@ -42,7 +42,7 @@ export default function AlbumsPage() {
       ) : error ? (
         <SearchError error={error} />
       ) : (
-        <div className="grid grid-cols-5 gap-3">
+        <div className="grid grid-cols-5 gap-3 p-7">
           {data.map((albumItem) => (
             <Link
               href={`/albums/${albumItem.id}`}
