@@ -5,15 +5,12 @@ import NoResults from "@/components/no-results";
 import SearchError from "@/components/search-error";
 import PlaceholderPageGreeting from "@/components/placeholder-page-greeting";
 import useDeezerSearch from "@/hooks/useDeezerSearch";
-import { genericBlur } from "@/lib/utils";
-import { searchAlbums } from "@/services/deezer";
-import { DeezerAlbum } from "@/types/deezer/types";
-import Image from "next/image";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { RiAlbumLine } from "react-icons/ri";
 import SearchBar from "@/components/search-bar"; // 👈 Añadido
 import AlbumCard from "@/components/album-card";
+import { searchAlbums } from "@/services/deezer";
+import { DeezerAlbum } from "@/types/deezer";
 
 export default function AlbumsPage() {
   const searchQuery = useSearchParams().get("search");
@@ -23,7 +20,7 @@ export default function AlbumsPage() {
     {
       query: searchQuery,
       limit: 50,
-    }
+    },
   );
 
   return (

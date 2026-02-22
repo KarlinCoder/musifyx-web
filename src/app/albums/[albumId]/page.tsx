@@ -1,9 +1,8 @@
 import { formatDateToSpanish, genericBlur } from "@/lib/utils";
-import { DeezerAlbum } from "@/types/deezer/types";
+import { DeezerAlbum } from "@/types/deezer";
 import axios from "axios";
 import { getAverageColor } from "fast-average-color-node";
 import Image from "next/image";
-import { FaDotCircle } from "react-icons/fa";
 
 export default async function AlbumIdPage({
   params,
@@ -17,7 +16,7 @@ export default async function AlbumIdPage({
       headers: {
         "X-Requested-With": "XMLHttpRequest",
       },
-    }
+    },
   );
 
   const avgColor = (await getAverageColor(album.cover_small!)).hex;

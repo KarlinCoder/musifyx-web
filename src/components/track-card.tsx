@@ -30,7 +30,6 @@ export default function TrackCard({
   const [isLoading, setIsLoading] = useState(false);
 
   const artistUrl = `/artists/${artistId}`;
-
   const handleDownload = async () => {
     if (isLoading) return;
     setIsLoading(true);

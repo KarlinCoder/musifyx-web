@@ -5,13 +5,12 @@ import NoResults from "@/components/no-results";
 import SearchError from "@/components/search-error";
 import PlaceholderPageGreeting from "@/components/placeholder-page-greeting";
 import useDeezerSearch from "@/hooks/useDeezerSearch";
-import { searchPlaylists } from "@/services/deezer";
-import { DeezerPlaylist } from "@/types/deezer/types";
 import { useSearchParams } from "next/navigation";
 import SearchBar from "@/components/search-bar"; // 👈 Añadido
 import { RiPlayList2Line } from "react-icons/ri";
-import ArtistCard from "@/components/artist-card";
 import PlaylistCard from "@/components/playlist-card";
+import { searchPlaylists } from "@/services/deezer";
+import { DeezerPlaylist } from "@/types/deezer";
 
 export default function PlaylistsPage() {
   const searchQuery = useSearchParams().get("search");
@@ -21,7 +20,7 @@ export default function PlaylistsPage() {
     {
       query: searchQuery,
       limit: 50,
-    }
+    },
   );
 
   return (

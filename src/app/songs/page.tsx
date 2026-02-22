@@ -1,47 +1,27 @@
 "use client";
 
 import PlaceholderPageGreeting from "@/components/placeholder-page-greeting";
-import { searchTracks } from "@/services/deezer";
-import { DeezerTrack } from "@/types/deezer/types";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import { RiMusic2Line } from "react-icons/ri";
-import TrackCard from "./_components/track-card";
+import TrackCard from "../../components/track-card";
 import SearchError from "@/components/search-error";
 import NoResults from "@/components/no-results";
 import Loader from "@/components/loader";
-import SearchBar from "@/components/search-bar"; // 👈 Asegúrate de la ruta correcta
+import SearchBar from "@/components/search-bar";
+import { DeezerTrack } from "@/types/deezer";
+import { searchTracks } from "@/services/deezer";
+import useDeezerSearch from "@/hooks/useDeezerSearch";
 
 export default function SongsPage() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [searchResults, setSearchResults] = useState<DeezerTrack[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const searchQuery = useSearchParams().get("search");
 
-  useEffect(() => {
-    const fetchResults = async () => {
-      if (!searchQuery) {
-        setSearchResults([]);
-        setError(null);
-        return;
-      }
-
-      setIsLoading(true);
-      setError(null);
-      try {
-        const { data } = await searchTracks(searchQuery, { limit: 50 });
-        setSearchResults(data);
-      } catch (err) {
-        console.error("Error fetching tracks:", err);
-        setError("No se pudieron cargar las canciones.");
-        setSearchResults([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchResults();
-  }, [searchQuery]);
+  const { data, error, isLoading } = useDeezerSearch<DeezerTrack>(
+    searchTracks,
+    {
+      query: searchQuery,
+      limit: 50,
+    },
+  );
 
   return (
     <>
@@ -57,15 +37,16 @@ export default function SongsPage() {
         <Loader />
       ) : error ? (
         <SearchError error={error} />
-      ) : searchResults.length === 0 ? (
+      ) : data.length === 0 ? (
         <NoResults query={searchQuery} />
       ) : (
         <div className="flex flex-col w-full">
-          {searchResults.map((track) => (
+          {data.map((track) => (
             <TrackCard
               key={track.id}
               title={track.title}
-              artist={track.artist} // Asumiendo que track.artist es un objeto
+              artistId={track.album.id}
+              artistName={track.artist.name}
               coverUrl={track.album.cover_medium}
               duration={track.duration}
               id={track.id}

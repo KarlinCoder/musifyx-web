@@ -1,100 +1,82 @@
-import {
-  DeezerAlbum,
-  DeezerArtist,
-  DeezerCharts,
-  DeezerGenre,
-  DeezerPlaylist,
-  DeezerTrack,
-} from "@/types/deezer/types.d";
+import { DeezerSearchTracksResults } from "@/types/deezer";
+import axios from "axios";
 
-const DEEZER_API_BASE = "https://api.deezer.com";
-const CORS_PROXY = "https://cors-anywhere.com/";
+const API_URL = "https://musifyx.api.karlincoder.com";
 
-const buildUrl = (path: string): string => {
-  return `${CORS_PROXY}${DEEZER_API_BASE}${path}`;
+export const searchTracks = async (query: string, limit?: number) => {
+  const { data } = await axios.get<DeezerSearchTracksResults>(
+    `${API_URL}/search/track?q=${encodeURIComponent(query)}${limit && `&limit=${limit}`}`,
+  );
+
+  return data;
 };
 
-async function fetchJson<T>(url: string): Promise<T> {
-  const res = await fetch(url);
-  if (!res.ok) {
-    throw new Error(`HTTP error! status: ${res.status}`);
-  }
-  return res.json() as Promise<T>;
-}
+export const searchAlbums = async (query: string, limit?: number) => {
+  const { data } = await axios.get<Pagedres>(
+    `${API_URL}/search/album?q=${encodeURIComponent(query)}${limit && `&limit=${limit}`}`,
+  );
 
-export async function searchTracks(
-  query: string,
-  options?: { limit?: number; strict?: boolean }
-) {
-  let url = `/search?q=${encodeURIComponent(query)}`;
-  if (options?.limit) url += `&limit=${options.limit}`;
-  if (options?.strict) url += "&strict=on";
-  return fetchJson<{ data: DeezerTrack[] }>(buildUrl(url));
-}
+  return data;
+};
 
-export async function searchAlbums(
-  query: string,
-  options?: { limit?: number; strict?: boolean }
-) {
-  let url = `/search/album?q=${encodeURIComponent(query)}`;
-  if (options?.limit) url += `&limit=${options.limit}`;
-  if (options?.strict) url += "&strict=on";
-  return fetchJson<{ data: DeezerAlbum[] }>(buildUrl(url));
-}
+export const searchArtist = async (query: string, limit?: number) => {
+  const { data } = await axios.get<ArtistSearchResponse>(
+    `${API_URL}/search/artist?q=${encodeURIComponent(query)}${limit && `&limit=${limit}`}`,
+  );
 
-export async function searchArtists(
-  query: string,
-  options?: { limit?: number; strict?: boolean }
-) {
-  let url = `/search/artist?q=${encodeURIComponent(query)}`;
-  if (options?.limit) url += `&limit=${options.limit}`;
-  if (options?.strict) url += "&strict=on";
-  return fetchJson<{ data: DeezerArtist[] }>(buildUrl(url));
-}
+  return data;
+};
 
-export async function searchPlaylists(
-  query: string,
-  options?: { limit?: number; strict?: boolean }
-) {
-  let url = `/search/playlist?q=${encodeURIComponent(query)}`;
-  if (options?.limit) url += `&limit=${options.limit}`;
-  if (options?.strict) url += "&strict=on";
-  return fetchJson<{ data: DeezerPlaylist[] }>(buildUrl(url));
-}
+export const searchPlaylists = async (query: string, limit?: number) => {
+  const { data } = await axios.get<PlaylistSearchResponse>(
+    `${API_URL}/search/playlist?q=${encodeURIComponent(query)}${limit && `&limit=${limit}`}`,
+  );
 
-export async function searchGenres(
-  query: string,
-  options?: { limit?: number }
-) {
-  let url = `/search/genre?q=${encodeURIComponent(query)}`;
-  if (options?.limit) url += `&limit=${options.limit}`;
-  return fetchJson<{ data: DeezerGenre[] }>(buildUrl(url));
-}
+  return data;
+};
 
-// === OBTENER POR ID ===
+export const getAlbum = async (id: number) => {
+  const { data } = await axios.get<AlbumResponse>(
+    `${API_URL}/search/playlist/${id}`,
+  );
 
-export async function getTrack(id: number): Promise<DeezerTrack> {
-  return fetchJson(buildUrl(`/track/${id}`));
-}
+  return data;
+};
 
-export async function getAlbum(id: number): Promise<DeezerAlbum> {
-  return fetchJson(buildUrl(`/album/${id}`));
-}
+export const getArtist = async (id: number) => {
+  const { data } = await axios.get<ArtistResponse>(
+    `${API_URL}/search/artist/${id}`,
+  );
 
-export async function getArtist(id: number): Promise<DeezerArtist> {
-  return fetchJson(buildUrl(`/artist/${id}`));
-}
+  return data;
+};
 
-export async function getPlaylist(id: number): Promise<DeezerPlaylist> {
-  return fetchJson(buildUrl(`/playlist/${id}`));
-}
+export const getArtistTop10 = async (id: number) => {
+  const { data } = await axios.get<ArtistResponse>(
+    `${API_URL}/search/artist/${id}}/top`,
+  );
 
-export async function getGenre(id: number): Promise<DeezerGenre> {
-  return fetchJson(buildUrl(`/genre/${id}`));
-}
+  return data;
+};
 
-// === CHARTS ===
+export const getPlaylist = async (id: number) => {
+  const { data } = await axios.get<PlaylistResponse>(
+    `${API_URL}/search/playlist/${id}`,
+  );
 
-export async function getCharts(): Promise<DeezerCharts> {
-  return fetchJson(buildUrl("/chart"));
-}
+  return data;
+};
+
+export const getPopular = async () => {
+  const { data } = await axios.get<PopularResponse>(
+    `${API_URL}/search/popular`,
+  );
+
+  return data;
+};
+
+export const getCharts = async () => {
+  const { data } = await axios.get<PopularResponse>(`${API_URL}/search/charts`);
+
+  return data;
+};

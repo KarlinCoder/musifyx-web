@@ -1,7 +1,7 @@
 import { RiUser2Fill } from "react-icons/ri";
 import Hr from "@/components/hr";
-import { DeezerArtist } from "@/types/deezer/types";
 import ArtistCard from "@/components/artist-card";
+import { DeezerArtist } from "@/types/deezer";
 
 interface Props {
   artists: DeezerArtist[];

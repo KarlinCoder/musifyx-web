@@ -6,11 +6,8 @@ interface UseDeezerSearchOptions {
 }
 
 export default function useDeezerSearch<T>(
-  searchFn: (
-    query: string,
-    options: { limit: number }
-  ) => Promise<{ data: T[] }>,
-  { query, limit = 50 }: UseDeezerSearchOptions
+  searchFn: (query: string, limit: number) => Promise<{ data: T[] }>,
+  { query, limit = 50 }: UseDeezerSearchOptions,
 ) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState<T[]>([]);
@@ -28,7 +25,8 @@ export default function useDeezerSearch<T>(
       setError(null);
 
       try {
-        const { data: results } = await searchFn(query, { limit });
+        const { data: results } = await searchFn(query, limit);
+        console.log(results);
         setData(results);
       } catch (err) {
         console.error("Error in useDeezerSearch:", err);

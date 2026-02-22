@@ -5,22 +5,22 @@ import NoResults from "@/components/no-results";
 import SearchError from "@/components/search-error";
 import PlaceholderPageGreeting from "@/components/placeholder-page-greeting";
 import useDeezerSearch from "@/hooks/useDeezerSearch";
-import { searchArtists } from "@/services/deezer";
-import { DeezerArtist } from "@/types/deezer/types";
 import { useSearchParams } from "next/navigation";
 import SearchBar from "@/components/search-bar"; // 👈 Añadido
 import { RiUser2Line } from "react-icons/ri";
 import ArtistCard from "@/components/artist-card";
+import { searchArtist } from "@/services/deezer";
+import { DeezerArtist } from "@/types/deezer";
 
 export default function ArtistsPage() {
   const searchQuery = useSearchParams().get("search");
 
   const { data, error, isLoading } = useDeezerSearch<DeezerArtist>(
-    searchArtists,
+    searchArtist,
     {
       query: searchQuery,
       limit: 50,
-    }
+    },
   );
 
   return (

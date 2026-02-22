@@ -25,6 +25,7 @@ export default function PlaylistCard({
     >
       <div className="relative overflow-hidden">
         <Image
+          loading="lazy"
           placeholder="blur"
           blurDataURL={genericBlur}
           width={100}

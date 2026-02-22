@@ -29,6 +29,7 @@ export default function AlbumCard({
     >
       <div className="relative overflow-hidden">
         <Image
+          loading="lazy"
           placeholder="blur"
           blurDataURL={genericBlur}
           width={100}

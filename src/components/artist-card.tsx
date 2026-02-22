@@ -15,6 +15,7 @@ export default function ArtistCard({ id, name, coverUrl }: Props) {
     <Link href={artistUrl} className="group inline-block p-3">
       <div className="overflow-hidden rounded-full">
         <Image
+          loading="lazy"
           src={coverUrl}
           alt={`${name} profile picture`}
           placeholder="blur"

@@ -1,7 +1,7 @@
 import { RiAlbumFill } from "react-icons/ri";
 import Hr from "@/components/hr";
-import { DeezerAlbum } from "@/types/deezer/types";
 import AlbumCard from "@/components/album-card";
+import { DeezerAlbum } from "@/types/deezer";
 
 interface Props {
   albums: DeezerAlbum[];

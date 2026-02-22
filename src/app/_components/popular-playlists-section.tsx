@@ -1,7 +1,7 @@
 import { RiPlayList2Fill } from "react-icons/ri";
 import Hr from "@/components/hr";
-import { DeezerPlaylist } from "@/types/deezer/types";
 import PlaylistCard from "@/components/playlist-card";
+import { DeezerPlaylist } from "@/types/deezer";
 
 interface Props {
   playlists: DeezerPlaylist[];

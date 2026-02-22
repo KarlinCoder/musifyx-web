@@ -1,7 +1,7 @@
 import { RiMusic2Fill } from "react-icons/ri";
-import TrackCard from "../songs/_components/track-card";
+import TrackCard from "../../components/track-card";
 import Hr from "@/components/hr";
-import { DeezerTrack } from "@/types/deezer/types";
+import { DeezerTrack } from "@/types/deezer";
 
 interface Props {
   songs: DeezerTrack[];
