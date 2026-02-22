@@ -9,7 +9,7 @@ interface Props {
 
 export default function PopularPlaylistsSection({ playlists }: Props) {
   return (
-    <div className="mt-8">
+    <div className="mt-8" id="playlists">
       <p className="text-lg flex items-center gap-2">
         <RiPlayList2Fill /> Playlists populares
       </p>
@@ -25,6 +25,7 @@ export default function PopularPlaylistsSection({ playlists }: Props) {
               title={item.title}
               totalSongs={item.nb_tracks}
               coverUrl={item.picture_medium!}
+              fans={item.fans!}
             />
           );
         })}

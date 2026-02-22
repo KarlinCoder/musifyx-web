@@ -49,6 +49,7 @@ export default function PlaylistsPage() {
               title={playlistItem.title}
               id={playlistItem.id}
               totalSongs={playlistItem.nb_tracks}
+              fans={playlistItem.fans!}
             />
           ))}
         </div>

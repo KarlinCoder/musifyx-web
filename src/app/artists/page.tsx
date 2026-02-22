@@ -25,7 +25,7 @@ export default function ArtistsPage() {
 
   return (
     <>
-      <SearchBar placeholder="Escribe el nombre de algún álbum o EP." />
+      <SearchBar placeholder="Escribe el nombre de algún artista o banda." />
 
       {!searchQuery ? (
         <PlaceholderPageGreeting

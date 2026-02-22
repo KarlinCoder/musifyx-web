@@ -66,7 +66,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <aside className="flex flex-col gap-8 max-w-70 w-full bg-background p-3 border-r border-white/6">
+    <aside className="flex flex-col gap-8 max-w-75 w-full bg-background p-3 border-r border-white/6">
       <div className="p-3">
         <Image
           src={logoImg}

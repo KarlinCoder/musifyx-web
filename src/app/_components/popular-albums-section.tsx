@@ -9,7 +9,7 @@ interface Props {
 
 export default function PopularAlbumsSection({ albums }: Props) {
   return (
-    <div className="mt-8">
+    <div className="mt-8" id="albumes">
       <p className="text-lg flex items-center gap-2">
         <RiAlbumFill /> Álbums populares
       </p>

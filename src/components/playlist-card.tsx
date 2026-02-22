@@ -7,6 +7,7 @@ interface Props {
   coverUrl: string;
   title: string;
   totalSongs: number;
+  fans: number;
 }
 
 export default function PlaylistCard({
@@ -14,6 +15,7 @@ export default function PlaylistCard({
   coverUrl,
   title,
   totalSongs,
+  fans,
 }: Props) {
   return (
     <Link
@@ -36,7 +38,7 @@ export default function PlaylistCard({
       <div className="p-3 -space-y-0.5">
         <p className="font-primary text-[15px] font-medium">{title}</p>
         <p className="block text-text-muted text-[13px]">
-          {totalSongs} canciones
+          {totalSongs} canciones - {fans} fans
         </p>
       </div>
     </Link>

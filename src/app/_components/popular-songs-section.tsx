@@ -9,7 +9,7 @@ interface Props {
 
 export default function PopularSongsSection({ songs }: Props) {
   return (
-    <div className="mt-8">
+    <div className="mt-8" id="canciones">
       <p className="text-lg flex items-center gap-2">
         <RiMusic2Fill /> Canciones populares
       </p>
