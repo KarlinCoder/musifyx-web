@@ -1,11 +1,11 @@
 import { RiBarChartFill } from "react-icons/ri";
 import PopularSongsSection from "./_components/popular-songs-section";
 import axios from "axios";
-import { DeezerCharts } from "@/types/deezer/types";
 import PopularAlbumsSection from "./_components/popular-albums-section";
 import PopularArtistsSection from "./_components/popular-artists-section";
 import PopularPlaylistsSection from "./_components/popular-playlists-section";
 import Link from "next/link";
+import { DeezerChart } from "@/types/deezer";
 
 export default async function HomePage() {
   const anchorLinks = [
@@ -15,13 +15,13 @@ export default async function HomePage() {
     { url: "#playlists", label: "Playlists" },
   ];
 
-  const { data: charts } = await axios<DeezerCharts>(
+  const { data: charts } = await axios<DeezerChart>(
     "https://cors-anywhere.com/https://api.deezer.com/chart",
     {
       headers: {
         origin: "https://musifyx.karlincoder.com",
       },
-    }
+    },
   );
 
   return (

@@ -1,4 +1,13 @@
-import { DeezerSearchTracksResults } from "@/types/deezer";
+import {
+  DeezerAlbum,
+  DeezerArtist,
+  DeezerChart,
+  DeezerPlaylist,
+  DeezerSearchAlbumsResults,
+  DeezerSearchArtistsResults,
+  DeezerSearchPlaylistsResults,
+  DeezerSearchTracksResults,
+} from "@/types/deezer";
 import axios from "axios";
 
 const API_URL = "https://musifyx.api.karlincoder.com";
@@ -12,7 +21,7 @@ export const searchTracks = async (query: string, limit?: number) => {
 };
 
 export const searchAlbums = async (query: string, limit?: number) => {
-  const { data } = await axios.get<Pagedres>(
+  const { data } = await axios.get<DeezerSearchAlbumsResults>(
     `${API_URL}/search/album?q=${encodeURIComponent(query)}${limit && `&limit=${limit}`}`,
   );
 
@@ -20,7 +29,7 @@ export const searchAlbums = async (query: string, limit?: number) => {
 };
 
 export const searchArtist = async (query: string, limit?: number) => {
-  const { data } = await axios.get<ArtistSearchResponse>(
+  const { data } = await axios.get<DeezerSearchArtistsResults>(
     `${API_URL}/search/artist?q=${encodeURIComponent(query)}${limit && `&limit=${limit}`}`,
   );
 
@@ -28,7 +37,7 @@ export const searchArtist = async (query: string, limit?: number) => {
 };
 
 export const searchPlaylists = async (query: string, limit?: number) => {
-  const { data } = await axios.get<PlaylistSearchResponse>(
+  const { data } = await axios.get<DeezerSearchPlaylistsResults>(
     `${API_URL}/search/playlist?q=${encodeURIComponent(query)}${limit && `&limit=${limit}`}`,
   );
 
@@ -36,7 +45,7 @@ export const searchPlaylists = async (query: string, limit?: number) => {
 };
 
 export const getAlbum = async (id: number) => {
-  const { data } = await axios.get<AlbumResponse>(
+  const { data } = await axios.get<DeezerAlbum>(
     `${API_URL}/search/playlist/${id}`,
   );
 
@@ -44,7 +53,7 @@ export const getAlbum = async (id: number) => {
 };
 
 export const getArtist = async (id: number) => {
-  const { data } = await axios.get<ArtistResponse>(
+  const { data } = await axios.get<DeezerArtist>(
     `${API_URL}/search/artist/${id}`,
   );
 
@@ -52,7 +61,7 @@ export const getArtist = async (id: number) => {
 };
 
 export const getArtistTop10 = async (id: number) => {
-  const { data } = await axios.get<ArtistResponse>(
+  const { data } = await axios.get<DeezerSearchTracksResults>(
     `${API_URL}/search/artist/${id}}/top`,
   );
 
@@ -60,7 +69,7 @@ export const getArtistTop10 = async (id: number) => {
 };
 
 export const getPlaylist = async (id: number) => {
-  const { data } = await axios.get<PlaylistResponse>(
+  const { data } = await axios.get<DeezerPlaylist>(
     `${API_URL}/search/playlist/${id}`,
   );
 
@@ -68,15 +77,7 @@ export const getPlaylist = async (id: number) => {
 };
 
 export const getPopular = async () => {
-  const { data } = await axios.get<PopularResponse>(
-    `${API_URL}/search/popular`,
-  );
-
-  return data;
-};
-
-export const getCharts = async () => {
-  const { data } = await axios.get<PopularResponse>(`${API_URL}/search/charts`);
+  const { data } = await axios.get<DeezerChart>(`${API_URL}/search/popular`);
 
   return data;
 };
