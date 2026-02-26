@@ -10,8 +10,10 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@bprogress/next": "^3.2.12",
     "@fontsource/stack-sans-headline": "^5.2.1",
     "@fontsource/stack-sans-text": "^5.2.1",
+    "@tanstack/react-query": "^5.90.21",
     "axios": "^1.13.5",
     "fast-average-color": "^9.5.0",
     "fast-average-color-node": "^3.2.0",
@@ -21,9 +23,11 @@
     "react-dom": "19.2.3",
     "react-hook-form": "^7.71.1",
     "react-icons": "^5.5.0",
+    "react-intersection-observer": "^10.0.3",
     "react-slot-counter": "^3.3.2",
     "react-textarea-autosize": "^8.5.9",
-    "typewriter-effect": "^2.22.0"
+    "typewriter-effect": "^2.22.0",
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

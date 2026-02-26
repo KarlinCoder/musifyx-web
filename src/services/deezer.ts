@@ -46,7 +46,7 @@ export const searchPlaylists = async (query: string, limit?: number) => {
 
 export const getAlbum = async (id: number) => {
   const { data } = await axios.get<DeezerAlbum>(
-    `${API_URL}/search/playlist/${id}`,
+    `${API_URL}/search/album/${id}`,
   );
 
   return data;
@@ -63,6 +63,38 @@ export const getArtist = async (id: number) => {
 export const getArtistTop10 = async (id: number) => {
   const { data } = await axios.get<DeezerSearchTracksResults>(
     `${API_URL}/search/artist/${id}}/top`,
+  );
+
+  return data;
+};
+
+export const getArtistAlbums = async (id: number) => {
+  const { data } = await axios.get<DeezerSearchAlbumsResults>(
+    `${API_URL}/search/artist/${id}}/albums`,
+  );
+
+  return data;
+};
+
+export const getArtistRadio = async (id: number) => {
+  const { data } = await axios.get<DeezerSearchTracksResults>(
+    `${API_URL}/search/artist/${id}}/radio`,
+  );
+
+  return data;
+};
+
+export const getArtistPlaylists = async (id: number) => {
+  const { data } = await axios.get<DeezerSearchPlaylistsResults>(
+    `${API_URL}/search/artist/${id}}/playlists`,
+  );
+
+  return data;
+};
+
+export const getArtistRelated = async (id: number) => {
+  const { data } = await axios.get<DeezerSearchArtistsResults>(
+    `${API_URL}/search/artist/${id}/related`,
   );
 
   return data;

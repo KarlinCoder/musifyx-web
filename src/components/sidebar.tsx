@@ -15,12 +15,15 @@ import {
   RiUser2Fill,
   RiPlayList2Fill,
   RiFireFill,
-  RiBardFill,
-  RiBardLine,
+  RiAccountCircleLine,
+  RiAccountCircleFill,
+  RiStarLine,
+  RiStarFill,
 } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import Hr from "./hr";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -58,30 +61,38 @@ export default function Sidebar() {
       url: "/charts",
     },
     {
-      icon: RiBardLine,
-      accentIcon: RiBardFill,
-      label: "IA",
-      url: "/ia",
+      icon: RiStarLine,
+      accentIcon: RiStarFill,
+      label: "Para Tí",
+      url: "/parati",
+    },
+    {
+      icon: RiAccountCircleLine,
+      accentIcon: RiAccountCircleFill,
+      label: "Mi Cuenta",
+      url: "/account",
     },
   ];
 
   return (
-    <aside className="flex flex-col gap-8 max-w-75 w-full bg-background p-3 border-r border-white/6">
+    <aside className="flex flex-col max-w-75 w-full bg-background p-3 border-r border-white/6 overflow-y-auto styled-scrollbar">
       <div className="p-3">
         <Image
-          src={logoImg}
+          src={logoImg || "/not-loaded.jpg"}
           alt="Logo"
           height={80}
           width={80}
           className="rounded-lg"
         />
-        <p className="relative font-primary text-3xl font-semibold mt-2 inline-block">
+        <p className="font-primary text-3xl font-medium mt-2 inline-block">
           Musify
-          <span className="absolute text-base -right-3">X</span>
+          <span className="text-primary">X</span>
         </p>
         <p className="text-text-muted text-sm">
           Tu biblioteca musical personal.
         </p>
+
+        <Hr className="mt-3" />
       </div>
 
       <nav>
@@ -94,7 +105,7 @@ export default function Sidebar() {
               <li key={item.label}>
                 <Link
                   href={item.url}
-                  className={`relative flex items-center gap-2 font-light text-sm px-6 py-3.5 rounded-lg hover:bg-white/3 ${
+                  className={`relative flex items-center gap-2 font-medium text-neutral-300 text-sm px-6 py-3 rounded-lg hover:bg-white/3 ${
                     pathname === item.url && "bg-white/3"
                   }`}
                 >

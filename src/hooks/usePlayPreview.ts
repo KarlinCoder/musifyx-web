@@ -1,3 +1,4 @@
+// hooks/usePlayPreview.ts
 import { useEffect, useRef, useState } from "react";
 
 interface Props {
@@ -5,48 +6,55 @@ interface Props {
 }
 
 export default function usePlayPreview({ previewUrl }: Props) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  useEffect(() => {
-    const audio = new Audio(previewUrl);
-    audioRef.current = audio;
-
-    const handleLoadStart = () => setIsLoading(true);
-    const handleCanPlay = () => setIsLoading(false);
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-    const handleEnded = () => setIsPlaying(false);
-
-    audio.addEventListener("loadstart", handleLoadStart);
-    audio.addEventListener("canplay", handleCanPlay);
-    audio.addEventListener("play", handlePlay);
-    audio.addEventListener("pause", handlePause);
-    audio.addEventListener("ended", handleEnded);
-
-    audio.preload = "auto";
-
-    audio.load();
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.removeEventListener("loadstart", handleLoadStart);
-        audioRef.current.removeEventListener("canplay", handleCanPlay);
-        audioRef.current.removeEventListener("play", handlePlay);
-        audioRef.current.removeEventListener("pause", handlePause);
-        audioRef.current.removeEventListener("ended", handleEnded);
-      }
-    };
-  }, [previewUrl]);
+  // Limpiar audio anterior si existe
+  const cleanupAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = "";
+      audioRef.current.load();
+      audioRef.current = null;
+    }
+  };
 
   const play = async () => {
-    if (!audioRef.current) return;
+    cleanupAudio();
+
+    setIsLoading(true);
+
     try {
-      await audioRef.current.play();
+      const audio = new Audio(previewUrl);
+      audioRef.current = audio;
+
+      const handleCanPlay = () => {
+        setIsLoading(false);
+        audio.play().catch((error) => {
+          console.error("Error al reproducir:", error);
+          setIsPlaying(false);
+          setIsLoading(false);
+        });
+      };
+
+      const handlePlay = () => setIsPlaying(true);
+      const handlePause = () => setIsPlaying(false);
+      const handleEnded = () => {
+        setIsPlaying(false);
+        cleanupAudio();
+      };
+
+      audio.addEventListener("canplay", handleCanPlay);
+      audio.addEventListener("play", handlePlay);
+      audio.addEventListener("pause", handlePause);
+      audio.addEventListener("ended", handleEnded);
+
+      audio.preload = "auto";
+      audio.load();
     } catch (error) {
-      console.error("Error al reproducir el audio:", error);
+      console.error("Error al crear el audio:", error);
+      setIsLoading(false);
       setIsPlaying(false);
     }
   };
@@ -64,6 +72,13 @@ export default function usePlayPreview({ previewUrl }: Props) {
       play();
     }
   };
+
+  // Cleanup al desmontar el componente
+  useEffect(() => {
+    return () => {
+      cleanupAudio();
+    };
+  }, []);
 
   return {
     isLoading,

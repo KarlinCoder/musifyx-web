@@ -2,8 +2,15 @@ import { FastAverageColor } from "fast-average-color";
 
 export const formatSecondsToMinutes = (seconds: number): string => {
   if (seconds < 0) seconds = 0;
-  const mins = Math.floor(seconds / 60);
+
+  const hours = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
   const secs = Math.floor(seconds % 60);
+
+  if (hours > 0) {
+    return `${hours}:${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  }
+
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 };
 
@@ -16,7 +23,7 @@ export const getAverageColor = async (imgUrl: string) => {
   return color.hex;
 };
 
-export function formatDateToSpanish(date: string | Date): string {
+export const formatDateToSpanish = (date: string | Date): string => {
   const d = new Date(date);
 
   // verif basica de fecha valida
@@ -30,4 +37,10 @@ export function formatDateToSpanish(date: string | Date): string {
   const monthName = d.toLocaleDateString("es-ES", { month: "long" });
 
   return `${day} de ${monthName} del ${year}`;
-}
+};
+
+export const capitalize = (word: string) => {
+  const letter = word[0].toUpperCase();
+  const rest = word.slice(1).toLowerCase();
+  return letter + rest;
+};

@@ -21,11 +21,13 @@ export default function AlbumCard({
   hasExplicitLyrics,
   recordType,
 }: Props) {
+  console.log(artistId);
+
   return (
     <Link
       href={`/albums/${id}`}
       key={id}
-      className="inline-block rounded-lg overflow-hidden hover:bg-background-light cursor-pointer h-fit group"
+      className="inline-block overflow-hidden hover:bg-background-light cursor-pointer h-fit p-2.5 rounded-md"
     >
       <div className="relative overflow-hidden">
         <Image
@@ -34,9 +36,9 @@ export default function AlbumCard({
           blurDataURL={genericBlur}
           width={100}
           height={100}
-          src={coverUrl || ""}
+          src={coverUrl || "/not-loaded.jpg"}
           alt={`"${title}" de ${artistName}`}
-          className="w-full aspect-square group-hover:scale-115 duration-500 transition-transform"
+          className="w-full aspect-square"
         />
 
         {hasExplicitLyrics && (
@@ -51,7 +53,7 @@ export default function AlbumCard({
       </div>
 
       <div className="p-3 -space-y-0.5">
-        <p className="font-primary text-[15px] font-medium">{title}</p>
+        <p className="text-[15px] font-medium">{title}</p>
         <p className="block text-text-muted text-[13px]">{artistName}</p>
       </div>
     </Link>

@@ -1,6 +1,4 @@
 @import "tailwindcss";
-@import "@fontsource/stack-sans-headline";
-@import "@fontsource/stack-sans-text";
 @import "./loader.css";
 
 @theme {
@@ -14,8 +12,14 @@
   --color-text: oklch(90% 0 0);
   --color-text-muted: oklch(70% 0 0);
 
-  --font-primary: "Stack Sans Headline";
-  --font-secondary: "Stack Sans Text";
+  --font-primary: var(--font-deezer);
+  --font-secondary: var(--font-inter);
+}
+
+@layer components {
+  .artist-section-title {
+    @apply text-3xl font-primary flex items-center gap-2 px-3 text-neutral-200 font-medium mb-4;
+  }
 }
 
 .styled-scrollbar {

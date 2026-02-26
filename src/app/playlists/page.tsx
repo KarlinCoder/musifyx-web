@@ -40,7 +40,7 @@ export default function PlaylistsPage() {
       ) : error ? (
         <SearchError error={error} />
       ) : (
-        <div className="grid grid-cols-5 gap-3 p-7">
+        <div className="grid grid-cols-5 p-8">
           {data.map((playlistItem) => (
             <PlaylistCard
               key={playlistItem.id}

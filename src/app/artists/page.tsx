@@ -40,7 +40,7 @@ export default function ArtistsPage() {
       ) : error ? (
         <SearchError error={error} />
       ) : (
-        <div className="grid grid-cols-5 gap-3 p-7">
+        <div className="grid grid-cols-5 p-7">
           {data.map((artistItem) => (
             <ArtistCard
               key={artistItem.id}

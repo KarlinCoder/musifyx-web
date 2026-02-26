@@ -1,6 +1,5 @@
-import { RiMusic2Fill } from "react-icons/ri";
+import SectionTitle from "@/components/section-title";
 import TrackCard from "../../components/track-card";
-import Hr from "@/components/hr";
 import { DeezerTrack } from "@/types/deezer";
 
 interface Props {
@@ -10,13 +9,9 @@ interface Props {
 export default function PopularSongsSection({ songs }: Props) {
   return (
     <div className="mt-8" id="canciones">
-      <p className="text-lg flex items-center gap-2">
-        <RiMusic2Fill /> Canciones populares
-      </p>
+      <SectionTitle>Canciones populares</SectionTitle>
 
-      <Hr className="mb-4 mt-3" />
-
-      <div className="grid grid-cols-2 gap-3 w-full overflow-hidden overflow-x-auto styled-scrollbar">
+      <div className="grid grid-cols-2 w-full overflow-hidden overflow-x-auto styled-scrollbar">
         {songs.map((item) => {
           return (
             <TrackCard

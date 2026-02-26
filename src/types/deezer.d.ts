@@ -73,6 +73,8 @@ export interface DeezerPlaylist {
   collaborative: boolean;
   nb_tracks: number;
   fans: number;
+  add_date: string;
+  mod_date: string;
   link: DeezerUrl;
   share: DeezerUrl;
   picture: DeezerUrl;

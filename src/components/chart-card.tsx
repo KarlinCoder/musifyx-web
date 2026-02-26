@@ -7,23 +7,16 @@ interface Props {
   coverUrl: string;
   title: string;
   totalSongs: number;
-  fans: number;
 }
 
-export default function PlaylistCard({
-  id,
-  coverUrl,
-  title,
-  totalSongs,
-  fans,
-}: Props) {
+export default function ChartCard({ id, coverUrl, title, totalSongs }: Props) {
   return (
     <Link
-      href={`/playlists/${id}`}
+      href={`/charts/${id}`}
       key={id}
-      className="inline-block hover:bg-background-light p-2.5 rounded-md cursor-pointer h-fit"
+      className="inline-block p-2.5 hover:bg-background-light rounded-md overflow-hidden cursor-pointer h-fit group shadow-2xl shadow-background-dark"
     >
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden group">
         <Image
           loading="lazy"
           placeholder="blur"
@@ -34,12 +27,14 @@ export default function PlaylistCard({
           alt={`playlist ${title}`}
           className="w-full aspect-square"
         />
+
+        <div className="absolute size-full inset-0 group-hover:bg-black/12 transition-colors duration-200"></div>
       </div>
 
       <div className="p-3 -space-y-0.5">
         <p className="text-[15px] font-medium">{title}</p>
         <p className="block text-text-muted text-[13px]">
-          {totalSongs} canciones - {fans} fans
+          {totalSongs} canciones
         </p>
       </div>
     </Link>

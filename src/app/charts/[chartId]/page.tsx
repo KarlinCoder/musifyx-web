@@ -5,21 +5,22 @@ import {
   formatSecondsToMinutes,
   genericBlur,
 } from "@/lib/utils";
-import { getAlbum } from "@/services/deezer";
+import { getPlaylist } from "@/services/deezer";
 import { getAverageColor } from "fast-average-color-node";
 import Image from "next/image";
-import Link from "next/link";
 
-export default async function AlbumIdPage({
+export default async function ChartIdPage({
   params,
 }: {
-  params: Promise<{ albumId: number }>;
+  params: Promise<{ chartId: number }>;
 }) {
-  const { albumId } = await params;
+  const { chartId } = await params;
 
-  const album = await getAlbum(albumId);
+  const chart = await getPlaylist(chartId);
 
-  const avgColor = (await getAverageColor(album.cover_small)).hex;
+  console.log(chart);
+
+  const avgColor = (await getAverageColor(chart.picture_small)).hex;
 
   return (
     <div
@@ -33,7 +34,7 @@ export default async function AlbumIdPage({
           <div className="max-w-65 w-full shadow-2xl shadow-background">
             <Image
               alt="album cover"
-              src={album.cover_big || "/not-loaded.jpg"}
+              src={chart.picture_big || "/not-loaded.jpg"}
               width={100}
               height={100}
               placeholder="blur"
@@ -44,33 +45,19 @@ export default async function AlbumIdPage({
 
           <div>
             <h2 className="font-primary text-5xl space-y-2 font-medium">
-              {album.title}
+              {chart.title}
             </h2>
 
-            <div className="flex items-center gap-2 mt-4">
-              <Image
-                src={album.artist.picture_small || "/not-loaded.jpg"}
-                alt="artist picture"
-                width={70}
-                height={70}
-                className="size-7 rounded-full"
-              />
-              <Link
-                href={`/artists/${album.artist.id}`}
-                className="block text-base text-neutral-300 hover:underline underline-offset-2 "
-              >
-                {album.artist.name}
-              </Link>
-            </div>
+            <div className="mt-1 text-sm text-neutral-400">
+              <div className="flex items-center gap-2">
+                <p>{chart.tracks.data.length} canciones</p>
+                {"|"}
+                <p>{formatSecondsToMinutes(chart.duration)} </p>
+                {"|"}
+                <p>{chart.fans} fans</p>
+              </div>
 
-            <div className="flex items-center gap-2 mt-1 text-sm text-neutral-400">
-              <p>{album.tracks.data.length} canciones</p>
-              {"|"}
-              <p>{formatSecondsToMinutes(album.duration)} minutos</p>
-              {"|"}
-              <p>{album.fans} fans</p>
-              {"|"}
-              <p>Lanzado el {formatDateToSpanish(album.release_date!)}</p>
+              <p>Actualizada el {formatDateToSpanish(chart.mod_date)}</p>
             </div>
 
             <button className="mt-3 text-sm bg-primary hover:bg-primary/85 active:bg-primary transition-all duration-100 text-white rounded-full px-8 cursor-pointer py-2 font-semibold">
@@ -84,7 +71,7 @@ export default async function AlbumIdPage({
           <Hr />
 
           <div className="flex flex-col">
-            {album.tracks.data.map((item, index) => {
+            {chart.tracks.data.map((item, index) => {
               return (
                 <TrackCard
                   key={item.id}

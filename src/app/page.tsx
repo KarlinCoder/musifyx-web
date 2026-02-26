@@ -1,11 +1,10 @@
 import { RiBarChartFill } from "react-icons/ri";
 import PopularSongsSection from "./_components/popular-songs-section";
-import axios from "axios";
 import PopularAlbumsSection from "./_components/popular-albums-section";
 import PopularArtistsSection from "./_components/popular-artists-section";
 import PopularPlaylistsSection from "./_components/popular-playlists-section";
 import Link from "next/link";
-import { DeezerChart } from "@/types/deezer";
+import { getPopular } from "@/services/deezer";
 
 export default async function HomePage() {
   const anchorLinks = [
@@ -15,20 +14,13 @@ export default async function HomePage() {
     { url: "#playlists", label: "Playlists" },
   ];
 
-  const { data: charts } = await axios<DeezerChart>(
-    "https://cors-anywhere.com/https://api.deezer.com/chart",
-    {
-      headers: {
-        origin: "https://musifyx.karlincoder.com",
-      },
-    },
-  );
+  const charts = await getPopular();
 
   return (
     <div className="size-full p-8 scroll-smooth">
-      <h2 className="font-primary text-3xl font-medium flex items-center gap-3">
-        <RiBarChartFill /> Lo mejor del momento
-      </h2>
+      <p className="text-5xl font-primary flex items-center gap-2 font-bold">
+        <RiBarChartFill /> Descubre lo mejor del momento
+      </p>
 
       <div className="flex gap-2 mt-3">
         {anchorLinks.map((link) => {
@@ -44,10 +36,12 @@ export default async function HomePage() {
         })}
       </div>
 
-      <PopularSongsSection songs={charts.tracks.data} />
-      <PopularAlbumsSection albums={charts.albums.data} />
-      <PopularArtistsSection artists={charts.artists.data} />
-      <PopularPlaylistsSection playlists={charts.playlists.data} />
+      <div className="flex flex-col gap-8 mt-5">
+        <PopularSongsSection songs={charts.tracks.data} />
+        <PopularAlbumsSection albums={charts.albums.data} />
+        <PopularArtistsSection artists={charts.artists.data} />
+        <PopularPlaylistsSection playlists={charts.playlists.data} />
+      </div>
     </div>
   );
 }
