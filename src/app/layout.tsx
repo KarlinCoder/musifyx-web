@@ -5,8 +5,9 @@ import Sidebar from "@/components/sidebar";
 import { ProgressProvider } from "@bprogress/next/app";
 import localFont from "next/font/local";
 import { AnimatePresence } from "motion/react";
-import { useAudioStore } from "@/stores/useAudioPreviewStore";
-import PreviewPlayer from "./_components/preview-player";
+import ChatbotButton from "@/components/chatbot-button";
+import Chatbot from "@/components/chatbot";
+import { useState } from "react";
 
 const deezerFont = localFont({
   src: [
@@ -65,28 +66,23 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { trackData, reset } = useAudioStore();
+  const [showChatbot, setShowChatbot] = useState(false);
+  const toggleShowChatbot = () => setShowChatbot(!showChatbot);
 
   return (
     <html lang="es" className={`${deezerFont.variable} ${interFont.variable}`}>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>MusifyX</title>
+        <title>Musify | Tu biblioteca musical personal</title>
       </head>
       <body className="relative flex font-secondary bg-background-dark h-dvh text-text overflow-hidden">
         <Sidebar />
+        <AnimatePresence>
+          {showChatbot && <Chatbot onClose={toggleShowChatbot} />}
+        </AnimatePresence>
 
-        <main className="relative flex flex-col size-full styled-scrollbar overflow-x-hidden overflow-y-auto">
-          <AnimatePresence>
-            {trackData && (
-              <PreviewPlayer
-                artist={trackData.artist}
-                coverUrl={trackData.cover}
-                songTitle={trackData.title}
-                onQuit={reset}
-              />
-            )}
-          </AnimatePresence>
+        <main className="relative flex flex-col size-full mb=10 styled-scrollbar overflow-x-hidden overflow-y-auto">
+          <ChatbotButton onClick={toggleShowChatbot} />
 
           <ProgressProvider
             height="2px"

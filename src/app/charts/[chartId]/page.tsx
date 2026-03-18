@@ -20,7 +20,9 @@ export default async function ChartIdPage({
 
   console.log(chart);
 
-  const avgColor = (await getAverageColor(chart.picture_small)).hex;
+  const avgColor = (
+    await getAverageColor(chart.picture_small || "/not-loaded.jpg")
+  ).hex;
 
   return (
     <div
@@ -54,7 +56,7 @@ export default async function ChartIdPage({
                 {"|"}
                 <p>{formatSecondsToMinutes(chart.duration)} </p>
                 {"|"}
-                <p>{chart.fans} fans</p>
+                <p>{chart.fans.toLocaleString("en-US")} fans</p>
               </div>
 
               <p>Actualizada el {formatDateToSpanish(chart.mod_date)}</p>
@@ -73,17 +75,7 @@ export default async function ChartIdPage({
           <div className="flex flex-col">
             {chart.tracks.data.map((item, index) => {
               return (
-                <TrackCard
-                  key={item.id}
-                  id={item.id}
-                  artistId={item.artist.id}
-                  artistName={item.artist.name}
-                  coverUrl={item.album.cover_small}
-                  duration={item.duration}
-                  previewUrl={item.preview}
-                  title={item.title}
-                  albumPosition={index + 1}
-                />
+                <TrackCard key={item.id} data={item} listPosition={index + 1} />
               );
             })}
           </div>

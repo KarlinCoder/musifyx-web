@@ -13,7 +13,9 @@ export default async function ArtistLayout({
 }) {
   const { artistId } = await params;
   const artist = await getArtist(artistId);
-  const avgColor = (await getAverageColor(artist.picture_small)).hex;
+  const avgColor = (
+    await getAverageColor(artist.picture_small || "/not-loaded.jpg")
+  ).hex;
 
   return (
     <div
@@ -38,7 +40,8 @@ export default async function ArtistLayout({
             {artist.name}
           </h2>
           <p className="flex items-center gap-2 mt-2 text-sm text-neutral-400">
-            {artist.nb_fan} seguidores | {artist.nb_album} lanzamientos
+            {artist.nb_fan.toLocaleString("en-US")} seguidores |{" "}
+            {artist.nb_album} lanzamientos
           </p>
         </div>
       </header>

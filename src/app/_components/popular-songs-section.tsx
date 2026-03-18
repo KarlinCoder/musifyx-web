@@ -13,18 +13,7 @@ export default function PopularSongsSection({ songs }: Props) {
 
       <div className="grid grid-cols-2 w-full overflow-hidden overflow-x-auto styled-scrollbar">
         {songs.map((item) => {
-          return (
-            <TrackCard
-              key={item.id}
-              title={item.title}
-              artistId={item.artist.id}
-              artistName={item.artist.name}
-              coverUrl={item.album.cover_medium}
-              duration={item.duration}
-              id={item.id}
-              previewUrl={item.preview}
-            />
-          );
+          return <TrackCard key={item.id} data={item} />;
         })}
       </div>
     </div>

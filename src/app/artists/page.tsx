@@ -44,7 +44,7 @@ export default function ArtistsPage() {
           {data.map((artistItem) => (
             <ArtistCard
               key={artistItem.id}
-              coverUrl={artistItem.picture_big!}
+              coverUrl={artistItem.picture_big}
               id={artistItem.id}
               name={artistItem.name}
             />

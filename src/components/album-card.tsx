@@ -1,6 +1,7 @@
-import { genericBlur } from "@/lib/utils";
+import { formatRecordType, genericBlur } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import ExplicitMark from "./explicit-mark";
 
 interface Props {
   id: number;
@@ -29,7 +30,7 @@ export default function AlbumCard({
       key={id}
       className="inline-block overflow-hidden hover:bg-background-light cursor-pointer h-fit p-2.5 rounded-md"
     >
-      <div className="relative overflow-hidden">
+      <div className="overflow-hidden">
         <Image
           loading="lazy"
           placeholder="blur"
@@ -40,21 +41,16 @@ export default function AlbumCard({
           alt={`"${title}" de ${artistName}`}
           className="w-full aspect-square"
         />
-
-        {hasExplicitLyrics && (
-          <span className="text-[10px] bg-background/70 rounded-md absolute bottom-2 left-2 size-6 grid place-content-center">
-            E
-          </span>
-        )}
-
-        <span className="text-[10px] bg-background/70 rounded-md absolute bottom-2 right-2 p-1 grid place-content-center uppercase">
-          {recordType}
-        </span>
       </div>
 
-      <div className="p-3 -space-y-0.5">
-        <p className="text-[15px] font-medium">{title}</p>
-        <p className="block text-text-muted text-[13px]">{artistName}</p>
+      <div className="p-3">
+        <p className="font-medium text-[15px] min-w-0 w-full flex items-center gap-1">
+          <span className="truncate">{title}</span>
+        </p>
+        <p className="text-text-muted truncate text-[13px] flex items-center gap-1.5">
+          {hasExplicitLyrics && <ExplicitMark />} {formatRecordType(recordType)}{" "}
+          • {artistName}
+        </p>
       </div>
     </Link>
   );

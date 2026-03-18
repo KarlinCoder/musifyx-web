@@ -10,83 +10,64 @@ import {
   RiLoader3Line,
 } from "react-icons/ri";
 import { useAudioStore } from "@/stores/useAudioPreviewStore";
+import ExplicitMark from "./explicit-mark";
+import { DeezerTrack } from "@/types/deezer";
+import { useEffect } from "react";
 
 interface Props {
-  title: string;
-  artistName: string;
-  artistId: number;
-  duration: number;
-  coverUrl: string;
-  id: number;
-  previewUrl: string;
-  albumPosition?: number;
+  data: DeezerTrack;
+  listPosition?: number;
 }
 
-export default function TrackCard({
-  artistName,
-  artistId,
-  coverUrl,
-  duration,
-  id,
-  previewUrl,
-  title,
-  albumPosition,
-}: Props) {
-  console.log(id);
+export default function TrackCard({ data, listPosition }: Props) {
+  const current = useAudioStore((s) => s.current);
+  const isPlaying = useAudioStore((s) => s.isPlaying);
+  const isLoading = useAudioStore((s) => s.isLoading);
+  const { play, pause, clear } = useAudioStore();
 
-  const currentPreviewUrl = useAudioStore((state) => state.currentPreviewUrl);
-  const isPlaying = useAudioStore((state) => state.isPlaying);
-  const isLoading = useAudioStore((state) => state.isLoading);
-  const togglePreview = useAudioStore((state) => state.togglePreview);
+  const isThis = current?.id === data?.id;
 
-  const artistUrl = `/artists/${artistId}`;
-  const isThisPlaying = currentPreviewUrl === previewUrl && isPlaying;
-
-  const handlePlayPreview = () => {
-    const trackInfo = { title, artist: artistName, cover: coverUrl };
-    togglePreview(previewUrl, trackInfo);
+  const handleToggle = () => {
+    if (isThis && isPlaying) pause();
+    else play(data);
   };
 
+  useEffect(() => {
+    return () => clear();
+  }, [clear]);
+
   return (
-    <div className="flex justify-between items-center rounded-md hover:bg-background/50 transition-colors duration-200 grow p-2.5 group/track">
-      <div className="flex items-center gap-3">
-        {albumPosition && (
-          <p className="text-text-muted text-sm w-5 text-right font-mono">
-            {albumPosition}
+    <div className="flex gap-10 justify-between items-center rounded-md hover:bg-background grow p-2.5 group/track">
+      <div className="flex items-center gap-3 min-w-0 flex-1">
+        {/* Número de pista */}
+        {listPosition && (
+          <p className="text-text-muted text-sm w-5 text-right font-mono shrink-0">
+            {listPosition}
           </p>
         )}
 
-        <div className="relative size-13 rounded overflow-hidden group">
+        <div className="relative size-13 rounded shrink-0 group">
           <Image
-            src={coverUrl || "/not-loaded.jpg"}
-            alt={`${title} by ${artistName}`}
+            src={data.album.cover_small || "/not-loaded.jpg"}
+            alt={`Song cover art`}
             blurDataURL={genericBlur}
             width={64}
             height={64}
             placeholder="blur"
-            className={`object-cover size-full transition-all duration-300 ${
-              isThisPlaying
-                ? "scale-105 brightness-75"
-                : "group-hover:scale-105"
-            }`}
+            className={`object-cover size-full transition-all duration-300`}
           />
 
           <div
-            className={`absolute inset-0 bg-black/60 flex justify-center items-center backdrop-blur-[2px] transition-opacity duration-200 ${
-              isThisPlaying
-                ? "opacity-100"
-                : "opacity-0 group-hover:opacity-100"
-            }`}
+            className={`absolute inset-0 size-full ${isThis ? "opacity-100" : "group-hover/track:opacity-100 opacity-0"} bg-black/30 flex items-center justify-center rounded`}
           >
             <button
-              onClick={handlePlayPreview}
-              disabled={isLoading && isThisPlaying}
-              className="bg-white/90 hover:bg-white text-black rounded-full size-9 flex justify-center items-center transform transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer disabled:opacity-70"
-              aria-label={isThisPlaying ? `Pause ${title}` : `Play ${title}`}
+              onClick={handleToggle}
+              disabled={isLoading && isThis}
+              className={`bg-primary hover:bg-secondary active:bg-primary text-white rounded-full size-9 flex justify-center items-center cursor-pointer transition-opacity duration-200 `}
             >
-              {isLoading && isThisPlaying ? (
+              {isLoading && isThis ? (
                 <RiLoader3Line size={18} className="animate-spin" />
-              ) : isThisPlaying ? (
+              ) : isThis && isPlaying ? (
                 <RiPauseFill size={18} />
               ) : (
                 <RiPlayFill size={18} className="ml-0.5" />
@@ -95,27 +76,44 @@ export default function TrackCard({
           </div>
         </div>
 
-        <div className="-space-y-1 min-w-0">
-          <p className="font-medium text-sm truncate">{title}</p>
-          <Link
-            href={artistUrl}
-            className="text-text-muted text-[13px] hover:underline underline-offset-2 block truncate"
-          >
-            {artistName}
-          </Link>
+        {/* Info Text Area */}
+        <div className="min-w-0 flex flex-col justify-center">
+          <p className="font-medium text-sm truncate">{data.title}</p>
+
+          <div className="flex flex-nowrap items-center gap-1.5 text-text-muted text-[13px] truncate w-full min-w-0">
+            {data.explicit_lyrics && <ExplicitMark />}
+            <span>Cancion • </span>
+            {data.contributors.length > 0 && (
+              <>
+                <div className="flex gap-1 min-w-0">
+                  {data.contributors.map((artist, index) => (
+                    <Link
+                      key={artist.id}
+                      href={`/artists/${artist.id}`}
+                      className="hover:underline underline-offset-2 hover:text-foreground transition-colors whitespace-nowrap"
+                    >
+                      {artist.name}
+                      {index < data.contributors.length - 1 && ","}
+                    </Link>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="flex justify-end items-center gap-3">
-        <p className="text-[13px] text-text-muted text-right">
-          {formatSecondsToMinutes(duration)}
+      {/* Duration & Download */}
+      <div className="flex justify-end items-center gap-3 shrink-0">
+        <p className="text-[13px] text-text-muted text-right font-nums">
+          {formatSecondsToMinutes(data.duration)}
         </p>
 
-        <button
-          className="rounded-full bg-primary/90 hover:bg-primary active:scale-95 cursor-pointer text-white size-8 flex justify-center items-center transition-all duration-200 hover:shadow-lg"
-          aria-label={`Download ${title}`}
-        >
+        {/* <button className="rounded-full bg-primary/90 hover:bg-primary active:scale-95 cursor-pointer text-white size-8 flex justify-center items-center transition-all duration-200 hover:shadow-lg">
           <RiDownloadCloudFill size={20} />
+        </button> */}
+        <button className="rounded-full bg-primary/90 hover:bg-primary active:scale-95 cursor-pointer text-white  px-3 py-1 text-sm flex justify-center items-center transition-all duration-200 hover:shadow-lg">
+          Descargar
         </button>
       </div>
     </div>

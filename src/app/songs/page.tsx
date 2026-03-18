@@ -47,16 +47,7 @@ export default function SongsPage() {
             </p>
 
             {data.map((track) => (
-              <TrackCard
-                key={track.id}
-                title={track.title}
-                artistId={track.artist.id}
-                artistName={track.artist.name}
-                coverUrl={track.album.cover_medium}
-                duration={track.duration}
-                id={track.id}
-                previewUrl={track.preview}
-              />
+              <TrackCard key={track.id} data={track} />
             ))}
           </div>
         )}

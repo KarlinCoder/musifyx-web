@@ -1,31 +1,25 @@
 "use client";
 import { genericBlur } from "@/lib/utils";
+import { DeezerTrack } from "@/types/deezer";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { RiCloseFill } from "react-icons/ri";
 
 interface Props {
-  coverUrl: string | null;
+  track: DeezerTrack;
   onQuit: () => void;
-  songTitle: string;
-  artist: string;
 }
 
-export default function PreviewPlayer({
-  coverUrl,
-  onQuit,
-  artist,
-  songTitle,
-}: Props) {
+export default function PreviewPlayer({ track, onQuit }: Props) {
   return (
     <motion.div
       initial={{ x: 20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       exit={{ x: 20, opacity: 0 }}
-      className="fixed items-center z-10 top-4 right-6 flex bg-background-light rounded-md p-3 space-x-3 shadow-2xl shadow-black border border-white/6"
+      className="fixed items-center z-100 top-4 right-6 flex bg-background-light rounded-md p-3 space-x-3 shadow-2xl shadow-black border border-white/6"
     >
       <Image
-        src={coverUrl || "/not-loaded.jpg"}
+        src={track.album.cover_medium || "/not-loaded.jpg"}
         placeholder="blur"
         blurDataURL={genericBlur}
         alt="cover image"
@@ -36,9 +30,9 @@ export default function PreviewPlayer({
 
       <div className="flex gap-3 items-center">
         <div>
-          <p className="font-medium text-sm truncate">{songTitle}</p>
+          <p className="font-medium text-sm truncate">{track.title}</p>
           <p className="text-text-muted text-[13px] hover:underline underline-offset-2 block truncate">
-            {artist}
+            {track.artist.name}
           </p>
         </div>
         <button

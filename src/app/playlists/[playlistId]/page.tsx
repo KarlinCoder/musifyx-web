@@ -18,7 +18,11 @@ export default async function PlaylistIdPage({
 
   const playlist = await getPlaylist(playlistId);
 
-  const avgColor = (await getAverageColor(playlist.picture_small)).hex;
+  const avgColor = (
+    await getAverageColor(
+      playlist.picture_small || "../../../../public/not-loaded.jpg",
+    )
+  ).hex;
 
   return (
     <div
@@ -52,7 +56,7 @@ export default async function PlaylistIdPage({
                 {"|"}
                 <p>{formatSecondsToMinutes(playlist.duration)} </p>
                 {"|"}
-                <p>{playlist.fans} fans</p>
+                <p>{playlist.fans.toLocaleString("en-US")} fans</p>
               </div>
 
               <p>Actualizada el {formatDateToSpanish(playlist.mod_date)}</p>
@@ -73,17 +77,7 @@ export default async function PlaylistIdPage({
           <div className="flex flex-col">
             {playlist.tracks.data.map((item, index) => {
               return (
-                <TrackCard
-                  key={item.id}
-                  id={item.id}
-                  artistId={item.artist.id}
-                  artistName={item.artist.name}
-                  coverUrl={item.album.cover_small}
-                  duration={item.duration}
-                  previewUrl={item.preview}
-                  title={item.title}
-                  albumPosition={index + 1}
-                />
+                <TrackCard key={item.id} data={item} listPosition={index + 1} />
               );
             })}
           </div>

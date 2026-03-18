@@ -82,11 +82,10 @@ export default function Sidebar() {
           alt="Logo"
           height={80}
           width={80}
-          className="rounded-lg"
+          className="rounded-lg shadow-2xl shadow-black"
         />
-        <p className="font-primary text-3xl font-medium mt-2 inline-block">
+        <p className="font-primary text-3xl font-medium mt-2 inline-block tracking-wide">
           Musify
-          <span className="text-primary">X</span>
         </p>
         <p className="text-text-muted text-sm">
           Tu biblioteca musical personal.

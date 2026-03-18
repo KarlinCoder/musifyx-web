@@ -1,51 +1,25 @@
+// src/stores/useAudioPreviewStore.ts
+import { DeezerTrack } from "@/types/deezer";
 import { create } from "zustand";
 
-type PreviewTrackInfo = {
-  title: string;
-  artist: string;
-  cover: string;
-};
-
 interface AudioState {
-  currentPreviewUrl: string | null;
+  current: DeezerTrack | null;
+  audio: HTMLAudioElement | null;
   isPlaying: boolean;
   isLoading: boolean;
-  audio: HTMLAudioElement | null;
-  trackData: PreviewTrackInfo | null;
-
-  setAudio: (audio: HTMLAudioElement | null) => void;
-  playPreview: (url: string, track: PreviewTrackInfo) => void;
-  pausePreview: () => void;
-  togglePreview: (url: string, track: PreviewTrackInfo) => void;
-  reset: () => void;
+  play: (track: DeezerTrack) => void;
+  pause: () => void;
+  toggle: (track: DeezerTrack) => void;
+  clear: () => void;
 }
 
 export const useAudioStore = create<AudioState>((set, get) => ({
-  currentPreviewUrl: null,
+  current: null,
+  audio: null,
   isPlaying: false,
   isLoading: false,
-  audio: null,
-  trackData: null,
 
-  setAudio: (audio) => set({ audio }),
-
-  reset: () => {
-    const { audio } = get();
-    if (audio) {
-      audio.pause();
-      audio.src = "";
-      audio.load();
-    }
-    set({
-      currentPreviewUrl: null,
-      isPlaying: false,
-      isLoading: false,
-      audio: null,
-      trackData: null,
-    });
-  },
-
-  playPreview: (url, track) => {
+  play: (track) => {
     const { audio: currentAudio } = get();
 
     if (currentAudio) {
@@ -54,10 +28,13 @@ export const useAudioStore = create<AudioState>((set, get) => ({
       currentAudio.load();
     }
 
-    // Guardamos URL + datos ligeros del track
-    set({ isLoading: true, currentPreviewUrl: url, trackData: track });
+    set({
+      current: track,
+      isLoading: true,
+      isPlaying: false,
+    });
 
-    const audio = new Audio(url);
+    const audio = new Audio(track.preview);
     audio.preload = "auto";
 
     audio.addEventListener(
@@ -65,38 +42,58 @@ export const useAudioStore = create<AudioState>((set, get) => ({
       async () => {
         try {
           await audio.play();
-          set({ isPlaying: true, isLoading: false, audio });
+          set({
+            isPlaying: true,
+            isLoading: false,
+            audio,
+          });
         } catch (error) {
           console.error("Error al reproducir:", error);
-          set({ isPlaying: false, isLoading: false });
+          set({
+            isPlaying: false,
+            isLoading: false,
+          });
         }
       },
       { once: true },
     );
 
     audio.addEventListener("ended", () => {
-      get().reset();
+      get().clear();
     });
 
     audio.load();
   },
 
-  pausePreview: () => {
+  pause: () => {
     const { audio } = get();
     if (audio) {
       audio.pause();
+      set({ isPlaying: false });
     }
-    set({ isPlaying: false });
   },
 
-  togglePreview: (url, track) => {
-    const { currentPreviewUrl, isPlaying } = get();
+  toggle: (track) => {
+    const { current, isPlaying } = get();
 
-    if (currentPreviewUrl === url) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      isPlaying ? get().pausePreview() : get().playPreview(url, track);
+    if (current?.id === track.id) {
+      return isPlaying ? get().pause() : get().play(track);
     } else {
-      get().playPreview(url, track);
+      get().play(track);
     }
+  },
+
+  clear: () => {
+    const { audio } = get();
+    if (audio) {
+      audio.pause();
+      audio.src = "";
+    }
+    set({
+      current: null,
+      audio: null,
+      isPlaying: false,
+      isLoading: false,
+    });
   },
 }));

@@ -15,7 +15,7 @@ export interface DeezerArtist {
   nb_fan: number;
   radio: boolean;
   tracklist: DeezerUrl;
-  type: string;
+  type: "artist";
 }
 
 export interface DeezerAlbum {
@@ -40,8 +40,10 @@ export interface DeezerAlbum {
   explicit_content_lyrics: number;
   explicit_content_cover: number;
   artist: DeezerArtist;
-  tracks: DeezerPagedResponse<DeezerTrack>;
-  type: string;
+  tracks: {
+    data: DeezerTrack[];
+  };
+  type: "album";
 }
 
 export interface DeezerTrack {
@@ -56,7 +58,9 @@ export interface DeezerTrack {
   explicit_lyrics: boolean;
   preview: DeezerUrl;
   artist: DeezerArtist;
+  contributors: DeezerArtist[];
   album: DeezerAlbum;
+  type: "track";
 }
 
 export interface DeezerTrackWithPosition extends DeezerTrack {

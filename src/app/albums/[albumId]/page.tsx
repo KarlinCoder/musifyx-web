@@ -1,3 +1,4 @@
+import DownloadButton from "@/components/download-button";
 import Hr from "@/components/hr";
 import TrackCard from "@/components/track-card";
 import {
@@ -18,6 +19,7 @@ export default async function AlbumIdPage({
   const { albumId } = await params;
 
   const album = await getAlbum(albumId);
+  console.log(album);
 
   const avgColor = (await getAverageColor(album.cover_small)).hex;
 
@@ -68,14 +70,10 @@ export default async function AlbumIdPage({
               {"|"}
               <p>{formatSecondsToMinutes(album.duration)} minutos</p>
               {"|"}
-              <p>{album.fans} fans</p>
-              {"|"}
               <p>Lanzado el {formatDateToSpanish(album.release_date!)}</p>
             </div>
 
-            <button className="mt-3 text-sm bg-primary hover:bg-primary/85 active:bg-primary transition-all duration-100 text-white rounded-full px-8 cursor-pointer py-2 font-semibold">
-              Descargar
-            </button>
+            <DownloadButton id={albumId}>Descargar álbum</DownloadButton>
           </div>
         </header>
 
@@ -86,17 +84,7 @@ export default async function AlbumIdPage({
           <div className="flex flex-col">
             {album.tracks.data.map((item, index) => {
               return (
-                <TrackCard
-                  key={item.id}
-                  id={item.id}
-                  artistId={item.artist.id}
-                  artistName={item.artist.name}
-                  coverUrl={item.album.cover_small}
-                  duration={item.duration}
-                  previewUrl={item.preview}
-                  title={item.title}
-                  albumPosition={index + 1}
-                />
+                <TrackCard key={item.id} data={item} listPosition={index + 1} />
               );
             })}
           </div>

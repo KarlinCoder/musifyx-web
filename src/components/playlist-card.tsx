@@ -37,7 +37,7 @@ export default function PlaylistCard({
       </div>
 
       <div className="p-3 -space-y-0.5">
-        <p className="text-[15px] font-medium">{title}</p>
+        <p className="text-[15px] font-medium truncate">{title}</p>
         <p className="block text-text-muted text-[13px]">
           {totalSongs} canciones - {fans} fans
         </p>

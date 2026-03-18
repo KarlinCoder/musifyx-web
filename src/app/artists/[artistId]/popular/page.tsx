@@ -14,17 +14,7 @@ export default async function ArtistTop10Page({
       <p className="artist-section-title">Popular ahora</p>
 
       {artistPopular.map((track, index) => (
-        <TrackCard
-          key={track.id}
-          id={track.id}
-          artistId={track.artist.id}
-          artistName={track.artist.name}
-          duration={track.duration}
-          coverUrl={track.album.cover_medium}
-          previewUrl={track.preview}
-          title={track.title}
-          albumPosition={index + 1}
-        />
+        <TrackCard key={track.id} data={track} listPosition={index + 1} />
       ))}
     </div>
   );
