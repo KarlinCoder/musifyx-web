@@ -19,7 +19,6 @@ export default async function AlbumIdPage({
   const { albumId } = await params;
 
   const album = await getAlbum(albumId);
-  console.log(album);
 
   const avgColor = (await getAverageColor(album.cover_small)).hex;
 

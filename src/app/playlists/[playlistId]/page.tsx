@@ -17,12 +17,16 @@ export default async function PlaylistIdPage({
   const { playlistId } = await params;
 
   const playlist = await getPlaylist(playlistId);
+  console.log("ACCCCCCAAA");
+  console.log({ playlist });
 
-  const avgColor = (
-    await getAverageColor(
-      playlist.picture_small || "../../../../public/not-loaded.jpg",
-    )
-  ).hex;
+  const avgColor = (await getAverageColor(playlist.picture_small)).hex;
+
+  playlist.tracks.data.forEach((track, i) => {
+    if (!track.album) {
+      console.warn(`⚠️ Track ${i} sin album:`, track.title, track.id);
+    }
+  });
 
   return (
     <div
@@ -63,10 +67,6 @@ export default async function PlaylistIdPage({
               <Hr className="my-3" />
               <p className="text-pretty">{playlist.description}</p>
             </div>
-
-            <button className="mt-3 text-sm bg-primary hover:bg-primary/85 active:bg-primary transition-all duration-100 text-white rounded-full px-8 cursor-pointer py-2 font-semibold">
-              Descargar
-            </button>
           </div>
         </header>
 
@@ -77,7 +77,7 @@ export default async function PlaylistIdPage({
           <div className="flex flex-col">
             {playlist.tracks.data.map((item, index) => {
               return (
-                <TrackCard key={item.id} data={item} listPosition={index + 1} />
+                <TrackCard key={index} data={item} listPosition={index + 1} />
               );
             })}
           </div>
