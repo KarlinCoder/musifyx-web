@@ -5,13 +5,13 @@ import { getArtist, getArtistAlbums } from "@/services/deezer";
 export default async function ArtistDiscographyPage({
   params,
 }: {
-  params: Promise<{ artistId: number }>;
+  params: Promise<{ artistId: string }>;
 }) {
   const { artistId } = await params;
 
   const [artist, { data: artistAlbums }] = await Promise.all([
-    getArtist(artistId),
-    getArtistAlbums(artistId),
+    getArtist(parseInt(artistId)),
+    getArtistAlbums(parseInt(artistId)),
   ]);
 
   const albumTypes = () => {

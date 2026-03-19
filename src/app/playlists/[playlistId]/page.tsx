@@ -12,11 +12,11 @@ import Image from "next/image";
 export default async function PlaylistIdPage({
   params,
 }: {
-  params: Promise<{ playlistId: number }>;
+  params: Promise<{ playlistId: string }>;
 }) {
   const { playlistId } = await params;
 
-  const playlist = await getPlaylist(playlistId);
+  const playlist = await getPlaylist(parseInt(playlistId));
   console.log("ACCCCCCAAA");
   console.log({ playlist });
 

@@ -14,11 +14,11 @@ import Link from "next/link";
 export default async function AlbumIdPage({
   params,
 }: {
-  params: Promise<{ albumId: number }>;
+  params: Promise<{ albumId: string }>;
 }) {
   const { albumId } = await params;
 
-  const album = await getAlbum(albumId);
+  const album = await getAlbum(parseInt(albumId));
 
   const avgColor = (await getAverageColor(album.cover_small)).hex;
 
@@ -72,7 +72,9 @@ export default async function AlbumIdPage({
               <p>Lanzado el {formatDateToSpanish(album.release_date!)}</p>
             </div>
 
-            <DownloadButton id={albumId}>Descargar álbum</DownloadButton>
+            <DownloadButton id={parseInt(albumId)}>
+              Descargar álbum
+            </DownloadButton>
           </div>
         </header>
 

@@ -12,11 +12,11 @@ import Image from "next/image";
 export default async function ChartIdPage({
   params,
 }: {
-  params: Promise<{ chartId: number }>;
+  params: Promise<{ chartId: string }>;
 }) {
   const { chartId } = await params;
 
-  const chart = await getPlaylist(chartId);
+  const chart = await getPlaylist(parseInt(chartId));
 
   console.log(chart);
 
