@@ -5,7 +5,7 @@ import {
   formatSecondsToMinutes,
   genericBlur,
 } from "@/lib/utils";
-import { getPlaylist } from "@/services/deezer";
+import { getPlaylist } from "../../services/deezer";
 import { getAverageColor } from "fast-average-color-node";
 import Image from "next/image";
 
@@ -18,9 +18,9 @@ export default async function ChartIdPage({
 
   const chart = await getPlaylist(parseInt(chartId));
 
-  console.log(chart.tracks.data);
+  console.log(chart.tracks);
 
-  const avgColor = (await getAverageColor(chart.picture_small)).hex || "#eee";
+  const avgColor = (await getAverageColor(chart.image_url)).hex || "#eee";
 
   return (
     <div
@@ -34,7 +34,7 @@ export default async function ChartIdPage({
           <div className="max-w-65 w-full shadow-2xl shadow-background">
             <Image
               alt="album cover"
-              src={chart.picture_big || "/not-loaded.jpg"}
+              src={chart.image_url || "/not-loaded.jpg"}
               width={100}
               height={100}
               placeholder="blur"
@@ -50,11 +50,11 @@ export default async function ChartIdPage({
 
             <div className="mt-1 text-sm text-neutral-400">
               <div className="flex items-center gap-2">
-                <p>{chart.tracks.data.length} canciones</p>
+                <p>{chart.tracks.length} canciones</p>
                 {"|"}
                 <p>{formatSecondsToMinutes(chart.duration)} </p>
                 {"|"}
-                <p>{chart.fans.toLocaleString("en-US")} fans</p>
+                <p>{chart.nb_fans.toLocaleString("en-US")} fans</p>
               </div>
 
               <p>Actualizada el {formatDateToSpanish(chart.mod_date)}</p>
@@ -71,13 +71,9 @@ export default async function ChartIdPage({
           <Hr />
 
           <div className="flex flex-col">
-            {chart.tracks.data.map((item, index) => {
+            {chart.tracks.map((item, index) => {
               return (
-                <TrackCard
-                  key={`${item.id ?? "no-id"}-${item.isrc ?? "no-isrc"}-${index}`}
-                  data={item}
-                  listPosition={index + 1}
-                />
+                <TrackCard key={item.id} data={item} listPosition={index + 1} />
               );
             })}
           </div>
