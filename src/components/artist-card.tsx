@@ -1,15 +1,20 @@
 import { genericBlur } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
+import fallbackImage from "@/assets/not-loaded.jpg";
 
 interface Props {
-  id: number;
-  name: string;
-  coverUrl: string;
+  info: {
+    id: number;
+    name: string;
+    coverUrl: string;
+  };
 }
 
-export default function ArtistCard({ id, name, coverUrl }: Props) {
-  const artistUrl = `/artists/${id}`;
+export default function ArtistCard({ info }: Props) {
+  const { id, name, coverUrl } = info;
+
+  const artistUrl = `/app/artists/${id}`;
 
   return (
     <Link
@@ -19,13 +24,13 @@ export default function ArtistCard({ id, name, coverUrl }: Props) {
       <div className="overflow-hidden rounded-full">
         <Image
           loading="lazy"
-          src={coverUrl || "/not-loaded.jpg"}
+          src={coverUrl || fallbackImage}
           alt={`${name} profile picture`}
           placeholder="blur"
           blurDataURL={genericBlur}
-          height={50}
-          width={50}
-          className="w-full aspect-square max-w-100"
+          height={100}
+          width={100}
+          className="w-full aspect-square max-w-100 rounded-sm"
         />
       </div>
 

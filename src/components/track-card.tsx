@@ -1,17 +1,41 @@
 "use client";
+
 import imageFallback from "@/assets/not-loaded.jpg";
 import Image from "next/image";
-import Link from "next/link";
 import { formatSecondsToMinutes, genericBlur } from "@/lib/utils";
-import { RiPauseFill, RiPlayFill, RiLoader3Line } from "react-icons/ri";
+import {
+  RiPauseFill,
+  RiPlayFill,
+  RiLoader3Line,
+  RiMore2Line,
+  RiCircleFill,
+  RiHeartFill,
+  RiHeartLine,
+} from "react-icons/ri";
 import { useAudioStore } from "@/stores/useAudioPreviewStore";
 import ExplicitMark from "./explicit-mark";
-import { DeezerTrack } from "@/types/deezer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import TrackCardDownloadButton from "./track-card-download-button";
+import TrackCardDropdown from "./track-card-dropdown";
+import TrackLyricsModal from "@/app/app/_components/track-lyrics-modal";
+import { AnimatePresence } from "motion/react";
+import { createPortal } from "react-dom";
+import TrackMeaningsModal from "@/app/app/_components/track-meaning-modal";
+
+import { getTrackPreview } from "@/app/app/services/deezer";
+import { useAuth } from "@clerk/nextjs";
+import { useFavoritesStore } from "@/app/app/_stores/useFavoriteStore";
+import { Artist } from "@/app/app/_types/deezer";
 
 interface Props {
-  data: DeezerTrack;
+  data: {
+    id: number;
+    title: string;
+    artists: Artist[];
+    image_url: string;
+    explicit_lyrics: boolean;
+    duration: number;
+  };
   listPosition?: number;
 }
 
@@ -19,48 +43,146 @@ export default function TrackCard({ data, listPosition }: Props) {
   const current = useAudioStore((s) => s.current);
   const isPlaying = useAudioStore((s) => s.isPlaying);
   const isLoading = useAudioStore((s) => s.isLoading);
-  const { play, pause, clear } = useAudioStore();
+  const [detailOption, setDetailOption] = useState("");
+  const { play, clear } = useAudioStore();
 
-  const isThis = current?.id === data?.id;
+  const { getToken } = useAuth();
 
-  const handleToggle = () => {
-    if (isThis && isPlaying) pause();
-    else play(data);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isFetchingPreview, setIsFetchingPreview] = useState(false);
+
+  const {
+    addFavorite,
+    removeFavorite,
+    isFavorite,
+    isLoading: isFetchingFavories,
+  } = useFavoritesStore();
+  const [isFavLoading, setIsFavLoading] = useState(false);
+
+  const isFav = isFavorite(data.id);
+  const artistsText = data.artists.map((artist) => artist.name).join(", ");
+
+  const isThis = current?.id === data.id;
+
+  const handleToggle = async () => {
+    if (isThis && isPlaying) {
+      clear();
+      return;
+    }
+
+    try {
+      setIsFetchingPreview(true);
+      const previewUrl = await getTrackPreview(data.id);
+      play({ ...data, preview_url: previewUrl });
+    } catch (error) {
+      console.error("❌ Failed to fetch track preview:", error);
+    } finally {
+      setIsFetchingPreview(false);
+    }
+  };
+
+  const toggleFavorite = async () => {
+    if (isFavLoading) return;
+    setIsFavLoading(true);
+
+    try {
+      const token = await getToken();
+      if (!token) return;
+
+      if (isFav) {
+        await removeFavorite(data.id, token);
+      } else {
+        await addFavorite(
+          {
+            id: data.id,
+            data,
+            type: "track",
+          },
+          token,
+        );
+      }
+    } catch (err) {
+      console.error("❌ Error toggling favorite:", err);
+    } finally {
+      setIsFavLoading(false);
+    }
   };
 
   useEffect(() => {
+    console.log(data.id);
     return () => clear();
-  }, [clear]);
+  }, [clear, data]);
+
+  const isLoadingOrFetching = isFetchingPreview || (isLoading && isThis);
 
   return (
-    <div className="flex gap-10 justify-between items-center rounded-md hover:bg-background grow p-2.5 group/track">
-      <div className="flex items-center gap-3 min-w-0 flex-1">
-        {listPosition && (
-          <p className="text-text-muted text-sm w-5 text-right font-mono shrink-0">
-            {listPosition}
+    <div className="relative overflow-visible flex gap-4 justify-between items-center rounded-md hover:bg-background grow py-3 px-2 group/track box-border">
+      {listPosition && (
+        <div className="absolute top-7 -left-9.5 w-8 text-right z-10">
+          <p className="text-text-muted text-xs font-mono font-medium tabular-nums">
+            {listPosition.toString().padStart(2, " ")}
           </p>
-        )}
+        </div>
+      )}
 
+      <AnimatePresence>
+        {showDropdown && (
+          <TrackCardDropdown
+            isFavorite={isFav} // 👈 Sync con estado local
+            onClose={() => setShowDropdown(false)}
+            onSelect={(option) => setDetailOption(option)}
+          />
+        )}
+      </AnimatePresence>
+
+      {createPortal(
+        <AnimatePresence>
+          {detailOption === "track-lyrics" && (
+            <TrackLyricsModal
+              key="track-lyrics-modal"
+              trackName={data.title}
+              deezerSongId={data.id}
+              onClose={() => setDetailOption("")}
+            />
+          )}
+
+          {detailOption === "track-meaning" && (
+            <TrackMeaningsModal
+              key="track-meaning-modal"
+              trackName={data.title}
+              deezerSongId={data.id}
+              onClose={() => setDetailOption("")}
+            />
+          )}
+        </AnimatePresence>,
+        document.querySelector("body")!,
+      )}
+
+      <div className="flex items-center gap-3 min-w-0 flex-1">
         <div className="relative size-13 rounded shrink-0 group">
           <Image
-            src={data.album?.cover_small || imageFallback}
+            src={data.image_url || imageFallback}
             alt={`Song cover art`}
             blurDataURL={genericBlur}
             width={64}
             height={64}
             placeholder="blur"
-            className={`object-cover size-full transition-all duration-300`}
+            className="object-cover size-full transition-all duration-300 rounded-sm"
           />
 
           <div
-            className={`absolute inset-0 size-full ${isThis && data.preview ? "opacity-100" : "group-hover/track:opacity-100 opacity-0"} bg-black/30 flex items-center justify-center rounded`}
+            className={`absolute inset-0 size-full ${
+              isThis ? "opacity-100" : "group-hover/track:opacity-100 opacity-0"
+            } bg-black/30 flex items-center justify-center`}
           >
             <button
               onClick={handleToggle}
-              disabled={isLoading && isThis}
-              className={`bg-primary hover:bg-secondary active:bg-primary text-white rounded-full size-9 flex justify-center items-center cursor-pointer transition-opacity duration-200 `}
+              disabled={isLoadingOrFetching}
+              className={`bg-[#0009] backdrop-blur-2xl hover:bg-[#000f] active:bg-[#0009] text-white rounded-full size-9 flex justify-center items-center cursor-pointer transition-opacity duration-200 ${
+                isLoadingOrFetching ? "cursor-not-allowed opacity-70" : ""
+              }`}
             >
-              {isLoading && isThis ? (
+              {isLoadingOrFetching ? (
                 <RiLoader3Line size={18} className="animate-spin" />
               ) : isThis && isPlaying ? (
                 <RiPauseFill size={18} />
@@ -78,36 +200,48 @@ export default function TrackCard({ data, listPosition }: Props) {
 
           <div className="flex flex-nowrap items-center gap-1.5 text-text-muted text-[13px] truncate w-full min-w-0">
             {data.explicit_lyrics && <ExplicitMark />}
-            <span>Cancion • </span>
-            {data.contributors?.length > 0 && (
-              <>
-                <div className="flex gap-1 min-w-0">
-                  {data.contributors.map((artist, index) => (
-                    <Link
-                      key={artist.id}
-                      href={`/artists/${artist.id}`}
-                      className="hover:underline underline-offset-2 hover:text-foreground transition-colors whitespace-nowrap"
-                    >
-                      {artist.name}
-                      {index < data.contributors?.length - 1 && ","}
-                    </Link>
-                  ))}
-                </div>
-              </>
-            )}
-            {(!data.contributors || data.contributors.length === 0) && (
-              <span>[Artista desconocido]</span>
-            )}
+            <div className="flex items-center gap-1.5">
+              <p>Cancion</p> <RiCircleFill size={5} className="block" />
+              <p>{artistsText}</p>
+            </div>
+
+            {!data.artists && <span>[Artista desconocido]</span>}
           </div>
         </div>
       </div>
 
-      <div className="flex justify-end items-center gap-3 shrink-0">
-        <p className="text-[13px] text-text-muted text-right font-nums">
+      <div className="flex justify-end items-center shrink-0 gap-1">
+        <p className="text-[12px] mr-2 text-text-muted text-right font-nums flex items-center gap-1">
           {formatSecondsToMinutes(data.duration || 0)}
         </p>
 
-        <TrackCardDownloadButton trackId={data.id} />
+        <button
+          type="button"
+          onClick={toggleFavorite}
+          disabled={isFavLoading}
+          className="p-2 hover:scale-110 active:scale-95 transition disabled:opacity-50 cursor-pointer"
+          aria-label={isFav ? "Quitar de favoritos" : "Agregar a favoritos"}
+        >
+          {isFav ? (
+            <RiHeartFill className="w-5 h-5 text-red-500" />
+          ) : (
+            <RiHeartLine className="w-5 h-5 text-text-muted hover:text-white" />
+          )}
+        </button>
+
+        <TrackCardDownloadButton
+          trackId={data.id}
+          artist={artistsText}
+          imageUrl={data.image_url}
+          title={data.title}
+        />
+
+        <button
+          onClick={() => setShowDropdown(!showDropdown)}
+          className="p-2 hover:bg-white/7 active:bg-white/4 cursor-pointer rounded-full"
+        >
+          <RiMore2Line size={18} />
+        </button>
       </div>
     </div>
   );

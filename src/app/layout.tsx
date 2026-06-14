@@ -1,13 +1,8 @@
-"use client";
-
 import "@/styles/globals.css";
-import Sidebar from "@/components/sidebar";
-import { ProgressProvider } from "@bprogress/next/app";
 import localFont from "next/font/local";
-import { AnimatePresence } from "motion/react";
-import ChatbotButton from "@/components/chatbot-button";
-import Chatbot from "@/components/chatbot";
-import { useState } from "react";
+import { ClerkProvider } from "@clerk/nextjs";
+import { esES } from "@clerk/localizations";
+import { dark } from "@clerk/ui/themes";
 
 const deezerFont = localFont({
   src: [
@@ -61,39 +56,34 @@ const interFont = localFont({
   variable: "--font-inter",
 });
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [showChatbot, setShowChatbot] = useState(false);
-  const toggleShowChatbot = () => setShowChatbot(!showChatbot);
-
   return (
-    <html lang="es" className={`${deezerFont.variable} ${interFont.variable}`}>
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Musify | Tu biblioteca musical personal</title>
-      </head>
-      <body className="relative flex font-secondary bg-background-dark h-dvh text-text overflow-hidden">
-        <Sidebar />
-        <AnimatePresence>
-          {showChatbot && <Chatbot onClose={toggleShowChatbot} />}
-        </AnimatePresence>
-
-        <main className="relative flex flex-col size-full mb=10 styled-scrollbar overflow-x-hidden overflow-y-auto">
-          <ChatbotButton onClick={toggleShowChatbot} />
-
-          <ProgressProvider
-            height="2px"
-            color="#48e"
-            options={{ showSpinner: false }}
-            shallowRouting
-          >
-            {children}
-          </ProgressProvider>
-        </main>
-      </body>
-    </html>
+    <ClerkProvider
+      localization={esES}
+      appearance={{
+        theme: dark,
+        options: {
+          logoImageUrl: "/favicon.ico",
+        },
+      }}
+    >
+      <html
+        lang="es"
+        className={`${deezerFont.variable} ${interFont.variable}`}
+      >
+        <head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <title>Musify | Tu biblioteca musical personal</title>
+        </head>
+        <body className="font-secondary bg-background-dark">{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }

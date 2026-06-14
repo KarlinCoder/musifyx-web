@@ -1,15 +1,18 @@
-// src/stores/useAudioPreviewStore.ts
-import { DeezerTrack } from "@/types/deezer";
 import { create } from "zustand";
 
+type AudioItem = {
+  id: number;
+  preview_url: string;
+};
+
 interface AudioState {
-  current: DeezerTrack | null;
+  current: AudioItem | null;
   audio: HTMLAudioElement | null;
   isPlaying: boolean;
   isLoading: boolean;
-  play: (track: DeezerTrack) => void;
+  play: (track: AudioItem) => void;
   pause: () => void;
-  toggle: (track: DeezerTrack) => void;
+  toggle: (track: AudioItem) => void;
   clear: () => void;
 }
 
@@ -34,7 +37,7 @@ export const useAudioStore = create<AudioState>((set, get) => ({
       isPlaying: false,
     });
 
-    const audio = new Audio(track.preview);
+    const audio = new Audio(track.preview_url);
     audio.preload = "auto";
 
     audio.addEventListener(

@@ -27,7 +27,7 @@ export default function PlaceholderPageGreeting({
         initial={{ x: 20, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.8, type: "keyframes", delay: 0.2 }}
-        className="font-primary text-2xl font-semibold"
+        className="text-4xl font-bold font-primary"
       >
         {title}
       </motion.p>

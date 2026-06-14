@@ -15,10 +15,14 @@ import {
   RiUser2Fill,
   RiPlayList2Fill,
   RiFireFill,
-  RiAccountCircleLine,
-  RiAccountCircleFill,
   RiStarLine,
   RiStarFill,
+  RiBardLine,
+  RiBardFill,
+  RiFile2Line,
+  RiFile2Fill,
+  RiArchive2Fill,
+  RiArchive2Line,
 } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -29,48 +33,59 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   const menuLinks = [
-    { icon: RiHome2Line, accentIcon: RiHome2Fill, label: "Inicio", url: "/" },
+    {
+      icon: RiHome2Line,
+      accentIcon: RiHome2Fill,
+      label: "Inicio",
+      url: "/app",
+    },
     {
       icon: RiMusic2Line,
       accentIcon: RiMusic2Fill,
       label: "Canciones",
-      url: "/songs",
+      url: "/app/songs",
     },
     {
       icon: RiAlbumLine,
       accentIcon: RiAlbumFill,
       label: "Álbumes",
-      url: "/albums",
+      url: "/app/albums",
     },
     {
       icon: RiUser2Line,
       accentIcon: RiUser2Fill,
       label: "Artistas",
-      url: "/artists",
+      url: "/app/artists",
     },
     {
       icon: RiPlayList2Line,
       accentIcon: RiPlayList2Fill,
       label: "Playlists",
-      url: "/playlists",
+      url: "/app/playlists",
     },
     {
       icon: RiFireLine,
       accentIcon: RiFireFill,
       label: "Charts",
-      url: "/charts",
+      url: "/app/charts",
     },
     {
-      icon: RiStarLine,
-      accentIcon: RiStarFill,
-      label: "Para Tí",
-      url: "/parati",
+      icon: RiArchive2Line,
+      accentIcon: RiArchive2Fill,
+      label: "Vault",
+      url: "/app/vault",
     },
     {
-      icon: RiAccountCircleLine,
-      accentIcon: RiAccountCircleFill,
+      icon: RiUser2Line,
+      accentIcon: RiUser2Fill,
       label: "Mi Cuenta",
-      url: "/account",
+      url: "/app/account",
+    },
+    {
+      icon: RiBardLine,
+      accentIcon: RiBardFill,
+      label: "IA",
+      url: "/app/ia",
     },
   ];
 
@@ -84,7 +99,7 @@ export default function Sidebar() {
           width={80}
           className="rounded-lg shadow-2xl shadow-black"
         />
-        <p className="font-primary text-3xl font-medium mt-2 inline-block tracking-wide">
+        <p className="relative font-primary text-3xl font-medium mt-2 inline-block tracking-wide">
           Musify
         </p>
         <p className="text-text-muted text-sm">
@@ -103,7 +118,7 @@ export default function Sidebar() {
             return (
               <li key={item.label}>
                 <Link
-                  href={item.url}
+                  href={`${item.url}`}
                   className={`relative flex items-center gap-2 font-medium text-neutral-300 text-sm px-6 py-3 rounded-lg hover:bg-white/3 ${
                     pathname === item.url && "bg-white/3"
                   }`}

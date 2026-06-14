@@ -1,3 +1,4 @@
+import { Playlist } from "@/types/deezer";
 import { FastAverageColor } from "fast-average-color";
 
 export const formatSecondsToMinutes = (seconds: number): string => {
@@ -217,5 +218,73 @@ export const formatRecordType = (type: string) => {
   if (type === "song") return "Canción";
   if (type === "album") return "Álbum";
   if (type === "ep") return "EP";
+  if (type === "single") return "Single";
   return type;
+};
+
+export const getRandomDownloadMessage = () => {
+  const downloadPlaceholders: string[] = [
+    "Conectando con el servidor...",
+    "Estableciendo conexión segura...",
+    "Resolviendo dominio...",
+    "Buscando álbum en la base de datos...",
+    "Localizando artista...",
+    "Verificando disponibilidad...",
+    "Analizando tracklist...",
+    "Descargando información del álbum...",
+    "Obteniendo portada de alta resolución...",
+    "Buscando letras estáticas...",
+    "Recuperando créditos del álbum...",
+    "Consultando año de lanzamiento...",
+    "Identificando género musical...",
+    "Verificando integridad del archivo...",
+    "Calculando hash de verificación...",
+    "Decodificando flujo de audio...",
+    "Codificando a formato final...",
+    "Optimizando bitrate...",
+    "Normalizando niveles de volumen...",
+    "Eliminando silencio al inicio...",
+    "Eliminando silencio al final...",
+    "Aplicando metadatos ID3...",
+    "Incrustando portada en el archivo...",
+    "Etiquetando número de pista...",
+    "Etiquetando nombre del álbum...",
+    "Etiquetando nombre del artista...",
+    "Organizando estructura de carpetas...",
+    "Creando directorio de destino...",
+    "Renombrando archivos temporales...",
+    "Comprimiendo archivos...",
+    "Generando archivo ZIP...",
+    "Calculando tamaño final...",
+    "Preparando enlace de descarga...",
+    "Iniciando transferencia...",
+    "Buffering de datos...",
+    "Escribiendo en disco...",
+    "Leyendo sectores...",
+    "Validando permisos...",
+    "Limpiando caché temporal...",
+    "Liberando recursos...",
+    "Sincronizando con la nube...",
+    "Verificando derechos de autor...",
+    "Procesando último segmento...",
+    "Finalizando tareas en segundo plano...",
+    "Casi listo...",
+  ];
+
+  const randomIndex = Math.floor(Math.random() * downloadPlaceholders.length);
+  return downloadPlaceholders[randomIndex];
+};
+
+export const isOfficialDeezerPlaylist = (playlist: Playlist) => {
+  const name = playlist.user.name.toLowerCase();
+
+  if (name.includes("deezer") || name.includes("editor")) {
+    return true;
+  }
+
+  if (name.match(/-\s*deezer\s+\w+\s+editor/)) {
+    return true;
+  }
+
+  return false;
 };

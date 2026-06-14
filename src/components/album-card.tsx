@@ -4,30 +4,25 @@ import Link from "next/link";
 import ExplicitMark from "./explicit-mark";
 
 interface Props {
-  id: number;
-  coverUrl: string;
-  title: string;
-  artistName: string;
-  artistId: number;
-  hasExplicitLyrics: boolean;
-  recordType: string;
+  info: {
+    id: number;
+    coverUrl: string;
+    title: string;
+    artistName: string;
+    hasExplicitLyrics: boolean;
+    recordType: string;
+  };
 }
 
-export default function AlbumCard({
-  id,
-  coverUrl,
-  title,
-  artistName,
-  artistId,
-  hasExplicitLyrics,
-  recordType,
-}: Props) {
-  console.log(artistId);
+export default function AlbumCard({ info }: Props) {
+  const { id, coverUrl, title, artistName, hasExplicitLyrics, recordType } =
+    info;
 
   return (
     <Link
-      href={`/albums/${id}`}
+      href={`/app/albums/${id}`}
       key={id}
+      title={title}
       className="inline-block overflow-hidden hover:bg-background-light cursor-pointer h-fit p-2.5 rounded-md"
     >
       <div className="overflow-hidden">
@@ -39,7 +34,7 @@ export default function AlbumCard({
           height={100}
           src={coverUrl || "/not-loaded.jpg"}
           alt={`"${title}" de ${artistName}`}
-          className="w-full aspect-square"
+          className="w-full aspect-square rounded-md"
         />
       </div>
 

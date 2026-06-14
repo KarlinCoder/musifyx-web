@@ -1,8 +1,11 @@
 "use client";
 
+import { getRandomDownloadMessage } from "@/lib/utils";
 import { downloadAlbum } from "@/services/download";
 import { useEffect, useRef, useState } from "react";
 import { RiLoader2Fill } from "react-icons/ri";
+// 1. Importar motion y AnimatePresence
+import { AnimatePresence, motion } from "motion/react";
 
 interface Props {
   children: React.ReactNode;
@@ -12,6 +15,7 @@ interface Props {
 export default function DownloadButton({ children, id }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [downloadMessage, setDownloadMessage] = useState("");
 
   const controllerRef = useRef<AbortController | null>(null);
 
@@ -47,21 +51,47 @@ export default function DownloadButton({ children, id }: Props) {
     return () => controllerRef.current?.abort();
   }, []);
 
+  useEffect(() => {
+    const downloadMessagesInterval = setInterval(() => {
+      const message = getRandomDownloadMessage();
+      setDownloadMessage(message);
+    }, 2000);
+
+    return () => clearInterval(downloadMessagesInterval);
+  }, []);
+
   return (
     <button
       onClick={handleClick}
       disabled={isLoading}
-      className="min-w-50 flex items-center justify-center gap-2 mt-3 text-sm bg-primary hover:bg-primary/85 active:bg-primary disabled:opacity-90 transition-all duration-100 text-white rounded-full cursor-pointer py-2 font-semibold"
+      className="relative min-w-50 flex items-center justify-center gap-2 mt-3 text-sm bg-[#333] hover:opacity-85 active:opacity-100 disabled:opacity-90 transition-all duration-100 text-white rounded-full cursor-pointer py-2 font-semibold"
     >
       {isLoading ? (
         <>
-          <RiLoader2Fill size={20} className="animate-spin" /> Procesando
+          <RiLoader2Fill size={20} className="animate-spin" />
         </>
       ) : (
         <p>{children}</p>
       )}
 
       {error && <p>{error}</p>}
+
+      <div className="absolute -bottom-5 left-0 w-fit h-4 overflow-hidden">
+        <AnimatePresence mode="wait">
+          {downloadMessage && isLoading && (
+            <motion.p
+              key={downloadMessage}
+              initial={{ x: -5, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: 5, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="text-xs text-text-muted font-normal text-left whitespace-nowrap"
+            >
+              {downloadMessage}
+            </motion.p>
+          )}
+        </AnimatePresence>
+      </div>
     </button>
   );
 }

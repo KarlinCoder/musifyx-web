@@ -22,7 +22,7 @@ export const downloadAlbum = async (
 
 export const downloadTrack = async (
   trackId: number,
-  abortSignal: AbortSignal,
+  abortSignal?: AbortSignal,
 ) => {
   const { data } = await axios.get<DownloadResponse>(
     `${API_BASE}/download/track/${trackId}`,

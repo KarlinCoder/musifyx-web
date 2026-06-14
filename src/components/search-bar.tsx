@@ -38,13 +38,13 @@ export default function SearchBar({ placeholder }: Props) {
 
   // console
   return (
-    <div className="w-full bg-background py-3 px-5 border-b border-b-white/6">
+    <div className="w-full mt-6 px-5 border-b border-b-white/6">
       <div className="relative w-full bg-background-light max-w-140 rounded-full overflow-hidden border border-white/6 z-2">
         <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-          className="px-6 pl-14 py-3.5 size-full text-text text-sm"
+          className="px-10 pl-14 py-3.5 size-full text-text text-sm"
           placeholder={placeholder}
         />
         <RiSearchLine size={20} className="absolute top-3.25 left-5" />

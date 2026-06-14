@@ -1,5 +1,3 @@
-import Hr from "./hr";
-
 interface Props {
   children: React.ReactNode;
 }
@@ -7,11 +5,9 @@ interface Props {
 export default function SectionTitle({ children }: Props) {
   return (
     <div>
-      <p className="text-3xl font-primary flex items-center gap-2 px-3 text-neutral-200 font-medium">
+      <p className="text-3xl font-primary flex items-center gap-2 text-neutral-200 font-medium mb-4">
         {children}
       </p>
-
-      <Hr className="mb-5 mt-4" />
     </div>
   );
 }

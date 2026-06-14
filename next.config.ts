@@ -8,8 +8,13 @@ const nextConfig: NextConfig = {
         hostname: "cdn-images.dzcdn.net",
         pathname: "/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "via.placeholder.com",
+      },
     ],
   },
+  reactStrictMode: false,
 };
 
 export default nextConfig;

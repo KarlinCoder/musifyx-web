@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./loader.css";
+@import "./background-pattern.css";
 
 @theme {
   --color-primary: oklch(0.4 0.9 200);
@@ -16,9 +17,15 @@
   --font-secondary: var(--font-inter);
 }
 
+@layer utilities {
+  .grid-results {
+    @apply size-full max-w-300 mx-auto p-7;
+  }
+}
+
 @layer components {
   .artist-section-title {
-    @apply text-3xl font-primary flex items-center gap-2 px-3 text-neutral-200 font-medium mb-4;
+    @apply text-3xl font-primary flex items-center gap-2 text-neutral-200 font-medium mb-4;
   }
 }
 
