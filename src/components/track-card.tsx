@@ -51,12 +51,7 @@ export default function TrackCard({ data, listPosition }: Props) {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isFetchingPreview, setIsFetchingPreview] = useState(false);
 
-  const {
-    addFavorite,
-    removeFavorite,
-    isFavorite,
-    isLoading: isFetchingFavories,
-  } = useFavoritesStore();
+  const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
   const [isFavLoading, setIsFavLoading] = useState(false);
 
   const isFav = isFavorite(data.id);

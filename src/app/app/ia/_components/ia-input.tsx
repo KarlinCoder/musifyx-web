@@ -2,7 +2,7 @@
 
 import { FormEvent, useMemo } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { RiSendPlane2Fill, RiSparkling2Fill } from "react-icons/ri";
+import { RiSendPlane2Fill } from "react-icons/ri";
 
 interface Props {
   input: string;

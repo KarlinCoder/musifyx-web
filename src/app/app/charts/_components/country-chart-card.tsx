@@ -155,7 +155,12 @@ const keyMap: Record<string, string> = {
   "Top Costa de Marfil": "costa_marfil",
 };
 
-export default function CountryChartCard({ country, countryCode, label, playlistId, coverUrl }: Props) {
+export default function CountryChartCard({
+  countryCode,
+  label,
+  playlistId,
+  coverUrl,
+}: Props) {
   const flag = countryFlags[countryCode] || "🌐";
 
   return (
