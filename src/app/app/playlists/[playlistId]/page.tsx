@@ -4,7 +4,7 @@ import {
   formatSecondsToMinutes,
   genericBlur,
 } from "@/lib/utils";
-import { getAverageColor } from "fast-average-color-node";
+import { getAverageColor } from "@/lib/utils";
 import Image from "next/image";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { Metadata } from "next";
@@ -115,7 +115,7 @@ export default async function PlaylistIdPage({
 
   console.log(playlist.image_url);
 
-  const avgColor = (await getAverageColor(playlist.image_url)).hex || "#eee";
+  const avgColor = (await getAverageColor(playlist.image_url)) || "#eee";
 
   return (
     <div

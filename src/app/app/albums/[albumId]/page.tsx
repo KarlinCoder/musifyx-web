@@ -6,7 +6,7 @@ import {
   formatSecondsToMinutes,
   genericBlur,
 } from "@/lib/utils";
-import { getAverageColor } from "fast-average-color-node";
+import { getAverageColor } from "@/lib/utils";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -116,7 +116,7 @@ export default async function AlbumIdPage({
 }) {
   const { albumId } = await params;
   const album = await getAlbum(parseInt(albumId));
-  const avgColor = (await getAverageColor(album.image_url)).hex || "#eee";
+  const avgColor = (await getAverageColor(album.image_url)) || "#eee";
 
   return (
     <div

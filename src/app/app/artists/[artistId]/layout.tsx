@@ -1,4 +1,4 @@
-import { getAverageColor } from "fast-average-color-node";
+import { getAverageColor } from "@/lib/utils";
 import ArtistNavbar from "./_components/artist-navbar";
 import ArtistHeader from "./_components/artist-header";
 import { getArtist } from "../../services/deezer";
@@ -12,7 +12,7 @@ export default async function ArtistLayout({
 }) {
   const { artistId } = await params;
   const artist = await getArtist(Number(artistId));
-  const avgColor = (await getAverageColor(artist.image_url)).hex || "#eee";
+  const avgColor = (await getAverageColor(artist.image_url)) || "#eee";
 
   return (
     <div
