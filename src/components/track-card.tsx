@@ -24,13 +24,13 @@ import TrackMeaningsModal from "@/app/app/_components/track-meaning-modal";
 
 import { getTrackPreview } from "@/app/app/services/deezer";
 import { useFavoritesStore } from "@/app/app/_stores/useFavoriteStore";
-import { MusifyArtist } from "@/app/app/_types/musify";
+import { MFArtist } from "@/app/app/_types/musify";
 
 interface Props {
   data: {
     id: number;
     title: string;
-    artists: MusifyArtist[];
+    artists: MFArtist[];
     image_url: string;
     explicit_lyrics: boolean;
     duration: number;

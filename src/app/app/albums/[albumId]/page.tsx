@@ -184,7 +184,7 @@ export default async function AlbumIdPage({
                   key={item.id}
                   data={{
                     artists: item.artists,
-                    duration: item.duration,
+                    duration: item.duration_ms,
                     explicit_lyrics: item.explicit_lyrics,
                     id: item.id,
                     image_url: item.image_url,

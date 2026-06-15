@@ -12,7 +12,7 @@ interface Props {
 export default function ChartCard({ id, coverUrl, title, totalSongs }: Props) {
   return (
     <Link
-      href={`/app/charts/${id}`}
+      href={`/app/playlists/${id}`}
       key={id}
       className="inline-block p-2.5 hover:bg-background-light rounded-md overflow-hidden cursor-pointer h-fit group shadow-2xl shadow-background-dark"
     >

@@ -1,9 +1,9 @@
 import SectionTitle from "@/components/section-title";
 import TrackCard from "@/components/track-card";
-import { MusifyTrack } from "../_types/musify";
+import { MFTrack } from "../_types/musify";
 
 interface Props {
-  songs: MusifyTrack[];
+  songs: MFTrack[];
 }
 
 export default function PopularSongsSection({ songs }: Props) {
@@ -19,7 +19,7 @@ export default function PopularSongsSection({ songs }: Props) {
               data={{
                 artists: track.artists,
                 id: track.id,
-                duration: track.duration,
+                duration: track.duration_ms,
                 explicit_lyrics: track.explicit_lyrics,
                 title: track.title,
                 image_url: track.image_url,

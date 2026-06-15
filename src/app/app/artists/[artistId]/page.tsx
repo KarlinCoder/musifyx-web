@@ -1,8 +1,8 @@
 import AlbumCard from "@/components/album-card";
 import { capitalize } from "@/lib/utils";
 import { Metadata } from "next";
-import { getArtistDiscography, getArtistInfo } from "../../services/deezer";
-import { MusifyArtistAlbum } from "../../_types/musify";
+import { getArtistDiscography, getArtist } from "../../services/deezer";
+import { MFAlbum } from "../../_types/musify";
 
 type Params = Promise<{ artistId: string }>;
 
@@ -17,7 +17,7 @@ export async function generateMetadata({
   let artistPicture = "/og-default.jpg";
 
   try {
-    const artist = await getArtistInfo(parseInt(artistId));
+    const artist = await getArtist(parseInt(artistId));
     artistName = artist.name;
     artistPicture = artist.image_url || "/og-default.jpg";
   } catch (error) {
@@ -98,21 +98,21 @@ export default async function ArtistDiscographyPage({
   const { artistId } = await params;
 
   const [artistInfo, artistAlbums] = await Promise.all([
-    getArtistInfo(parseInt(artistId)),
+    getArtist(parseInt(artistId)),
     getArtistDiscography(parseInt(artistId)),
   ]);
 
   const albumTypes = () => {
     const albumTypesSet = new Set<string>();
-    artistAlbums.forEach((item) => albumTypesSet.add(item.record_type));
+    artistAlbums.forEach((item) => albumTypesSet.add(item.title));
 
     return Array.from(albumTypesSet);
   };
 
-  const discographySections = (): { type: string; albums: MusifyArtistAlbum[] }[] => {
+  const discographySections = (): { type: string; albums: MFAlbum[] }[] => {
     return albumTypes().map((type) => ({
       type,
-      albums: artistAlbums.filter((album) => album.record_type === type),
+      albums: artistAlbums.filter((album) => album.title === type),
     }));
   };
 
@@ -138,7 +138,7 @@ export default async function ArtistDiscographyPage({
                     coverUrl: album.image_url,
                     hasExplicitLyrics: album.explicit_lyrics,
                     id: album.id,
-                    recordType: album.record_type,
+                    recordType: "",
                     title: album.title,
                   }}
                 />

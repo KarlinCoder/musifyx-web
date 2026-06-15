@@ -5,10 +5,10 @@ import Image from "next/image";
 import { useState } from "react";
 import { RiShareFill, RiStarFill, RiStarLine } from "react-icons/ri";
 import { AnimatePresence, motion } from "motion/react";
-import { MusifyArtistFull } from "@/app/app/_types/musify";
+import { MFArtistPage } from "@/app/app/_types/musify";
 
 interface Props {
-  artist: MusifyArtistFull;
+  artist: MFArtistPage;
 }
 
 export default function ArtistHeader({ artist }: Props) {
@@ -49,7 +49,7 @@ export default function ArtistHeader({ artist }: Props) {
         </h2>
 
         <p className="text-sm text-neutral-400 px-4 py-1 rounded-full bg-[#fff2] w-fit mt-2">
-          {artist.nb_album} lanzamientos
+          {artist.nb_albums} lanzamientos
         </p>
 
         <div className="relative mt-2">

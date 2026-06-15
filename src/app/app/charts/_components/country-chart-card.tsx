@@ -165,7 +165,7 @@ export default function CountryChartCard({
 
   return (
     <Link
-      href={`/app/charts/${playlistId}`}
+      href={`/app/playlists/${playlistId}`}
       className="flex items-center gap-4 p-3 hover:bg-background-light rounded-xl transition-all duration-200 cursor-pointer group"
     >
       <div className="relative w-16 h-16 rounded-lg overflow-hidden shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-200">

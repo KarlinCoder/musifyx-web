@@ -1,7 +1,7 @@
 import { getAverageColor } from "fast-average-color-node";
 import ArtistNavbar from "./_components/artist-navbar";
 import ArtistHeader from "./_components/artist-header";
-import { getArtistInfo } from "../../services/deezer";
+import { getArtist } from "../../services/deezer";
 
 export default async function ArtistLayout({
   params,
@@ -11,7 +11,7 @@ export default async function ArtistLayout({
   children: React.ReactNode;
 }) {
   const { artistId } = await params;
-  const artist = await getArtistInfo(Number(artistId));
+  const artist = await getArtist(Number(artistId));
   const avgColor = (await getAverageColor(artist.image_url)).hex || "#eee";
 
   return (

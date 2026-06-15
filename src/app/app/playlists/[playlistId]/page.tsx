@@ -173,7 +173,7 @@ export default async function PlaylistIdPage({
                 key={track.id}
                 data={{
                   artists: track.artists,
-                  duration: track.duration,
+                  duration: track.duration_ms,
                   explicit_lyrics: track.explicit_lyrics,
                   id: track.id,
                   image_url: track.image_url,

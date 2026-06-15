@@ -11,14 +11,14 @@ import Loader from "@/components/loader";
 import SearchBar from "@/components/search-bar";
 import { searchPlaylists } from "../../services/deezer";
 import SectionTitle from "@/components/section-title";
-import { MusifyPlaylist, MusifySearchResponse } from "../../_types/musify";
+import { MFPlaylist, MFSearch } from "../../_types/musify";
 import PlaylistCard from "@/components/playlist-card";
 
 export default function SongsPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
 
-  const [data, setData] = useState<MusifySearchResponse<MusifyPlaylist> | null>(null);
+  const [data, setData] = useState<MFSearch<MFPlaylist> | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 

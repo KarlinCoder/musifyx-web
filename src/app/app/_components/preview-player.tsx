@@ -1,12 +1,12 @@
 "use client";
 import { genericBlur } from "@/lib/utils";
-import { MusifyTrack } from "../_types/musify";
+import { MFTrack } from "../_types/musify";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { RiCloseFill } from "react-icons/ri";
 
 interface Props {
-  track: MusifyTrack;
+  track: MFTrack;
   onQuit: () => void;
 }
 

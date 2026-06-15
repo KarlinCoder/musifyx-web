@@ -19,7 +19,7 @@ export default async function ArtistTop10Page({
           data={{
             id: track.id,
             artists: track.artists,
-            duration: track.duration,
+            duration: track.duration_ms,
             explicit_lyrics: track.explicit_lyrics,
             image_url: track.image_url,
             title: track.title,

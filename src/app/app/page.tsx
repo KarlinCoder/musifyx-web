@@ -5,7 +5,7 @@ import PopularArtistsSection from "./_components/popular-artists-section";
 import PopularPlaylistsSection from "./_components/popular-playlists-section";
 import Link from "next/link";
 import { getPopularNow } from "./services/deezer";
-import type { MusifyTrack, MusifyAlbum, MusifyArtist, MusifyPlaylist } from "./_types/musify";
+import type { MFTrack, MFAlbum, MFArtist, MFPlaylist } from "./_types/musify";
 
 export default async function HomePage() {
   const anchorLinks = [
@@ -16,10 +16,10 @@ export default async function HomePage() {
   ];
 
   let charts: {
-    tracks: MusifyTrack[];
-    albums: MusifyAlbum[];
-    artists: MusifyArtist[];
-    playlists: MusifyPlaylist[];
+    tracks: MFTrack[];
+    albums: MFAlbum[];
+    artists: MFArtist[];
+    playlists: MFPlaylist[];
   } = { tracks: [], albums: [], artists: [], playlists: [] };
 
   try {

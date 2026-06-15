@@ -1,57 +1,41 @@
-export interface MusifySearchResponse<T> {
-  data: T[];
-  total: number;
-}
-
-export interface MusifyTrack {
+export interface MFTrack {
   id: number;
   title: string;
-  artists: MusifyArtist[];
+  artists: MFArtist[];
   image_url: string;
-  duration: number;
+  duration_ms: number;
   explicit_lyrics: boolean;
 }
 
-export interface MusifyArtist {
+export interface MFArtist {
   id: number;
   name: string;
   image_url: string;
 }
 
-export interface MusifyArtistFull extends MusifyArtist {
-  banner_picture: string;
-  nb_album: number;
+export interface MFArtistPage extends MFArtist {
+  nb_albums: number;
   bio_html: string;
 }
 
-export interface MusifyArtistAlbum {
+export interface MFAlbum {
   id: number;
   title: string;
   image_url: string;
-  release_date: string;
-  explicit_lyrics: boolean;
-  record_type: string;
-}
-
-export interface MusifyAlbum {
-  id: number;
-  title: string;
-  artist: MusifyArtist;
-  image_url: string;
-  record_type: string;
+  artist: MFArtist;
   explicit_lyrics: boolean;
 }
 
-export interface MusifyAlbumFull extends MusifyAlbum {
-  nb_tracks: number;
+export interface MFAlbumPage extends MFAlbum {
   duration: number;
-  release_date: Date;
-  copyright: string;
   label: string;
-  tracks: MusifyTrack[];
+  copyright: string;
+  release_date: string;
+  nb_tracks: number;
+  tracks: MFTrack[];
 }
 
-export interface MusifyPlaylist {
+export interface MFPlaylist {
   id: number;
   title: string;
   image_url: string;
@@ -59,19 +43,23 @@ export interface MusifyPlaylist {
   is_official: boolean;
 }
 
-export interface MusifyPlaylistFull extends MusifyPlaylist {
-  description: string;
-  duration: number;
-  nb_fans: number;
+export interface MFPlaylistPage extends MFPlaylist {
   add_date: Date;
   mod_date: Date;
-  picture: string;
-  tracks: MusifyTrack[];
+  duration: number;
+  description: string;
+  nb_fans: number;
+  tracks: MFTrack[];
 }
 
-export interface MusifyPopularNow {
-  tracks: MusifyTrack[];
-  albums: MusifyAlbum[];
-  artists: MusifyArtist[];
-  playlists: MusifyPlaylist[];
+export interface MFPopular {
+  tracks: MFTrack[];
+  albums: MFAlbum[];
+  artists: MFArtist[];
+  playlists: MFPlaylist[];
+}
+
+export interface MFSearch<T> {
+  data: T[];
+  total: number;
 }

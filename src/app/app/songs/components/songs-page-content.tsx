@@ -12,13 +12,13 @@ import SearchBar from "@/components/search-bar";
 import { searchTracks } from "../../services/deezer";
 import SectionTitle from "@/components/section-title";
 import TrackCard from "@/components/track-card";
-import { MusifySearchResponse, MusifyTrack } from "../../_types/musify";
+import { MFSearch, MFTrack } from "../../_types/musify";
 
 export default function SongsPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
 
-  const [data, setData] = useState<MusifySearchResponse<MusifyTrack> | null>(null);
+  const [data, setData] = useState<MFSearch<MFTrack> | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -84,7 +84,7 @@ export default function SongsPageContent() {
                       id: track.id,
                       artists: track.artists,
                       image_url: track.image_url,
-                      duration: track.duration,
+                      duration: track.duration_ms,
                       explicit_lyrics: track.explicit_lyrics,
                       title: track.title,
                     }}

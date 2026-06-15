@@ -1,48 +1,48 @@
 import axios from "axios";
 import {
-  MusifyAlbum,
-  MusifyAlbumFull,
-  MusifyArtist,
-  MusifyArtistAlbum,
-  MusifyArtistFull,
-  MusifyPlaylist,
-  MusifyPlaylistFull,
-  MusifySearchResponse,
-  MusifyTrack,
+  MFAlbum,
+  MFAlbumPage,
+  MFArtist,
+  MFArtistPage,
+  MFPlaylist,
+  MFPlaylistPage,
+  MFPopular,
+  MFSearch,
+  MFTrack,
 } from "../_types/musify";
 
 const API_URL = "https://musify.api.karlincoder.com";
 
 export const searchTracks = async (query: string) => {
-  const { data } = await axios.get<MusifySearchResponse<MusifyTrack>>(
+  const { data } = await axios.get<MFSearch<MFTrack>>(
     `${API_URL}/search/track?q=${encodeURIComponent(query)}`,
   );
   return data;
 };
 
 export const searchAlbums = async (query: string) => {
-  const { data } = await axios.get<MusifySearchResponse<MusifyAlbum>>(
+  const { data } = await axios.get<MFSearch<MFAlbum>>(
     `${API_URL}/search/album?q=${encodeURIComponent(query)}`,
   );
   return data;
 };
 
 export const searchArtist = async (query: string) => {
-  const { data } = await axios.get<MusifySearchResponse<MusifyArtist>>(
+  const { data } = await axios.get<MFSearch<MFArtist>>(
     `${API_URL}/search/artist?q=${encodeURIComponent(query)}`,
   );
   return data;
 };
 
 export const searchPlaylists = async (query: string) => {
-  const { data } = await axios.get<MusifySearchResponse<MusifyPlaylist>>(
+  const { data } = await axios.get<MFSearch<MFPlaylist>>(
     `${API_URL}/search/playlist?q=${encodeURIComponent(query)}`,
   );
 
   return data;
 };
 
-export const getAlbum = async (id: number): Promise<MusifyAlbumFull> => {
+export const getAlbum = async (id: number): Promise<MFAlbumPage> => {
   const res = await fetch(`${API_URL}/search/album/${id}`, {
     next: { revalidate: 3600 },
   });
@@ -50,9 +50,7 @@ export const getAlbum = async (id: number): Promise<MusifyAlbumFull> => {
   return res.json();
 };
 
-export const getPlaylist = async (
-  id: number,
-): Promise<MusifyPlaylistFull> => {
+export const getPlaylist = async (id: number): Promise<MFPlaylistPage> => {
   const res = await fetch(`${API_URL}/search/playlist/${id}`, {
     next: { revalidate: 3600 },
   });
@@ -60,9 +58,7 @@ export const getPlaylist = async (
   return res.json();
 };
 
-export const getArtistInfo = async (
-  id: number,
-): Promise<MusifyArtistFull> => {
+export const getArtist = async (id: number): Promise<MFArtistPage> => {
   const res = await fetch(`${API_URL}/search/artist/${id}`, {
     next: { revalidate: 3600 },
   });
@@ -70,7 +66,7 @@ export const getArtistInfo = async (
   return res.json();
 };
 
-export const getArtistTop = async (id: number): Promise<MusifyTrack[]> => {
+export const getArtistTop = async (id: number): Promise<MFTrack[]> => {
   const res = await fetch(`${API_URL}/search/artist/${id}/top`, {
     next: { revalidate: 3600 },
   });
@@ -78,9 +74,7 @@ export const getArtistTop = async (id: number): Promise<MusifyTrack[]> => {
   return res.json();
 };
 
-export const getArtistDiscography = async (
-  id: number,
-): Promise<MusifyArtistAlbum[]> => {
+export const getArtistDiscography = async (id: number): Promise<MFAlbum[]> => {
   const res = await fetch(`${API_URL}/search/artist/${id}/albums`, {
     next: { revalidate: 3600 },
   });
@@ -88,9 +82,7 @@ export const getArtistDiscography = async (
   return res.json();
 };
 
-export const getArtistMentions = async (
-  id: number,
-): Promise<MusifyPlaylist[]> => {
+export const getArtistMentions = async (id: number): Promise<MFPlaylist[]> => {
   const res = await fetch(`${API_URL}/search/artist/${id}/mentions`, {
     next: { revalidate: 3600 },
   });
@@ -98,7 +90,7 @@ export const getArtistMentions = async (
   return res.json();
 };
 
-export const getArtistRadio = async (id: number): Promise<MusifyTrack[]> => {
+export const getArtistRadio = async (id: number): Promise<MFTrack[]> => {
   const res = await fetch(`${API_URL}/search/artist/${id}/radio`, {
     next: { revalidate: 3600 },
   });
@@ -106,9 +98,7 @@ export const getArtistRadio = async (id: number): Promise<MusifyTrack[]> => {
   return res.json();
 };
 
-export const getArtistSimilar = async (
-  id: number,
-): Promise<MusifyArtist[]> => {
+export const getArtistSimilar = async (id: number): Promise<MFArtist[]> => {
   const res = await fetch(`${API_URL}/search/artist/${id}/similar`, {
     next: { revalidate: 3600 },
   });
@@ -116,9 +106,7 @@ export const getArtistSimilar = async (
   return res.json();
 };
 
-export const getArtistPlaylists = async (
-  id: number,
-): Promise<MusifyPlaylist[]> => {
+export const getArtistPlaylists = async (id: number): Promise<MFPlaylist[]> => {
   const res = await fetch(`${API_URL}/search/artist/${id}/playlists`, {
     next: { revalidate: 3600 },
   });
@@ -127,10 +115,10 @@ export const getArtistPlaylists = async (
 };
 
 export const getPopularNow = async (): Promise<{
-  tracks: MusifyTrack[];
-  albums: MusifyAlbum[];
-  artists: MusifyArtist[];
-  playlists: MusifyPlaylist[];
+  tracks: MFTrack[];
+  albums: MFAlbum[];
+  artists: MFArtist[];
+  playlists: MFPlaylist[];
 }> => {
   const res = await fetch(`${API_URL}/search/popular`, {
     next: { revalidate: 3600 },
@@ -139,9 +127,7 @@ export const getPopularNow = async (): Promise<{
   return res.json();
 };
 
-export const getTrackPreview = async (
-  id: string | number,
-): Promise<string> => {
+export const getTrackPreview = async (id: string | number): Promise<string> => {
   const res = await fetch(`${API_URL}/search/track/${id}/preview`, {
     next: { revalidate: 3600 },
   });

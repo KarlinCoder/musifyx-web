@@ -1,9 +1,9 @@
 import AlbumCard from "@/components/album-card";
 import SectionTitle from "@/components/section-title";
-import { MusifyAlbum } from "../_types/musify";
+import { MFAlbum } from "../_types/musify";
 
 interface Props {
-  albums: MusifyAlbum[];
+  albums: MFAlbum[];
 }
 
 export default function PopularAlbumsSection({ albums }: Props) {
@@ -21,7 +21,7 @@ export default function PopularAlbumsSection({ albums }: Props) {
                 coverUrl: item.image_url,
                 hasExplicitLyrics: item.explicit_lyrics,
                 id: item.id,
-                recordType: item.record_type,
+                recordType: "",
                 title: item.title,
               }}
             />
