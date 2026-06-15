@@ -1,30 +1,30 @@
-export interface SearchResponse<T> {
+export interface MusifySearchResponse<T> {
   data: T[];
   total: number;
 }
 
-export interface Track {
+export interface MusifyTrack {
   id: number;
   title: string;
-  artists: Artist[];
+  artists: MusifyArtist[];
   image_url: string;
   duration: number;
   explicit_lyrics: boolean;
 }
 
-export interface Artist {
+export interface MusifyArtist {
   id: number;
   name: string;
   image_url: string;
 }
 
-export interface ArtistFull extends Artist {
+export interface MusifyArtistFull extends MusifyArtist {
   banner_picture: string;
   nb_album: number;
   bio_html: string;
 }
 
-export interface ArtistAlbum {
+export interface MusifyArtistAlbum {
   id: number;
   title: string;
   image_url: string;
@@ -33,25 +33,25 @@ export interface ArtistAlbum {
   record_type: string;
 }
 
-export interface Album {
+export interface MusifyAlbum {
   id: number;
   title: string;
-  artist: Artist;
+  artist: MusifyArtist;
   image_url: string;
   record_type: string;
   explicit_lyrics: boolean;
 }
 
-export interface AlbumFull extends Album {
+export interface MusifyAlbumFull extends MusifyAlbum {
   nb_tracks: number;
   duration: number;
   release_date: Date;
   copyright: string;
   label: string;
-  tracks: Track[];
+  tracks: MusifyTrack[];
 }
 
-export interface Playlist {
+export interface MusifyPlaylist {
   id: number;
   title: string;
   image_url: string;
@@ -59,31 +59,19 @@ export interface Playlist {
   is_official: boolean;
 }
 
-export interface PlaylistFull extends Playlist {
+export interface MusifyPlaylistFull extends MusifyPlaylist {
   description: string;
   duration: number;
   nb_fans: number;
   add_date: Date;
   mod_date: Date;
   picture: string;
-  tracks: Track[];
+  tracks: MusifyTrack[];
 }
 
-export interface PopularNow {
-  tracks: {
-    data: Track[];
-    total: number;
-  };
-  albums: {
-    data: Album[];
-    total: number;
-  };
-  artists: {
-    data: Artist[];
-    total: number;
-  };
-  playlists: {
-    data: Playlist[];
-    total: number;
-  };
+export interface MusifyPopularNow {
+  tracks: MusifyTrack[];
+  albums: MusifyAlbum[];
+  artists: MusifyArtist[];
+  playlists: MusifyPlaylist[];
 }

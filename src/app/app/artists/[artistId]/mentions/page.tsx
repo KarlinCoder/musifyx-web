@@ -4,10 +4,10 @@ import PlaylistCard from "@/components/playlist-card";
 export default async function ArtistPlaylistsPage({
   params,
 }: {
-  params: Promise<{ artistId: number }>;
+  params: Promise<{ artistId: string }>;
 }) {
   const { artistId } = await params;
-  const artistMentions = await getArtistMentions(artistId);
+  const artistMentions = await getArtistMentions(Number(artistId));
 
   return (
     <div>

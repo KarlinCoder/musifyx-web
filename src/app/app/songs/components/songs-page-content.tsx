@@ -12,13 +12,13 @@ import SearchBar from "@/components/search-bar";
 import { searchTracks } from "../../services/deezer";
 import SectionTitle from "@/components/section-title";
 import TrackCard from "@/components/track-card";
-import { SearchResponse, Track } from "../../_types/deezer";
+import { MusifySearchResponse, MusifyTrack } from "../../_types/musify";
 
 export default function SongsPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
 
-  const [data, setData] = useState<SearchResponse<Track> | null>(null);
+  const [data, setData] = useState<MusifySearchResponse<MusifyTrack> | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 

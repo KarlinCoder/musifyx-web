@@ -4,10 +4,10 @@ import TrackCard from "@/components/track-card";
 export default async function ArtistTop10Page({
   params,
 }: {
-  params: Promise<{ artistId: number }>;
+  params: Promise<{ artistId: string }>;
 }) {
   const { artistId } = await params;
-  const artistPopular = await getArtistTop(artistId);
+  const artistPopular = await getArtistTop(Number(artistId));
 
   return (
     <div>

@@ -11,14 +11,14 @@ import Loader from "@/components/loader";
 import SearchBar from "@/components/search-bar";
 import { searchAlbums } from "../../services/deezer";
 import SectionTitle from "@/components/section-title";
-import { Album, SearchResponse } from "../../_types/deezer";
+import { MusifyAlbum, MusifySearchResponse } from "../../_types/musify";
 import AlbumCard from "@/components/album-card";
 
 export default function SongsPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
 
-  const [data, setData] = useState<SearchResponse<Album> | null>(null);
+  const [data, setData] = useState<MusifySearchResponse<MusifyAlbum> | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -78,11 +78,10 @@ export default function SongsPageContent() {
                 <AlbumCard
                   key={crypto.randomUUID()}
                   info={{
-                    artistId: album.id,
+                    id: album.id,
                     artistName: album.artist.name,
                     coverUrl: album.image_url,
                     hasExplicitLyrics: album.explicit_lyrics,
-                    id: album.id,
                     recordType: album.record_type,
                     title: album.title,
                   }}

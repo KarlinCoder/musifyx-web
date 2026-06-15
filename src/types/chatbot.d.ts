@@ -1,6 +1,16 @@
-import { DeezerAlbum, DeezerArtist, DeezerTrack } from "./deezer";
+import {
+  MusifyAlbum,
+  MusifyArtist,
+  MusifyPlaylist,
+  MusifyTrack,
+} from "../app/app/_types/musify";
 
 export interface ChatbotResponse {
   message: string;
-  recomendations: (DeezerTrack | DeezerAlbum | DeezerArtist)[];
+  recomendations: {
+    tracks: MusifyTrack[];
+    albums: MusifyAlbum[];
+    artists: MusifyArtist[];
+    playlists: MusifyPlaylist[];
+  };
 }

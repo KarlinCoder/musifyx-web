@@ -15,12 +15,8 @@ import {
   RiUser2Fill,
   RiPlayList2Fill,
   RiFireFill,
-  RiStarLine,
-  RiStarFill,
   RiBardLine,
   RiBardFill,
-  RiFile2Line,
-  RiFile2Fill,
   RiArchive2Fill,
   RiArchive2Line,
 } from "react-icons/ri";

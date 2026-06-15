@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 interface Props {
-  artistId: number;
+  artistId: string;
 }
 
 export default function ArtistNavbar({ artistId }: Props) {

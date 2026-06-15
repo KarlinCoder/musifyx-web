@@ -1,4 +1,1 @@
-import { Tables } from "@/types/database";
-
-type FavoriteItem = Tables<"user_favorites">;
-type FavoriteItemInput = { id: number; data: Json; type: string };
+export type FavoriteItemInput = { id: number; data: unknown; type: string };

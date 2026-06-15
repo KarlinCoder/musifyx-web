@@ -1,45 +1,36 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import { FavoriteItemInput } from "../_types/favorite";
-import {
-  addDatabaseFavorite,
-  deleteDatabaseFavorite,
-  getDatabaseFavorites,
-} from "../services/favorites";
 
 interface FavoritesState {
   favorites: FavoriteItemInput[];
-  isLoading: boolean;
-  addFavorite: (data: FavoriteItemInput, authToken: string) => Promise<void>;
-  removeFavorite: (id: number, authToken: string) => Promise<void>;
+  addFavorite: (data: FavoriteItemInput) => void;
+  removeFavorite: (id: number) => void;
   isFavorite: (id: number) => boolean;
-  loadFavorites: (authToken: string) => Promise<void>;
 }
 
-export const useFavoritesStore = create<FavoritesState>((set, get) => ({
-  favorites: [],
-  isLoading: false,
+export const useFavoritesStore = create<FavoritesState>()(
+  persist(
+    (set, get) => ({
+      favorites: [],
 
-  loadFavorites: async (authToken) => {
-    set({ isLoading: true });
-    const data = await getDatabaseFavorites(authToken);
-    if (!data) return;
-    set({ favorites: data, isLoading: false });
-  },
+      addFavorite: (data) => {
+        set((state) => {
+          if (state.favorites.some((item) => item.id === data.id)) return state;
+          return { favorites: [...state.favorites, data] };
+        });
+      },
 
-  addFavorite: async (data, authToken) => {
-    await addDatabaseFavorite(authToken, data);
+      removeFavorite: (id) => {
+        set((state) => ({
+          favorites: state.favorites.filter((item) => item.id !== id),
+        }));
+      },
 
-    set((state) => ({
-      favorites: [...state.favorites, data],
-    }));
-  },
-
-  removeFavorite: async (id, token) => {
-    await deleteDatabaseFavorite(token, id);
-    set((state) => ({
-      favorites: state.favorites.filter((item) => item.id !== id),
-    }));
-  },
-
-  isFavorite: (id) => get().favorites.some((item) => item.id === id),
-}));
+      isFavorite: (id) => get().favorites.some((item) => item.id === id),
+    }),
+    {
+      name: "musify-favorites",
+    },
+  ),
+);

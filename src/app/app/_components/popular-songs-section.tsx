@@ -1,9 +1,9 @@
 import SectionTitle from "@/components/section-title";
 import TrackCard from "@/components/track-card";
-import { Track } from "../_types/deezer";
+import { MusifyTrack } from "../_types/musify";
 
 interface Props {
-  songs: Track[];
+  songs: MusifyTrack[];
 }
 
 export default function PopularSongsSection({ songs }: Props) {

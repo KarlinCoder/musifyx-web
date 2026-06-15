@@ -1,4 +1,3 @@
-import { Playlist } from "@/types/deezer";
 import { FastAverageColor } from "fast-average-color";
 
 export const formatSecondsToMinutes = (seconds: number): string => {
@@ -275,16 +274,3 @@ export const getRandomDownloadMessage = () => {
   return downloadPlaceholders[randomIndex];
 };
 
-export const isOfficialDeezerPlaylist = (playlist: Playlist) => {
-  const name = playlist.user.name.toLowerCase();
-
-  if (name.includes("deezer") || name.includes("editor")) {
-    return true;
-  }
-
-  if (name.match(/-\s*deezer\s+\w+\s+editor/)) {
-    return true;
-  }
-
-  return false;
-};

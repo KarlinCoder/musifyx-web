@@ -2,7 +2,7 @@ import AlbumCard from "@/components/album-card";
 import { capitalize } from "@/lib/utils";
 import { Metadata } from "next";
 import { getArtistDiscography, getArtistInfo } from "../../services/deezer";
-import { ArtistAlbum } from "../../_types/deezer";
+import { MusifyArtistAlbum } from "../../_types/musify";
 
 type Params = Promise<{ artistId: string }>;
 
@@ -109,7 +109,7 @@ export default async function ArtistDiscographyPage({
     return Array.from(albumTypesSet);
   };
 
-  const discographySections = (): { type: string; albums: ArtistAlbum[] }[] => {
+  const discographySections = (): { type: string; albums: MusifyArtistAlbum[] }[] => {
     return albumTypes().map((type) => ({
       type,
       albums: artistAlbums.filter((album) => album.record_type === type),

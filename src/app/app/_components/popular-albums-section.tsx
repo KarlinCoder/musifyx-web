@@ -1,9 +1,9 @@
 import AlbumCard from "@/components/album-card";
 import SectionTitle from "@/components/section-title";
-import { Album } from "../_types/deezer";
+import { MusifyAlbum } from "../_types/musify";
 
 interface Props {
-  albums: Album[];
+  albums: MusifyAlbum[];
 }
 
 export default function PopularAlbumsSection({ albums }: Props) {
@@ -17,7 +17,6 @@ export default function PopularAlbumsSection({ albums }: Props) {
             <AlbumCard
               key={item.id}
               info={{
-                artistId: item.id,
                 artistName: item.artist.name,
                 coverUrl: item.image_url,
                 hasExplicitLyrics: item.explicit_lyrics,

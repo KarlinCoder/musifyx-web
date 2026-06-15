@@ -7,11 +7,11 @@ export default async function ArtistLayout({
   params,
   children,
 }: {
-  params: Promise<{ artistId: number }>;
+  params: Promise<{ artistId: string }>;
   children: React.ReactNode;
 }) {
   const { artistId } = await params;
-  const artist = await getArtistInfo(artistId);
+  const artist = await getArtistInfo(Number(artistId));
   const avgColor = (await getAverageColor(artist.image_url)).hex || "#eee";
 
   return (

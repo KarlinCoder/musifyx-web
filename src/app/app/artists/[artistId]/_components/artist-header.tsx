@@ -5,10 +5,10 @@ import Image from "next/image";
 import { useState } from "react";
 import { RiShareFill, RiStarFill, RiStarLine } from "react-icons/ri";
 import { AnimatePresence, motion } from "motion/react";
-import { ArtistFull } from "@/app/app/_types/deezer";
+import { MusifyArtistFull } from "@/app/app/_types/musify";
 
 interface Props {
-  artist: ArtistFull;
+  artist: MusifyArtistFull;
 }
 
 export default function ArtistHeader({ artist }: Props) {

@@ -1,9 +1,9 @@
 import PlaylistCard from "@/components/playlist-card";
 import SectionTitle from "@/components/section-title";
-import { Playlist } from "../_types/deezer";
+import { MusifyPlaylist } from "../_types/musify";
 
 interface Props {
-  playlists: Playlist[];
+  playlists: MusifyPlaylist[];
 }
 
 export default function PopularPlaylistsSection({ playlists }: Props) {

@@ -4,10 +4,10 @@ import ArtistCard from "@/components/artist-card";
 export default async function ArtistRelatedPage({
   params,
 }: {
-  params: Promise<{ artistId: number }>;
+  params: Promise<{ artistId: string }>;
 }) {
   const { artistId } = await params;
-  const artistRelated = await getArtistSimilar(artistId);
+  const artistRelated = await getArtistSimilar(Number(artistId));
 
   return (
     <div>

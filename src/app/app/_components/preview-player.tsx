@@ -1,12 +1,12 @@
 "use client";
 import { genericBlur } from "@/lib/utils";
-import { DeezerTrack } from "@/types/deezer";
+import { MusifyTrack } from "../_types/musify";
 import { motion } from "motion/react";
 import Image from "next/image";
 import { RiCloseFill } from "react-icons/ri";
 
 interface Props {
-  track: DeezerTrack;
+  track: MusifyTrack;
   onQuit: () => void;
 }
 
@@ -19,7 +19,7 @@ export default function PreviewPlayer({ track, onQuit }: Props) {
       className="fixed items-center z-100 top-4 right-6 flex bg-background-light rounded-md p-3 space-x-3 shadow-2xl shadow-black border border-white/6"
     >
       <Image
-        src={track.album.cover_medium || "/not-loaded.jpg"}
+        src={track.image_url || "/not-loaded.jpg"}
         placeholder="blur"
         blurDataURL={genericBlur}
         alt="cover image"
@@ -32,7 +32,7 @@ export default function PreviewPlayer({ track, onQuit }: Props) {
         <div>
           <p className="font-medium text-sm truncate">{track.title}</p>
           <p className="text-text-muted text-[13px] hover:underline underline-offset-2 block truncate">
-            {track.artist.name}
+            {track.artists[0].name}
           </p>
         </div>
         <button

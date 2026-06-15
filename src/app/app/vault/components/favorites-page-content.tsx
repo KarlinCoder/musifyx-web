@@ -3,7 +3,7 @@
 import SectionTitle from "@/components/section-title";
 import { useEffect } from "react";
 import TrackCard from "@/components/track-card";
-import { Track } from "../../_types/deezer";
+import { MusifyTrack } from "../../_types/musify";
 import { useFavoritesStore } from "../../_stores/useFavoriteStore";
 
 export default function FavoritesPageContent() {
@@ -19,7 +19,7 @@ export default function FavoritesPageContent() {
           {favorites
             .filter((item) => item.type === "track")
             .map((track) => {
-              const trackData = track.data as unknown as Track;
+              const trackData = track.data as unknown as MusifyTrack;
               return (
                 <TrackCard
                   key={track.id}

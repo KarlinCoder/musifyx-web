@@ -1,9 +1,9 @@
 import ArtistCard from "@/components/artist-card";
 import SectionTitle from "@/components/section-title";
-import { Artist } from "../_types/deezer";
+import { MusifyArtist } from "../_types/musify";
 
 interface Props {
-  artists: Artist[];
+  artists: MusifyArtist[];
 }
 
 export default function PopularArtistsSection({ artists }: Props) {

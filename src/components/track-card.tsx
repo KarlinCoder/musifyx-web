@@ -23,15 +23,14 @@ import { createPortal } from "react-dom";
 import TrackMeaningsModal from "@/app/app/_components/track-meaning-modal";
 
 import { getTrackPreview } from "@/app/app/services/deezer";
-import { useAuth } from "@clerk/nextjs";
 import { useFavoritesStore } from "@/app/app/_stores/useFavoriteStore";
-import { Artist } from "@/app/app/_types/deezer";
+import { MusifyArtist } from "@/app/app/_types/musify";
 
 interface Props {
   data: {
     id: number;
     title: string;
-    artists: Artist[];
+    artists: MusifyArtist[];
     image_url: string;
     explicit_lyrics: boolean;
     duration: number;
@@ -46,13 +45,10 @@ export default function TrackCard({ data, listPosition }: Props) {
   const [detailOption, setDetailOption] = useState("");
   const { play, clear } = useAudioStore();
 
-  const { getToken } = useAuth();
-
   const [showDropdown, setShowDropdown] = useState(false);
   const [isFetchingPreview, setIsFetchingPreview] = useState(false);
 
   const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
-  const [isFavLoading, setIsFavLoading] = useState(false);
 
   const isFav = isFavorite(data.id);
   const artistsText = data.artists.map((artist) => artist.name).join(", ");
@@ -76,30 +72,11 @@ export default function TrackCard({ data, listPosition }: Props) {
     }
   };
 
-  const toggleFavorite = async () => {
-    if (isFavLoading) return;
-    setIsFavLoading(true);
-
-    try {
-      const token = await getToken();
-      if (!token) return;
-
-      if (isFav) {
-        await removeFavorite(data.id, token);
-      } else {
-        await addFavorite(
-          {
-            id: data.id,
-            data,
-            type: "track",
-          },
-          token,
-        );
-      }
-    } catch (err) {
-      console.error("❌ Error toggling favorite:", err);
-    } finally {
-      setIsFavLoading(false);
+  const toggleFavorite = () => {
+    if (isFav) {
+      removeFavorite(data.id);
+    } else {
+      addFavorite({ id: data.id, data, type: "track" });
     }
   };
 
@@ -213,8 +190,7 @@ export default function TrackCard({ data, listPosition }: Props) {
         <button
           type="button"
           onClick={toggleFavorite}
-          disabled={isFavLoading}
-          className="p-2 hover:scale-110 active:scale-95 transition disabled:opacity-50 cursor-pointer"
+          className="p-2 hover:scale-110 active:scale-95 transition cursor-pointer"
           aria-label={isFav ? "Quitar de favoritos" : "Agregar a favoritos"}
         >
           {isFav ? (

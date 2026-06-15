@@ -4,10 +4,10 @@ import { getArtistRadio } from "@/app/app/services/deezer";
 export default async function ArtistRadioPage({
   params,
 }: {
-  params: Promise<{ artistId: number }>;
+  params: Promise<{ artistId: string }>;
 }) {
   const { artistId } = await params;
-  const artistRadio = await getArtistRadio(artistId);
+  const artistRadio = await getArtistRadio(Number(artistId));
 
   return (
     <div>

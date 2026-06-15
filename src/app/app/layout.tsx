@@ -12,34 +12,15 @@ import { useDialogsStore } from "./_stores/useDialogsStore";
 import { AnimatePresence } from "motion/react";
 import ShowQueueButton from "./_components/show-queue-button";
 import { ToastContainer, Bounce } from "react-toastify";
-import { useFavoritesStore } from "./_stores/useFavoriteStore";
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { isLoaded, isSignedIn, getToken } = useAuth();
-  const { loadFavorites } = useFavoritesStore();
+  const { isLoaded, isSignedIn } = useAuth();
   const router = useRouter();
 
   const { isQueueSidebarOpen } = useDialogsStore();
-
-  useEffect(() => {
-    const fetchUserFavorites = async () => {
-      console.log("CARGADO POR PRIMERA VEZ ✔ ");
-      try {
-        const token = await getToken();
-        if (!token) return router.replace(loginRoute);
-
-        await loadFavorites(token);
-      } catch (error) {
-        console.log({ error });
-      }
-    };
-
-    fetchUserFavorites();
-  }, [loadFavorites, getToken, router]);
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {

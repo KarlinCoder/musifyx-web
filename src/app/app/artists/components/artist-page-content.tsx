@@ -12,13 +12,13 @@ import SearchBar from "@/components/search-bar";
 import SectionTitle from "@/components/section-title";
 import ArtistCard from "@/components/artist-card";
 import { searchArtist } from "../../services/deezer";
-import { Artist, SearchResponse } from "../../_types/deezer";
+import { MusifyArtist, MusifySearchResponse } from "../../_types/musify";
 
 export default function ArtistPageContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search");
 
-  const [data, setData] = useState<SearchResponse<Artist> | null>(null);
+  const [data, setData] = useState<MusifySearchResponse<MusifyArtist> | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 

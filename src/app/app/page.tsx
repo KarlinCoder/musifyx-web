@@ -5,6 +5,7 @@ import PopularArtistsSection from "./_components/popular-artists-section";
 import PopularPlaylistsSection from "./_components/popular-playlists-section";
 import Link from "next/link";
 import { getPopularNow } from "./services/deezer";
+import type { MusifyTrack, MusifyAlbum, MusifyArtist, MusifyPlaylist } from "./_types/musify";
 
 export default async function HomePage() {
   const anchorLinks = [
@@ -14,7 +15,18 @@ export default async function HomePage() {
     { url: "#playlists", label: "Playlists" },
   ];
 
-  const charts = await getPopularNow();
+  let charts: {
+    tracks: MusifyTrack[];
+    albums: MusifyAlbum[];
+    artists: MusifyArtist[];
+    playlists: MusifyPlaylist[];
+  } = { tracks: [], albums: [], artists: [], playlists: [] };
+
+  try {
+    charts = await getPopularNow();
+  } catch (error) {
+    console.error("Error fetching popular now:", error);
+  }
 
   return (
     <div className="size-full p-8 max-w-300 mx-auto scroll-smooth">
