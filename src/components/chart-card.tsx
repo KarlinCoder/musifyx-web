@@ -1,6 +1,6 @@
 import { genericBlur } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
+import ImageWithFallback from "./image-with-fallback";
 
 interface Props {
   id: number;
@@ -17,13 +17,14 @@ export default function ChartCard({ id, coverUrl, title, totalSongs }: Props) {
       className="inline-block p-2.5 hover:bg-background-light rounded-md overflow-hidden cursor-pointer h-fit group shadow-2xl shadow-background-dark"
     >
       <div className="relative overflow-hidden group">
-        <Image
+        <ImageWithFallback
           loading="lazy"
           placeholder="blur"
           blurDataURL={genericBlur}
           width={100}
           height={100}
-          src={coverUrl || "/not-loaded.jpg"}
+          src={coverUrl}
+          fallbackType="playlist"
           alt={`playlist ${title}`}
           className="w-full aspect-square"
         />

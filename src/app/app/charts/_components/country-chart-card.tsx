@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { genericBlur } from "@/lib/utils";
+import ImageWithFallback from "@/components/image-with-fallback";
 
 interface Props {
   country: string;
@@ -169,8 +169,9 @@ export default function CountryChartCard({
       className="flex items-center gap-4 p-3 hover:bg-background-light rounded-xl transition-all duration-200 cursor-pointer group"
     >
       <div className="relative w-16 h-16 rounded-lg overflow-hidden shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-200">
-        <Image
-          src={coverUrl || "/not-loaded.jpg"}
+        <ImageWithFallback
+          src={coverUrl}
+          fallbackType="playlist"
           alt={label}
           placeholder="blur"
           blurDataURL={genericBlur}
@@ -184,7 +185,7 @@ export default function CountryChartCard({
         <p className="text-base font-medium text-text truncate group-hover:text-primary transition-colors">
           {label.replace("Top ", "")}
         </p>
-        <p className="text-xs text-text-muted">Top 100 - Deezer</p>
+        <p className="text-xs text-text-muted">Top 100 - Musify</p>
       </div>
 
       <div className="text-2xl shrink-0 group-hover:scale-110 transition-transform duration-200">

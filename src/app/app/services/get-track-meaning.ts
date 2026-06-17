@@ -5,9 +5,9 @@ export interface TrackMeaningResponse {
 }
 
 export const getTrackMeaning = async (
-  deezer_song_id: number,
+  songId: number,
 ): Promise<TrackMeaningResponse> => {
-  const res = await fetch(`${API_URL}/song-meaning/${deezer_song_id}`, {
+  const res = await fetch(`${API_URL}/song-meaning/${songId}`, {
     next: { revalidate: 6000 },
   });
   if (!res.ok) throw new Error("Failed to fetch song meaning");

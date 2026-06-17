@@ -21,9 +21,9 @@ import {
   RiArchive2Line,
 } from "react-icons/ri";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import Hr from "./hr";
+import ImageWithFallback from "./image-with-fallback";
 
 export default function Sidebar() {
   const pathname = usePathname();
@@ -88,8 +88,9 @@ export default function Sidebar() {
   return (
     <aside className="flex flex-col max-w-75 w-full bg-background p-3 border-r border-white/6 overflow-y-auto styled-scrollbar">
       <div className="p-3">
-        <Image
-          src={logoImg || "/not-loaded.jpg"}
+        <ImageWithFallback
+          src={logoImg}
+          fallbackType="track"
           alt="Logo"
           height={80}
           width={80}

@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const API_URL = "https://musify.api.karlincoder.com";
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -15,6 +17,14 @@ const nextConfig: NextConfig = {
     ],
   },
   reactStrictMode: false,
+  async rewrites() {
+    return [
+      {
+        source: "/api/musify/:path*",
+        destination: `${API_URL}/search/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

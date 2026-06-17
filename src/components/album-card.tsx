@@ -1,7 +1,7 @@
 import { formatRecordType, genericBlur } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
 import ExplicitMark from "./explicit-mark";
+import ImageWithFallback from "./image-with-fallback";
 
 interface Props {
   info: {
@@ -26,13 +26,14 @@ export default function AlbumCard({ info }: Props) {
       className="inline-block overflow-hidden hover:bg-background-light cursor-pointer h-fit p-2.5 rounded-md"
     >
       <div className="overflow-hidden">
-        <Image
+        <ImageWithFallback
           loading="lazy"
           placeholder="blur"
           blurDataURL={genericBlur}
           width={100}
           height={100}
-          src={coverUrl || "/not-loaded.jpg"}
+          src={coverUrl}
+          fallbackType="album"
           alt={`"${title}" de ${artistName}`}
           className="w-full aspect-square rounded-md"
         />

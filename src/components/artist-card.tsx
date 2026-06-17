@@ -1,7 +1,6 @@
 import { genericBlur } from "@/lib/utils";
-import Image from "next/image";
 import Link from "next/link";
-import fallbackImage from "@/assets/not-loaded.jpg";
+import ImageWithFallback from "./image-with-fallback";
 
 interface Props {
   info: {
@@ -22,9 +21,10 @@ export default function ArtistCard({ info }: Props) {
       className="group inline-block p-2.5 hover:bg-background-light rounded-md"
     >
       <div className="overflow-hidden rounded-full">
-        <Image
+        <ImageWithFallback
           loading="lazy"
-          src={coverUrl || fallbackImage}
+          src={coverUrl}
+          fallbackType="artist"
           alt={`${name} profile picture`}
           placeholder="blur"
           blurDataURL={genericBlur}

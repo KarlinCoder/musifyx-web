@@ -2,7 +2,7 @@
 import { genericBlur } from "@/lib/utils";
 import { MFTrack } from "../_types/musify";
 import { motion } from "motion/react";
-import Image from "next/image";
+import ImageWithFallback from "@/components/image-with-fallback";
 import { RiCloseFill } from "react-icons/ri";
 
 interface Props {
@@ -18,8 +18,9 @@ export default function PreviewPlayer({ track, onQuit }: Props) {
       exit={{ x: 20, opacity: 0 }}
       className="fixed items-center z-100 top-4 right-6 flex bg-background-light rounded-md p-3 space-x-3 shadow-2xl shadow-black border border-white/6"
     >
-      <Image
-        src={track.image_url || "/not-loaded.jpg"}
+      <ImageWithFallback
+        src={track.image_url}
+        fallbackType="track"
         placeholder="blur"
         blurDataURL={genericBlur}
         alt="cover image"

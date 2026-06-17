@@ -9,13 +9,13 @@ import {
 
 interface Props {
   onClose: () => void;
-  deezerSongId: number;
+  songId: number;
   trackName: string;
 }
 
 export default function TrackMeaningsModal({
   onClose,
-  deezerSongId,
+  songId,
   trackName,
 }: Props) {
   const [songMeaning, setSongMeaning] = useState<TrackMeaningResponse | null>(
@@ -26,7 +26,7 @@ export default function TrackMeaningsModal({
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const data = await getTrackMeaning(deezerSongId);
+        const data = await getTrackMeaning(songId);
         setSongMeaning(data);
       } catch (error) {
         console.error("Error fetching song meaning:", error);
@@ -36,7 +36,7 @@ export default function TrackMeaningsModal({
     };
 
     fetchData();
-  }, [deezerSongId]);
+  }, [songId]);
 
   return (
     <AnimatePresence>

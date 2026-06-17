@@ -5,9 +5,9 @@ export interface TrackLyricsResponse {
 }
 
 export const getTrackLyrics = async (
-  deezer_song_id: number,
+  songId: number,
 ): Promise<TrackLyricsResponse> => {
-  const res = await fetch(`${API_URL}/lyrics/${deezer_song_id}`, {
+  const res = await fetch(`${API_URL}/lyrics/${songId}`, {
     next: { revalidate: 6000 },
   });
   if (!res.ok) throw new Error("Failed to fetch lyrics");

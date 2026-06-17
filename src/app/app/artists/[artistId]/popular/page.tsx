@@ -1,4 +1,4 @@
-import { getArtistTop } from "@/app/app/services/deezer";
+import { getArtistTop } from "@/app/app/services/musify";
 import TrackCard from "@/components/track-card";
 
 export default async function ArtistTop10Page({

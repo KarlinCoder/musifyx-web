@@ -5,11 +5,11 @@ import {
   genericBlur,
 } from "@/lib/utils";
 import { getAverageColor } from "@/lib/utils";
-import Image from "next/image";
-import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { Metadata } from "next";
-import { getPlaylist } from "../../services/deezer";
+import { RiVerifiedBadgeFill } from "react-icons/ri";
+import { getPlaylist } from "../../services/musify";
 import TrackCard from "@/components/track-card";
+import ImageWithFallback from "@/components/image-with-fallback";
 
 type Params = Promise<{ playlistId: string }>;
 
@@ -127,9 +127,10 @@ export default async function PlaylistIdPage({
       <div className="max-w-300 mx-auto w-full p-10 space-y-20">
         <header className={`flex items-center gap-5 w-full `}>
           <div className="max-w-65 w-full shadow-2xl shadow-background">
-            <Image
+            <ImageWithFallback
               alt="album cover"
-              src={playlist.image_url || "/not-loaded.jpg"}
+              src={playlist.image_url}
+              fallbackType="playlist"
               width={100}
               height={100}
               placeholder="blur"
@@ -145,7 +146,7 @@ export default async function PlaylistIdPage({
 
             <p className="flex items-center gap-1 text-sm my-2 font-semibold">
               <RiVerifiedBadgeFill size={20} className="text-blue-400" />{" "}
-              Oficial de Deezer
+              Oficial de Musify
             </p>
 
             <div className="mt-1 text-sm text-neutral-400">

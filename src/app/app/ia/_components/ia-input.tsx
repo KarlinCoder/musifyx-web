@@ -423,7 +423,7 @@ export default function IAInput({
 
       <p className="text-xs text-text-muted/40 text-center mt-auto pt-8">
         La IA puede cometer errores. Los resultados dependen de la
-        disponibilidad en Deezer.
+        disponibilidad en Musify.
       </p>
     </div>
   );

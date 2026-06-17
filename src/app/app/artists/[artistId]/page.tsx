@@ -1,7 +1,7 @@
 import AlbumCard from "@/components/album-card";
 import { capitalize } from "@/lib/utils";
 import { Metadata } from "next";
-import { getArtistDiscography, getArtist } from "../../services/deezer";
+import { getArtistDiscography, getArtist } from "../../services/musify";
 import { MFAlbum } from "../../_types/musify";
 
 type Params = Promise<{ artistId: string }>;

@@ -35,7 +35,7 @@ src/
 ├── components/            # Shared UI components (TrackCard, AlbumCard, etc.)
 ├── hooks/                 # Custom hooks
 ├── lib/                   # Utils, supabase client
-├── services/              # API services (deezer)
+├── services/              # API services (musify)
 ├── stores/                # Global zustand stores
 └── types/                 # Global types
 ```
@@ -44,7 +44,7 @@ src/
 
 - **Page components** go in `src/app/app/` with `_components`, `_stores`, `_types`, `_lib` alongside
 - **Shared components** go in `src/components/`
-- **API services** in `src/services/` (deezer.ts, download.ts)
+- **API services** in `src/app/app/services/` (musify.ts, download.ts)
 - Components use `use client` for client-side logic
 - Use `@/` alias for `src/` imports (configured in tsconfig.json)
 
@@ -53,7 +53,7 @@ src/
 - Tailwind v4 uses `@theme` directive in `globals.css` for custom tokens
 - Use existing cards: `TrackCard`, `AlbumCard`, `ArtistCard`, `PlaylistCard`
 - Scrollbar style: `.styled-scrollbar` class
-- Fonts: `font-primary` (Deezer), `font-secondary` (Inter)
+- Fonts: `font-primary` (Musify), `font-secondary` (Inter)
 
 ## Lint & Typecheck
 
@@ -66,7 +66,7 @@ npx tsc      # TypeScript (no --noEmit flag needed, runs directly)
 
 - Clerk for authentication (requires `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`)
 - Supabase for database (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`)
-- Deezer API proxy via `/api/deezer` routes
+- Musify API at `https://musify.api.karlincoder.com`
 
 ## Known Issues
 

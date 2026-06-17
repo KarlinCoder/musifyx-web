@@ -1,4 +1,4 @@
-import { getArtistSimilar } from "@/app/app/services/deezer";
+import { getArtistSimilar } from "@/app/app/services/musify";
 import ArtistCard from "@/components/artist-card";
 
 export default async function ArtistRelatedPage({

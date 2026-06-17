@@ -1,7 +1,6 @@
 "use client";
 
-import imageFallback from "@/assets/not-loaded.jpg";
-import Image from "next/image";
+import ImageWithFallback from "./image-with-fallback";
 import { formatSecondsToMinutes, genericBlur } from "@/lib/utils";
 import {
   RiPauseFill,
@@ -22,7 +21,7 @@ import { AnimatePresence } from "motion/react";
 import { createPortal } from "react-dom";
 import TrackMeaningsModal from "@/app/app/_components/track-meaning-modal";
 
-import { getTrackPreview } from "@/app/app/services/deezer";
+import { getTrackPreview } from "@/app/app/services/musify";
 import { useFavoritesStore } from "@/app/app/_stores/useFavoriteStore";
 import { MFArtist } from "@/app/app/_types/musify";
 
@@ -113,7 +112,7 @@ export default function TrackCard({ data, listPosition }: Props) {
             <TrackLyricsModal
               key="track-lyrics-modal"
               trackName={data.title}
-              deezerSongId={data.id}
+              songId={data.id}
               onClose={() => setDetailOption("")}
             />
           )}
@@ -122,7 +121,7 @@ export default function TrackCard({ data, listPosition }: Props) {
             <TrackMeaningsModal
               key="track-meaning-modal"
               trackName={data.title}
-              deezerSongId={data.id}
+              songId={data.id}
               onClose={() => setDetailOption("")}
             />
           )}
@@ -132,8 +131,9 @@ export default function TrackCard({ data, listPosition }: Props) {
 
       <div className="flex items-center gap-3 min-w-0 flex-1">
         <div className="relative size-13 rounded shrink-0 group">
-          <Image
-            src={data.image_url || imageFallback}
+          <ImageWithFallback
+            src={data.image_url}
+            fallbackType="track"
             alt={`Song cover art`}
             blurDataURL={genericBlur}
             width={64}

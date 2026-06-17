@@ -1,7 +1,7 @@
 "use client";
 
 import { genericBlur } from "@/lib/utils";
-import Image from "next/image";
+import ImageWithFallback from "@/components/image-with-fallback";
 import { useState } from "react";
 import { RiShareFill, RiStarFill, RiStarLine } from "react-icons/ri";
 import { AnimatePresence, motion } from "motion/react";
@@ -22,8 +22,9 @@ export default function ArtistHeader({ artist }: Props) {
   return (
     <header className="flex items-center justify-start relative py-20 bg-center bg-no-repeat bg-cover gap-7">
       <div className="w-full grow shrink inline-block">
-        <Image
-          src={artist.image_url || "/not-loaded.jpg"}
+        <ImageWithFallback
+          src={artist.image_url}
+          fallbackType="artist"
           alt="artist picture"
           width={2000}
           height={2000}

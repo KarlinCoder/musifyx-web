@@ -36,7 +36,7 @@ export default function TrackCardDropdown({ onSelect, onClose }: Props) {
     // const data = await addFavorite(token, {
     //   artists: flatTrackContributorsNames(track),
     //   cover_url: track.album.cover_medium,
-    //   deezer_id: track.id,
+    //   musify_id: track.id,
     //   duration: track.duration,
     //   id: track.id,
     //   title: track.title,

@@ -11,7 +11,7 @@ export default function PopularAlbumsSection({ albums }: Props) {
     <div id="albumes">
       <SectionTitle>Álbums populares</SectionTitle>
 
-      <div className="grid grid-cols-5 w-full overflow-hidden overflow-x-auto styled-scrollbar">
+      <div className="grid grid-cols-5 gap-2 w-full overflow-hidden overflow-x-auto styled-scrollbar">
         {albums.map((item) => {
           return (
             <AlbumCard

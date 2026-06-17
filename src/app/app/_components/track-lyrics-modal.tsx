@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "motion/react";
 
 interface Props {
   onClose: () => void;
-  deezerSongId: number;
+  songId: number;
   trackName: string;
 }
 
@@ -20,7 +20,7 @@ interface LyricsLine {
 
 export default function TrackLyricsModal({
   onClose,
-  deezerSongId,
+  songId,
   trackName,
 }: Props) {
   const [songLyrics, setSongLyrics] = useState<TrackLyricsResponse | null>(
@@ -41,7 +41,7 @@ export default function TrackLyricsModal({
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const data = await getTrackLyrics(deezerSongId);
+        const data = await getTrackLyrics(songId);
         setSongLyrics(data);
       } catch (error) {
         console.error("Error fetching lyrics:", error);
@@ -51,7 +51,7 @@ export default function TrackLyricsModal({
     };
 
     fetchData();
-  }, [deezerSongId]);
+  }, [songId]);
 
   return (
     <AnimatePresence>

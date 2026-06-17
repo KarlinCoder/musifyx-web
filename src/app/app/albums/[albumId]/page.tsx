@@ -8,9 +8,9 @@ import {
 } from "@/lib/utils";
 import { getAverageColor } from "@/lib/utils";
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import { getAlbum } from "../../services/deezer";
+import { getAlbum } from "../../services/musify";
+import ImageWithFallback from "@/components/image-with-fallback";
 
 type Params = Promise<{ albumId: string }>;
 
@@ -128,9 +128,10 @@ export default async function AlbumIdPage({
       <div className="mx-auto w-full">
         <header className={`flex items-center gap-5 w-full py-17`}>
           <div className="max-w-65 w-full shadow-2xl shadow-background">
-            <Image
+            <ImageWithFallback
               alt="album cover"
-              src={album.image_url || "/not-loaded.jpg"}
+              src={album.image_url}
+              fallbackType="album"
               width={100}
               height={100}
               placeholder="blur"
@@ -145,8 +146,9 @@ export default async function AlbumIdPage({
             </h2>
 
             <div className="flex items-center gap-2 mt-4">
-              <Image
-                src={album.artist.image_url || "/not-loaded.jpg"}
+              <ImageWithFallback
+                src={album.artist.image_url}
+                fallbackType="artist"
                 alt="artist picture"
                 width={70}
                 height={70}

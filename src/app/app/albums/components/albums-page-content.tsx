@@ -9,7 +9,7 @@ import SearchError from "@/components/search-error";
 import NoResults from "@/components/no-results";
 import Loader from "@/components/loader";
 import SearchBar from "@/components/search-bar";
-import { searchAlbums } from "../../services/deezer";
+import { searchAlbums } from "../../services/musify";
 import SectionTitle from "@/components/section-title";
 import { MFAlbum, MFSearch } from "../../_types/musify";
 import AlbumCard from "@/components/album-card";

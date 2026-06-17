@@ -11,7 +11,7 @@ import {
   RiCloseLine,
   RiDeleteBin6Fill,
 } from "react-icons/ri";
-import Image from "next/image";
+import ImageWithFallback from "@/components/image-with-fallback";
 
 export default function DownloadQueueList() {
   const { setIsQueueSidebarOpen } = useDialogsStore();
@@ -128,8 +128,9 @@ export default function DownloadQueueList() {
                 <div
                   className={`size-14 shrink-0 rounded overflow-hidden transition-all duration-300 ${isCancelled ? "grayscale" : ""}`}
                 >
-                  <Image
+                  <ImageWithFallback
                     src={item.imageUrl}
+                    fallbackType="track"
                     alt={item.title}
                     width={56}
                     height={56}

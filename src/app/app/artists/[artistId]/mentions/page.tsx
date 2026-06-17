@@ -1,4 +1,4 @@
-import { getArtistMentions } from "@/app/app/services/deezer";
+import { getArtistMentions } from "@/app/app/services/musify";
 import PlaylistCard from "@/components/playlist-card";
 
 export default async function ArtistPlaylistsPage({

@@ -1,7 +1,7 @@
 import { getAverageColor } from "@/lib/utils";
 import ArtistNavbar from "./_components/artist-navbar";
 import ArtistHeader from "./_components/artist-header";
-import { getArtist } from "../../services/deezer";
+import { getArtist } from "../../services/musify";
 
 export default async function ArtistLayout({
   params,

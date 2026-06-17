@@ -11,7 +11,7 @@ import Loader from "@/components/loader";
 import SearchBar from "@/components/search-bar";
 import SectionTitle from "@/components/section-title";
 import ArtistCard from "@/components/artist-card";
-import { searchArtist } from "../../services/deezer";
+import { searchArtist } from "../../services/musify";
 import { MFArtist, MFSearch } from "../../_types/musify";
 
 export default function ArtistPageContent() {

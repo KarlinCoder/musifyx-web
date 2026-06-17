@@ -1,5 +1,5 @@
 import TrackCard from "@/components/track-card";
-import { getArtistRadio } from "@/app/app/services/deezer";
+import { getArtistRadio } from "@/app/app/services/musify";
 
 export default async function ArtistRadioPage({
   params,

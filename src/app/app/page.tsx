@@ -4,7 +4,7 @@ import PopularAlbumsSection from "./_components/popular-albums-section";
 import PopularArtistsSection from "./_components/popular-artists-section";
 import PopularPlaylistsSection from "./_components/popular-playlists-section";
 import Link from "next/link";
-import { getPopularNow } from "./services/deezer";
+import { getPopularNow } from "./services/musify";
 import type { MFTrack, MFAlbum, MFArtist, MFPlaylist } from "./_types/musify";
 
 export default async function HomePage() {
