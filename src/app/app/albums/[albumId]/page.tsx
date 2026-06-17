@@ -6,7 +6,7 @@ import {
   formatSecondsToMinutes,
   genericBlur,
 } from "@/lib/utils";
-import { getAverageColor } from "@/lib/utils";
+import { getAverageColor } from "@/lib/get-average-color";
 import { Metadata } from "next";
 import Link from "next/link";
 import { getAlbum } from "../../services/musify";

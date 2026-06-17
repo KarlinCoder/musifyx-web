@@ -1,5 +1,3 @@
-import { FastAverageColor } from "fast-average-color";
-
 export const formatSecondsToMinutes = (seconds: number): string => {
   if (seconds < 0) seconds = 0;
 
@@ -16,12 +14,6 @@ export const formatSecondsToMinutes = (seconds: number): string => {
 
 export const genericBlur =
   "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSIjMzMzIi8+Cjwvc3ZnPg==";
-
-export const getAverageColor = async (imgUrl: string) => {
-  const fac = new FastAverageColor();
-  const color = await fac.getColorAsync(imgUrl);
-  return color.hex;
-};
 
 export const formatDateToSpanish = (date: string | Date): string => {
   const d = new Date(date);

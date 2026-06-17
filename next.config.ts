@@ -21,7 +21,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/musify/:path*",
-        destination: `${API_URL}/search/:path*`,
+        destination: `${API_URL}/:path*`,
       },
     ];
   },

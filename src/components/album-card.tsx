@@ -42,10 +42,16 @@ export default function AlbumCard({ info }: Props) {
       <div className="p-3">
         <p className="font-medium text-[15px] min-w-0 w-full flex items-center gap-1">
           <span className="truncate">{title}</span>
+          {}
         </p>
         <p className="text-text-muted truncate text-[13px] flex items-center gap-1.5">
-          {hasExplicitLyrics && <ExplicitMark />} {formatRecordType(recordType)}{" "}
-          • {artistName}
+          {hasExplicitLyrics && (
+            <>
+              <ExplicitMark />
+              {" • "}
+            </>
+          )}
+          {formatRecordType(recordType)} {artistName}
         </p>
       </div>
     </Link>

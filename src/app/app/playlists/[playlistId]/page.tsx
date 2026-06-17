@@ -4,7 +4,7 @@ import {
   formatSecondsToMinutes,
   genericBlur,
 } from "@/lib/utils";
-import { getAverageColor } from "@/lib/utils";
+import { getAverageColor } from "@/lib/get-average-color";
 import { Metadata } from "next";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { getPlaylist } from "../../services/musify";
