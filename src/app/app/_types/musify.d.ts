@@ -23,6 +23,7 @@ export interface MFAlbum {
   title: string;
   image_url: string;
   artist: MFArtist;
+  record_type: string;
   explicit_lyrics: boolean;
 }
 
@@ -32,7 +33,6 @@ export interface MFAlbumPage extends MFAlbum {
   copyright: string;
   release_date: string;
   nb_tracks: number;
-  tracks: MFTrack[];
 }
 
 export interface MFPlaylist {

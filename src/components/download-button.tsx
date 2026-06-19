@@ -1,7 +1,7 @@
 "use client";
 
 import { getRandomDownloadMessage } from "@/lib/utils";
-import { downloadAlbum } from "@/services/download";
+import { downloadAlbum } from "@/app/app/services/musify";
 import { useEffect, useRef, useState } from "react";
 import { RiLoader2Fill } from "react-icons/ri";
 // 1. Importar motion y AnimatePresence
@@ -64,7 +64,7 @@ export default function DownloadButton({ children, id }: Props) {
     <button
       onClick={handleClick}
       disabled={isLoading}
-      className="relative min-w-50 flex items-center justify-center gap-2 mt-3 text-sm bg-[#333] hover:opacity-85 active:opacity-100 disabled:opacity-90 transition-all duration-100 text-white rounded-full cursor-pointer py-2 font-semibold"
+      className="relative min-w-50 flex items-center justify-center gap-2 text-sm bg-[#333] hover:opacity-85 active:opacity-100 disabled:opacity-90 transition-all duration-100 text-white rounded-full cursor-pointer py-2 font-semibold"
     >
       {isLoading ? (
         <>

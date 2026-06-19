@@ -167,6 +167,7 @@ export default function TrackCard({ data, listPosition }: Props) {
 
         <div className="min-w-0 flex flex-col justify-center">
           <p className="font-medium text-sm truncate">
+            {listPosition?.toString().padStart(2, " ")}.{" "}
             {data.title || "[Título no disponible]"}
           </p>
 

@@ -1,4 +1,4 @@
-import DownloadButton from "@/components/download-button";
+import AlbumActions from "@/components/album-actions";
 import Hr from "@/components/hr";
 import TrackCard from "@/components/track-card";
 import {
@@ -9,7 +9,7 @@ import {
 import { getAverageColor } from "@/lib/get-average-color";
 import { Metadata } from "next";
 import Link from "next/link";
-import { getAlbum } from "../../services/musify";
+import { getAlbum, getAlbumTracks } from "../../services/musify";
 import ImageWithFallback from "@/components/image-with-fallback";
 
 type Params = Promise<{ albumId: string }>;
@@ -115,8 +115,14 @@ export default async function AlbumIdPage({
   params: Promise<{ albumId: string }>;
 }) {
   const { albumId } = await params;
-  const album = await getAlbum(parseInt(albumId));
+
+  const [album, albumTracks] = await Promise.all([
+    getAlbum(parseInt(albumId)),
+    getAlbumTracks(parseInt(albumId)),
+  ]);
   const avgColor = (await getAverageColor(album.image_url)) || "#eee";
+
+  console.log(album);
 
   return (
     <div
@@ -126,7 +132,7 @@ export default async function AlbumIdPage({
       className="size-full p-8 max-w-300 mx-auto"
     >
       <div className="mx-auto w-full">
-        <header className={`flex items-center gap-5 w-full py-17`}>
+        <header className="flex items-center gap-5 w-full pb-17">
           <div className="max-w-65 w-full shadow-2xl shadow-background">
             <ImageWithFallback
               alt="album cover"
@@ -136,12 +142,12 @@ export default async function AlbumIdPage({
               height={100}
               placeholder="blur"
               blurDataURL={genericBlur}
-              className="w-full"
+              className="w-full border-2 border-white/9"
             />
           </div>
 
           <div>
-            <h2 className="font-primary text-5xl space-y-2 font-medium">
+            <h2 className="font-primary text-6xl space-y-2 font-semibold">
               {album.title}
             </h2>
 
@@ -170,17 +176,22 @@ export default async function AlbumIdPage({
               <p>Lanzado el {formatDateToSpanish(album.release_date!)}</p>
             </div>
 
-            <DownloadButton id={parseInt(albumId)}>
-              Descargar álbum
-            </DownloadButton>
+            <AlbumActions
+              albumId={parseInt(albumId)}
+              albumTitle={album.title}
+              artistName={album.artist.name}
+              albumCover={album.image_url}
+            />
           </div>
         </header>
 
         <main className="pb-10">
-          <p className="artist-section-title">Canciones:</p>
+          <p className="text-sm uppercase border-b border-white/20 pb-3">
+            Canciones
+          </p>
 
           <div className="flex flex-col">
-            {album.tracks.map((item, index) => {
+            {albumTracks.map((item, index) => {
               return (
                 <TrackCard
                   key={item.id}

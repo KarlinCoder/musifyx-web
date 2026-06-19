@@ -10,6 +10,8 @@ export type DownloadItem = {
   type: "album" | "track";
   status: "pending" | "processing" | "completed" | "cancelled" | "error";
   downloadUrl?: string;
+  progress?: number;
+  message?: string;
 };
 
 type QueueItem = DownloadItem & { resolve?: () => void };
@@ -29,7 +31,9 @@ export const downloadQueue = {
 
   add: async (
     item: Omit<DownloadItem, "id" | "status">,
-    fetchFn: () => Promise<{ success: boolean; download_url: string }>,
+    fetchFn: (
+      id: string,
+    ) => Promise<{ success: boolean; download_url: string }>,
   ) => {
     const id = crypto.randomUUID();
     const entry: QueueItem = { ...item, id, status: "pending" };
@@ -49,7 +53,7 @@ export const downloadQueue = {
       current.status = "processing";
 
       try {
-        const res = await fetchFn();
+        const res = await fetchFn(id);
 
         if (res.success && queue.get(id)?.status !== "cancelled") {
           // ✅ Completado: -1 pending, +1 total
@@ -81,6 +85,14 @@ export const downloadQueue = {
   getAll: () => Array.from(queue.values()),
 
   get: (id: string) => queue.get(id),
+
+  updateProgress: (id: string, progress: number, message: string) => {
+    const item = queue.get(id);
+    if (item) {
+      item.progress = progress;
+      item.message = message;
+    }
+  },
 
   clearCompleted: () => {
     for (const [id, item] of queue.entries()) {

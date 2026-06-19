@@ -1,5 +1,5 @@
 import { downloadQueue } from "@/app/app/_lib/download-queue";
-import { downloadTrack } from "@/services/download";
+import { downloadTrackSSE } from "@/app/app/services/musify";
 import { useState } from "react";
 
 interface Props {
@@ -20,8 +20,14 @@ export default function TrackCardDownloadButton({
   const handleClick = async () => {
     setAddedToQueueText(true);
 
-    downloadQueue.add({ title, artist, imageUrl, type: "track" }, () =>
-      downloadTrack(trackId),
+    downloadQueue.add({ title, artist, imageUrl, type: "track" }, (id) =>
+      downloadTrackSSE(trackId, {
+        onProgress: (progress, message) => {
+          downloadQueue.updateProgress(id, progress, message);
+        },
+        onDone: () => {},
+        onError: () => {},
+      }),
     );
 
     setTimeout(() => {

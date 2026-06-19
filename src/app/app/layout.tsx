@@ -55,7 +55,7 @@ export default function RootLayout({
       />
       <div className="relative flex h-dvh text-text overflow-hidden">
         <Sidebar />
-        <main className="relative flex flex-col size-full styled-scrollbar overflow-x-hidden overflow-y-auto px-5">
+        <main className="relative flex flex-col size-full styled-scrollbar overflow-x-hidden overflow-y-auto">
           <div className="absolute top-6 right-6 size-12 aspect-square border-2 border-white/20 rounded-full">
             <UserButton
               appearance={{

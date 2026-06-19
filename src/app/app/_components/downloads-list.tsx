@@ -162,6 +162,24 @@ export default function DownloadQueueList() {
                       </span>
                     )}
                   </div>
+
+                  {item.type === "track" &&
+                    item.status === "processing" &&
+                    item.progress !== undefined && (
+                      <div className="mt-2 space-y-1">
+                        <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-blue-500 rounded-full transition-all duration-300 ease-out"
+                            style={{ width: `${Math.min(item.progress, 100)}%` }}
+                          />
+                        </div>
+                        {item.message && (
+                          <p className="text-[10px] text-blue-400/80 truncate">
+                            {item.message}
+                          </p>
+                        )}
+                      </div>
+                    )}
                 </div>
 
                 {!isCancelled && isCancellable && (
