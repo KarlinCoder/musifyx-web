@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { RiUser2Fill } from "react-icons/ri";
 
-import PlaceholderPageGreeting from "@/components/placeholder-page-greeting";
-import SearchError from "@/components/search-error";
-import NoResults from "@/components/no-results";
-import Loader from "@/components/loader";
-import SearchBar from "@/components/search-bar";
-import SectionTitle from "@/components/section-title";
-import ArtistCard from "@/components/artist-card";
-import { searchArtist } from "../../services/musify";
+import PlaceholderPageGreeting from "@/app/app/_components/placeholder-page-greeting";
+import SearchError from "@/app/app/_components/search-error";
+import NoResults from "@/app/app/_components/no-results";
+import Loader from "@/app/app/_components/loader";
+import SearchBar from "@/app/app/_components/search-bar";
+import SectionTitle from "@/app/app/_components/section-title";
+import ArtistCard from "@/app/app/_components/artist-card";
+import { searchArtist } from "../../_services/musify";
 import { MFArtist, MFSearch } from "../../_types/musify";
 
 export default function ArtistPageContent() {

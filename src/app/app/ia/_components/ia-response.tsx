@@ -1,10 +1,10 @@
 "use client";
 
-import TrackCard from "@/components/track-card";
-import AlbumCard from "@/components/album-card";
-import ArtistCard from "@/components/artist-card";
-import PlaylistCard from "@/components/playlist-card";
-import SectionTitle from "@/components/section-title";
+import TrackCard from "@/app/app/_components/track-card";
+import AlbumCard from "@/app/app/_components/album-card";
+import ArtistCard from "@/app/app/_components/artist-card";
+import PlaylistCard from "@/app/app/_components/playlist-card";
+import SectionTitle from "@/app/app/_components/section-title";
 import { RiArrowGoBackFill } from "react-icons/ri";
 
 interface TrackResult {

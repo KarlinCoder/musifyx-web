@@ -1,5 +1,5 @@
-import { getArtistSimilar } from "@/app/app/services/musify";
-import ArtistCard from "@/components/artist-card";
+import { getArtistSimilar } from "@/app/app/_services/musify";
+import ArtistCard from "@/app/app/_components/artist-card";
 
 export default async function ArtistRelatedPage({
   params,
@@ -11,7 +11,7 @@ export default async function ArtistRelatedPage({
 
   return (
     <div>
-      <p className="artist-section-title">Artistas similares</p>
+      <p className="app-section-title">Artistas similares</p>
 
       <div className="grid grid-cols-5">
         {artistRelated.map((artist) => (

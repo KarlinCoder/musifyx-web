@@ -11,7 +11,7 @@ import {
   RiCloseLine,
   RiDeleteBin6Fill,
 } from "react-icons/ri";
-import ImageWithFallback from "@/components/image-with-fallback";
+import ImageWithFallback from "@/app/app/_components/image-with-fallback";
 
 export default function DownloadQueueList() {
   const { setIsQueueSidebarOpen } = useDialogsStore();
@@ -163,8 +163,7 @@ export default function DownloadQueueList() {
                     )}
                   </div>
 
-                  {item.type === "track" &&
-                    item.status === "processing" &&
+                  {item.status === "processing" &&
                     item.progress !== undefined && (
                       <div className="mt-2 space-y-1">
                         <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">

@@ -56,6 +56,33 @@ const interFont = localFont({
   variable: "--font-inter",
 });
 
+const spotifyTitle = localFont({
+  src: [
+    {
+      path: "../../public/fonts/SpotifyMixUITitleVariable-8769ccfde3379b7ebcadd9529b49d0cc.woff2",
+      weight: "100 900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-spotify-title-var",
+});
+
+const spotifyText = localFont({
+  src: [
+    {
+      path: "../../public/fonts/SpotifyMixUI-Regular-cc3b1de388efa4cbca6c75cebc24585e.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/SpotifyMixUI-Bold-4264b799009b1db5c491778b1bc8e5b7.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-spotify-text-var",
+});
+
 export default async function RootLayout({
   children,
 }: {
@@ -73,7 +100,7 @@ export default async function RootLayout({
     >
       <html
         lang="es"
-        className={`${deezerFont.variable} ${interFont.variable}`}
+        className={`${deezerFont.variable} ${interFont.variable} ${spotifyTitle.variable} ${spotifyText.variable}`}
       >
         <head>
           <meta

@@ -3,7 +3,7 @@
 import { useDialogsStore } from "../_stores/useDialogsStore";
 
 export default function AppLayoutModals() {
-  const { isQueueSidebarOpen } = useDialogsStore();
+  const {} = useDialogsStore();
 
   return (
     <>

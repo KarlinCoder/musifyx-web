@@ -1,7 +1,7 @@
 "use client";
 
-import ChartCard from "@/components/chart-card";
-import SectionTitle from "@/components/section-title";
+import ChartCard from "@/app/app/_components/chart-card";
+import SectionTitle from "@/app/app/_components/section-title";
 import { useAuth } from "@clerk/nextjs";
 import UnauthorizedPage from "../../_components/unauthorized-page";
 

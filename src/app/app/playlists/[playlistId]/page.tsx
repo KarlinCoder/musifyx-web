@@ -1,4 +1,5 @@
-import Hr from "@/components/hr";
+import BackButton from "@/app/app/_components/back-button";
+import Hr from "@/app/app/_components/hr";
 import {
   formatDateToSpanish,
   formatSecondsToMinutes,
@@ -7,9 +8,10 @@ import {
 import { getAverageColor } from "@/lib/get-average-color";
 import { Metadata } from "next";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
-import { getPlaylist } from "../../services/musify";
-import TrackCard from "@/components/track-card";
-import ImageWithFallback from "@/components/image-with-fallback";
+import { getPlaylist } from "../../_services/musify";
+import TrackCard from "@/app/app/_components/track-card";
+import ImageWithFallback from "@/app/app/_components/image-with-fallback";
+import EntityActions from "@/app/app/_components/entity-actions";
 
 type Params = Promise<{ playlistId: string }>;
 
@@ -24,19 +26,17 @@ export async function generateMetadata({
   let playlistTitle = "Playlist";
   let playlistPicture = "/og-default.jpg";
   let trackCount = 0;
-  let fansCount = 0;
 
   try {
     const playlist = await getPlaylist(parseInt(playlistId));
     playlistTitle = playlist.title;
     playlistPicture = playlist.image_url || "/og-default.jpg";
     trackCount = playlist.nb_tracks || playlist.tracks.length || 0;
-    fansCount = playlist.nb_fans || 0;
   } catch (error) {
     console.error(`Error fetching playlist ${playlistId} for meta`, error);
   }
 
-  const seoDescription = `${playlistTitle} - ${trackCount} canciones y ${fansCount.toLocaleString("en-US")} fans. Descarga esta playlist completa en alta calidad con Musify. Metadatos perfectos, portadas originales y letras integradas.`;
+  const seoDescription = `${playlistTitle} - ${trackCount} canciones. Visualiza esta playlist completa en alta calidad con Musify. Metadatos perfectos, portadas originales y letras integradas.`;
 
   return {
     title: `${playlistTitle} | Playlist - Musify`,
@@ -111,9 +111,7 @@ export default async function PlaylistIdPage({
 }) {
   const { playlistId } = await params;
 
-  const playlist = await getPlaylist(parseInt(playlistId));
-
-  console.log(playlist.image_url);
+  const playlist = await getPlaylist(Number(playlistId));
 
   const avgColor = (await getAverageColor(playlist.image_url)) || "#eee";
 
@@ -125,7 +123,10 @@ export default async function PlaylistIdPage({
       className="size-full"
     >
       <div className="max-w-300 mx-auto w-full p-10 space-y-20">
-        <header className={`flex items-center gap-5 w-full `}>
+        <header className={`flex items-center gap-5 w-full relative`}>
+          <div className="absolute top-0 left-0">
+            <BackButton />
+          </div>
           <div className="max-w-65 w-full shadow-2xl shadow-background">
             <ImageWithFallback
               alt="album cover"
@@ -135,7 +136,7 @@ export default async function PlaylistIdPage({
               height={100}
               placeholder="blur"
               blurDataURL={genericBlur}
-              className="w-full rounded-sm"
+              className="w-full img-card"
             />
           </div>
 
@@ -154,19 +155,19 @@ export default async function PlaylistIdPage({
                 <p>{playlist.nb_tracks} canciones</p>
                 {"|"}
                 <p>{formatSecondsToMinutes(playlist.duration)} </p>
-                {"|"}
-                <p>{playlist.nb_fans} fans</p>
               </div>
 
               <p>Actualizada el {formatDateToSpanish(playlist.mod_date)}</p>
               <Hr className="my-3" />
               <p className="text-balance">{playlist.description}</p>
             </div>
+
+            <EntityActions type="playlist" entity={playlist} />
           </div>
         </header>
 
         <main className="p-10s">
-          <p className="artist-section-title">Canciones:</p>
+          <p className="app-section-title">Canciones:</p>
 
           <div className="flex flex-col relative pb-8">
             {playlist.tracks.map((track, index) => (

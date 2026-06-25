@@ -1,6 +1,6 @@
 "use client";
 
-import Hr from "@/components/hr";
+import Hr from "@/app/app/_components/hr";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

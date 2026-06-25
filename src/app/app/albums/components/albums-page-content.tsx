@@ -4,15 +4,14 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { RiAlbumFill } from "react-icons/ri";
 
-import PlaceholderPageGreeting from "@/components/placeholder-page-greeting";
-import SearchError from "@/components/search-error";
-import NoResults from "@/components/no-results";
-import Loader from "@/components/loader";
-import SearchBar from "@/components/search-bar";
-import { searchAlbums } from "../../services/musify";
-import SectionTitle from "@/components/section-title";
+import PlaceholderPageGreeting from "@/app/app/_components/placeholder-page-greeting";
+import SearchError from "@/app/app/_components/search-error";
+import NoResults from "@/app/app/_components/no-results";
+import Loader from "@/app/app/_components/loader";
+import SearchBar from "@/app/app/_components/search-bar";
+import { searchAlbums } from "../../_services/musify";
 import { MFAlbum, MFSearch } from "../../_types/musify";
-import AlbumCard from "@/components/album-card";
+import AlbumCard from "@/app/app/_components/album-card";
 
 export default function SongsPageContent() {
   const searchParams = useSearchParams();
@@ -71,7 +70,9 @@ export default function SongsPageContent() {
           <NoResults query={searchQuery} />
         ) : (
           <div className="p-grid size-full">
-            <SectionTitle>Se encontraron {data?.total} álbumes</SectionTitle>
+            <p className="text-lg px-2 text-white/80">
+              Se encontraron {data?.total} álbumes.
+            </p>
 
             <div className="relative grid grid-cols-5 w-full pb-10">
               {parsedData.map((album) => (
@@ -82,7 +83,7 @@ export default function SongsPageContent() {
                     artistName: album.artist.name,
                     coverUrl: album.image_url,
                     hasExplicitLyrics: album.explicit_lyrics,
-                    recordType: "",
+                    recordType: album.record_type,
                     title: album.title,
                   }}
                 />

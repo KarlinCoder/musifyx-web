@@ -5,6 +5,7 @@ export interface MFTrack {
   image_url: string;
   duration_ms: number;
   explicit_lyrics: boolean;
+  preview_url: string | null;
 }
 
 export interface MFArtist {
@@ -14,7 +15,7 @@ export interface MFArtist {
 }
 
 export interface MFArtistPage extends MFArtist {
-  nb_albums: number;
+  nb_album: number;
   bio_html: string;
 }
 
@@ -23,8 +24,8 @@ export interface MFAlbum {
   title: string;
   image_url: string;
   artist: MFArtist;
-  record_type: string;
   explicit_lyrics: boolean;
+  record_type: string;
 }
 
 export interface MFAlbumPage extends MFAlbum {
@@ -33,6 +34,7 @@ export interface MFAlbumPage extends MFAlbum {
   copyright: string;
   release_date: string;
   nb_tracks: number;
+  tracks: MFTrack[];
 }
 
 export interface MFPlaylist {
@@ -48,7 +50,6 @@ export interface MFPlaylistPage extends MFPlaylist {
   mod_date: Date;
   duration: number;
   description: string;
-  nb_fans: number;
   tracks: MFTrack[];
 }
 
@@ -62,4 +63,35 @@ export interface MFPopular {
 export interface MFSearch<T> {
   data: T[];
   total: number;
+}
+
+export interface MFLyricsResponse {
+  lyrics: string;
+}
+
+export interface MFLyricsSyncLine {
+  timestamp: string;
+  text: string;
+  milliseconds: number;
+  duration: number;
+}
+
+export interface MFLyricsSyncResponse {
+  lyrics: MFLyricsSyncLine[];
+}
+
+export interface MFLyricsTranslatedLine {
+  timestamp: string;
+  text: string;
+  milliseconds: number;
+  duration: number;
+  translation: string;
+}
+
+export interface MFLyricsTranslatedResponse {
+  lyrics: MFLyricsTranslatedLine[];
+}
+
+export interface MFAnalysisResponse {
+  analysis: string;
 }

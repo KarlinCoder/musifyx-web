@@ -1,6 +1,7 @@
-import AlbumActions from "@/components/album-actions";
-import Hr from "@/components/hr";
-import TrackCard from "@/components/track-card";
+import AlbumActions from "@/app/app/albums/[albumId]/_components/album-actions";
+import BackButton from "@/app/app/_components/back-button";
+import Hr from "@/app/app/_components/hr";
+import TrackCard from "@/app/app/_components/track-card";
 import {
   formatDateToSpanish,
   formatSecondsToMinutes,
@@ -9,8 +10,8 @@ import {
 import { getAverageColor } from "@/lib/get-average-color";
 import { Metadata } from "next";
 import Link from "next/link";
-import { getAlbum, getAlbumTracks } from "../../services/musify";
-import ImageWithFallback from "@/components/image-with-fallback";
+import { getAlbum, getAlbumTracks } from "../../_services/musify";
+import ImageWithFallback from "@/app/app/_components/image-with-fallback";
 
 type Params = Promise<{ albumId: string }>;
 
@@ -127,12 +128,15 @@ export default async function AlbumIdPage({
   return (
     <div
       style={{
-        background: `radial-gradient(circle 550px at 50% -20%, ${avgColor}, transparent)`,
+        background: `radial-gradient(circle 550px at 50% -30%, ${avgColor}, transparent)`,
       }}
       className="size-full p-8 max-w-300 mx-auto"
     >
       <div className="mx-auto w-full">
-        <header className="flex items-center gap-5 w-full pb-17">
+        <header className="flex items-center gap-5 w-full pb-10 relative">
+          <div className="absolute top-0 left-0">
+            <BackButton />
+          </div>
           <div className="max-w-65 w-full shadow-2xl shadow-background">
             <ImageWithFallback
               alt="album cover"
@@ -142,12 +146,12 @@ export default async function AlbumIdPage({
               height={100}
               placeholder="blur"
               blurDataURL={genericBlur}
-              className="w-full border-2 border-white/9"
+              className="w-full img-card"
             />
           </div>
 
           <div>
-            <h2 className="font-primary text-6xl space-y-2 font-semibold">
+            <h2 className="font-primary text-balance text-6xl space-y-2 font-semibold">
               {album.title}
             </h2>
 
@@ -161,7 +165,7 @@ export default async function AlbumIdPage({
                 className="size-7 rounded-full"
               />
               <Link
-                href={`/artists/${album.artist.id}`}
+                href={`/app/artists/${album.artist.id}`}
                 className="block text-base text-neutral-300 hover:underline underline-offset-2 "
               >
                 {album.artist.name}
@@ -176,19 +180,12 @@ export default async function AlbumIdPage({
               <p>Lanzado el {formatDateToSpanish(album.release_date!)}</p>
             </div>
 
-            <AlbumActions
-              albumId={parseInt(albumId)}
-              albumTitle={album.title}
-              artistName={album.artist.name}
-              albumCover={album.image_url}
-            />
+            <AlbumActions album={album} />
           </div>
         </header>
 
         <main className="pb-10">
-          <p className="text-sm uppercase border-b border-white/20 pb-3">
-            Canciones
-          </p>
+          <div className="h-0.5 w-full bg-white/10 rounded-full"></div>
 
           <div className="flex flex-col">
             {albumTracks.map((item, index) => {

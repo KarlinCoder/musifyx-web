@@ -2,11 +2,11 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { UserButton, useAuth } from "@clerk/nextjs";
-import Sidebar from "@/components/sidebar";
+import { useAuth } from "@clerk/nextjs";
+import Sidebar from "@/app/app/_components/sidebar";
 import Providers from "./providers";
 import DownloadsList from "./_components/downloads-list";
-import Loader from "@/components/loader";
+import Loader from "@/app/app/_components/loader";
 import { loginRoute } from "@/config/auth-routes";
 import { useDialogsStore } from "./_stores/useDialogsStore";
 import { AnimatePresence } from "motion/react";
@@ -56,16 +56,6 @@ export default function RootLayout({
       <div className="relative flex h-dvh text-text overflow-hidden">
         <Sidebar />
         <main className="relative flex flex-col size-full styled-scrollbar overflow-x-hidden overflow-y-auto">
-          <div className="absolute top-6 right-6 size-12 aspect-square border-2 border-white/20 rounded-full">
-            <UserButton
-              appearance={{
-                elements: {
-                  userButtonAvatarBox: { width: "100%", height: "100%" },
-                },
-              }}
-            />
-          </div>
-
           {children}
 
           <ShowQueueButton />

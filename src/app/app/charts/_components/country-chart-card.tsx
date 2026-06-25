@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { genericBlur } from "@/lib/utils";
-import ImageWithFallback from "@/components/image-with-fallback";
+import ImageWithFallback from "@/app/app/_components/image-with-fallback";
 
 interface Props {
   country: string;

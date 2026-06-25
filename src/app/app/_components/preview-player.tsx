@@ -2,7 +2,7 @@
 import { genericBlur } from "@/lib/utils";
 import { MFTrack } from "../_types/musify";
 import { motion } from "motion/react";
-import ImageWithFallback from "@/components/image-with-fallback";
+import ImageWithFallback from "@/app/app/_components/image-with-fallback";
 import { RiCloseFill } from "react-icons/ri";
 
 interface Props {

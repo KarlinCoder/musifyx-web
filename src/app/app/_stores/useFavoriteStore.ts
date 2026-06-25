@@ -1,33 +1,53 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { FavoriteItemInput } from "../_types/favorite";
+import { MFTrack, MFAlbum, MFPlaylist, MFArtist } from "../_types/musify";
 
 interface FavoritesState {
-  favorites: FavoriteItemInput[];
-  addFavorite: (data: FavoriteItemInput) => void;
-  removeFavorite: (id: number) => void;
-  isFavorite: (id: number) => boolean;
+  tracks: MFTrack[];
+  albums: MFAlbum[];
+  playlists: MFPlaylist[];
+  artists: MFArtist[];
+  toggleTrack: (track: MFTrack) => void;
+  toggleAlbum: (album: MFAlbum) => void;
+  togglePlaylist: (playlist: MFPlaylist) => void;
+  toggleArtist: (artist: MFArtist) => void;
 }
 
 export const useFavoritesStore = create<FavoritesState>()(
   persist(
-    (set, get) => ({
-      favorites: [],
+    (set) => ({
+      tracks: [],
+      albums: [],
+      playlists: [],
+      artists: [],
 
-      addFavorite: (data) => {
-        set((state) => {
-          if (state.favorites.some((item) => item.id === data.id)) return state;
-          return { favorites: [...state.favorites, data] };
-        });
-      },
-
-      removeFavorite: (id) => {
+      toggleTrack: (track) =>
         set((state) => ({
-          favorites: state.favorites.filter((item) => item.id !== id),
-        }));
-      },
+          tracks: state.tracks.some((t) => t.id === track.id)
+            ? state.tracks.filter((t) => t.id !== track.id)
+            : [...state.tracks, track],
+        })),
 
-      isFavorite: (id) => get().favorites.some((item) => item.id === id),
+      toggleAlbum: (album) =>
+        set((state) => ({
+          albums: state.albums.some((a) => a.id === album.id)
+            ? state.albums.filter((a) => a.id !== album.id)
+            : [...state.albums, album],
+        })),
+
+      togglePlaylist: (playlist) =>
+        set((state) => ({
+          playlists: state.playlists.some((p) => p.id === playlist.id)
+            ? state.playlists.filter((p) => p.id !== playlist.id)
+            : [...state.playlists, playlist],
+        })),
+
+      toggleArtist: (artist) =>
+        set((state) => ({
+          artists: state.artists.some((a) => a.id === artist.id)
+            ? state.artists.filter((a) => a.id !== artist.id)
+            : [...state.artists, artist],
+        })),
     }),
     {
       name: "musify-favorites",

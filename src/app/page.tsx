@@ -304,7 +304,7 @@ export default function LandingPage() {
         id="home"
         className="relative min-h-screen flex items-center justify-center px-6 py-20 overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/20 via-transparent to-background-dark pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-b from-primary/20 via-transparent to-background-dark pointer-events-none" />
         <div className="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl" />
 
@@ -316,7 +316,7 @@ export default function LandingPage() {
             </span>
           </div>
 
-          <h1 className="text-7xl md:text-8xl font-primary font-extrabold mb-6 bg-gradient-to-r from-white via-primary to-white bg-clip-text text-transparent">
+          <h1 className="text-7xl md:text-8xl font-primary font-extrabold mb-6 bg-linear-to-r from-white via-primary to-white bg-clip-text text-transparent">
             MUSIFY
           </h1>
 

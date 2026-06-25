@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "./loader.css";
 @import "./background-pattern.css";
+@import "../app/app/_styles/index.css";
 
 @theme {
   --color-primary: oklch(0.4 0.9 200);
@@ -13,8 +14,13 @@
   --color-text: oklch(90% 0 0);
   --color-text-muted: oklch(70% 0 0);
 
-  --font-primary: var(--font-deezer);
-  --font-secondary: var(--font-inter);
+  --font-primary: var(--font-spotify-title);
+  --font-secondary: var(--font-spotify-text);
+
+  --font-spotify-title: var(--font-spotify-title-var);
+  --font-spotify-text: var(--font-spotify-text-var);
+  --font-family-spotify-title: var(--font-spotify-title);
+  --font-family-spotify-text: var(--font-spotify-text);
 }
 
 @layer utilities {
@@ -24,7 +30,7 @@
 }
 
 @layer components {
-  .artist-section-title {
+  .app-section-title {
     @apply text-3xl font-primary flex items-center gap-2 text-neutral-200 font-medium mb-4;
   }
 }

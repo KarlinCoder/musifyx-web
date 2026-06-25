@@ -1,7 +1,8 @@
-import AlbumCard from "@/components/album-card";
+import AlbumCard from "@/app/app/_components/album-card";
+import BackButton from "@/app/app/_components/back-button";
 import { capitalize } from "@/lib/utils";
 import { Metadata } from "next";
-import { getArtistDiscography, getArtist } from "../../services/musify";
+import { getArtistDiscography, getArtist } from "../../_services/musify";
 import { MFAlbum } from "../../_types/musify";
 
 type Params = Promise<{ artistId: string }>;
@@ -104,7 +105,7 @@ export default async function ArtistDiscographyPage({
 
   const albumTypes = () => {
     const albumTypesSet = new Set<string>();
-    artistAlbums.forEach((item) => albumTypesSet.add(item.title));
+    artistAlbums.forEach((item) => albumTypesSet.add(item.record_type));
 
     return Array.from(albumTypesSet);
   };
@@ -112,7 +113,7 @@ export default async function ArtistDiscographyPage({
   const discographySections = (): { type: string; albums: MFAlbum[] }[] => {
     return albumTypes().map((type) => ({
       type,
-      albums: artistAlbums.filter((album) => album.title === type),
+      albums: artistAlbums.filter((album) => album.record_type === type),
     }));
   };
 
@@ -120,14 +121,15 @@ export default async function ArtistDiscographyPage({
 
   return (
     <div>
+      <div className="flex justify-start p-8 pb-0">
+        <BackButton />
+      </div>
       {discographySections().map((section) => {
         console.log(section);
 
         return (
           <div key={section.type} className="mb-10">
-            <h2 className="artist-section-title">
-              {capitalize(section.type)}s
-            </h2>
+            <h2 className="app-section-title">{capitalize(section.type)}s</h2>
 
             <div className="grid grid-cols-5">
               {section.albums.map((album) => (
@@ -138,7 +140,7 @@ export default async function ArtistDiscographyPage({
                     coverUrl: album.image_url,
                     hasExplicitLyrics: album.explicit_lyrics,
                     id: album.id,
-                    recordType: "",
+                    recordType: album.record_type,
                     title: album.title,
                   }}
                 />

@@ -3,6 +3,7 @@ import type { NextConfig } from "next";
 const API_URL = "https://musify.api.karlincoder.com";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   images: {
     remotePatterns: [
       {

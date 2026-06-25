@@ -1,5 +1,5 @@
-import TrackCard from "@/components/track-card";
-import { getArtistRadio } from "@/app/app/services/musify";
+import TrackCard from "@/app/app/_components/track-card";
+import { getArtistRadio } from "@/app/app/_services/musify";
 
 export default async function ArtistRadioPage({
   params,
@@ -11,9 +11,9 @@ export default async function ArtistRadioPage({
 
   return (
     <div>
-      <p className="artist-section-title">Radio</p>
+      <p className="app-section-title">Radio</p>
 
-      {artistRadio.map((track, index) => (
+      {artistRadio.map((track) => (
         <TrackCard
           key={track.id}
           data={{
@@ -24,7 +24,6 @@ export default async function ArtistRadioPage({
             image_url: track.image_url,
             title: track.title,
           }}
-          listPosition={index + 1}
         />
       ))}
     </div>

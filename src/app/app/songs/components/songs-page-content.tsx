@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { RiMusic2Line } from "react-icons/ri";
 
-import PlaceholderPageGreeting from "@/components/placeholder-page-greeting";
-import SearchError from "@/components/search-error";
-import NoResults from "@/components/no-results";
-import Loader from "@/components/loader";
-import SearchBar from "@/components/search-bar";
-import { searchTracks } from "../../services/musify";
-import SectionTitle from "@/components/section-title";
-import TrackCard from "@/components/track-card";
+import PlaceholderPageGreeting from "@/app/app/_components/placeholder-page-greeting";
+import SearchError from "@/app/app/_components/search-error";
+import NoResults from "@/app/app/_components/no-results";
+import Loader from "@/app/app/_components/loader";
+import SearchBar from "@/app/app/_components/search-bar";
+import { searchTracks } from "../../_services/musify";
+import SectionTitle from "@/app/app/_components/section-title";
+import TrackCard from "@/app/app/_components/track-card";
 import { MFSearch, MFTrack } from "../../_types/musify";
 
 export default function SongsPageContent() {
@@ -75,8 +75,6 @@ export default function SongsPageContent() {
 
             <div className="relative flex flex-col w-full pb-10">
               {parsedData.map((track) => {
-                console.log(track);
-
                 return (
                   <TrackCard
                     key={track.id}

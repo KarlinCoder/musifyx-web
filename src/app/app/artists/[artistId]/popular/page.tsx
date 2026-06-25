@@ -1,5 +1,5 @@
-import { getArtistTop } from "@/app/app/services/musify";
-import TrackCard from "@/components/track-card";
+import { getArtistTop } from "@/app/app/_services/musify";
+import TrackCard from "@/app/app/_components/track-card";
 
 export default async function ArtistTop10Page({
   params,
@@ -11,9 +11,9 @@ export default async function ArtistTop10Page({
 
   return (
     <div>
-      <p className="artist-section-title">Popular ahora</p>
+      <p className="app-section-title">Popular ahora</p>
 
-      {artistPopular.map((track, index) => (
+      {artistPopular.map((track) => (
         <TrackCard
           key={track.id}
           data={{
@@ -24,7 +24,6 @@ export default async function ArtistTop10Page({
             image_url: track.image_url,
             title: track.title,
           }}
-          listPosition={index + 1}
         />
       ))}
     </div>

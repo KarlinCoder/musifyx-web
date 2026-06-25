@@ -1,5 +1,5 @@
-import { getArtistMentions } from "@/app/app/services/musify";
-import PlaylistCard from "@/components/playlist-card";
+import { getArtistMentions } from "@/app/app/_services/musify";
+import PlaylistCard from "@/app/app/_components/playlist-card";
 
 export default async function ArtistPlaylistsPage({
   params,
@@ -11,7 +11,7 @@ export default async function ArtistPlaylistsPage({
 
   return (
     <div>
-      <p className="artist-section-title">Menciones importantes</p>
+      <p className="app-section-title">Menciones importantes</p>
 
       <div className="grid grid-cols-5">
         {artistMentions.map((playlist) => (

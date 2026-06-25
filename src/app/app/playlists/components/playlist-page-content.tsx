@@ -4,15 +4,15 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { RiPlayList2Line } from "react-icons/ri";
 
-import PlaceholderPageGreeting from "@/components/placeholder-page-greeting";
-import SearchError from "@/components/search-error";
-import NoResults from "@/components/no-results";
-import Loader from "@/components/loader";
-import SearchBar from "@/components/search-bar";
-import { searchPlaylists } from "../../services/musify";
-import SectionTitle from "@/components/section-title";
+import PlaceholderPageGreeting from "@/app/app/_components/placeholder-page-greeting";
+import SearchError from "@/app/app/_components/search-error";
+import NoResults from "@/app/app/_components/no-results";
+import Loader from "@/app/app/_components/loader";
+import SearchBar from "@/app/app/_components/search-bar";
+import { searchPlaylists } from "../../_services/musify";
+import SectionTitle from "@/app/app/_components/section-title";
 import { MFPlaylist, MFSearch } from "../../_types/musify";
-import PlaylistCard from "@/components/playlist-card";
+import PlaylistCard from "@/app/app/_components/playlist-card";
 
 export default function SongsPageContent() {
   const searchParams = useSearchParams();
