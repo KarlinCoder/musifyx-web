@@ -50,5 +50,16 @@
     "supabase": "2.84.0",
     "tailwindcss": "4",
     "typescript": "5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@clerk/shared",
+      "bufferutil",
+      "core-js",
+      "sharp",
+      "supabase",
+      "unrs-resolver",
+      "utf-8-validate"
+    ]
   }
 }
