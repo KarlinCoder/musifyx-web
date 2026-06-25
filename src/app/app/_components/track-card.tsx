@@ -65,6 +65,7 @@ export default function TrackCard({ data, listPosition }: Props) {
     try {
       setIsFetchingPreview(true);
       const previewUrl = await getTrackPreview(data.id);
+      if (!previewUrl) return;
       play({ ...data, preview_url: previewUrl });
     } catch (error) {
       console.error("❌ Failed to fetch track preview:", error);
