@@ -79,7 +79,7 @@ export default function TrackLyricsModal({
           exit={{ scale: 0.95, opacity: 0, y: 20 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
           onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-lg max-h-[85vh] flex flex-col rounded-2xl shadow-2xl overflow-hidden"
+          className="relative w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl shadow-2xl styled-scrollbar"
           style={{ backgroundColor: bgColor }}
         >
           <div
@@ -89,7 +89,7 @@ export default function TrackLyricsModal({
             }}
           />
 
-          <div className="relative shrink-0 flex flex-col items-center pt-8 pb-5 px-6">
+          <div className="relative flex flex-col items-center pt-8 pb-5 px-6">
             <button
               onClick={onClose}
               className="absolute top-4 right-4 p-1.5 rounded-full bg-black/30 hover:bg-black/50 transition-colors"
@@ -143,7 +143,7 @@ export default function TrackLyricsModal({
             </div>
           </div>
 
-          <section className="relative flex-1 overflow-y-auto px-6 pb-6 styled-scrollbar">
+          <section className="relative px-6 pb-6">
             {isLoading ? (
               <div className="flex items-center justify-center py-12">
                 <div className="animate-spin rounded-full h-6 w-6 border-2 border-white/30 border-t-white" />
