@@ -151,8 +151,8 @@ export default async function AlbumIdPage({
               alt="album cover"
               src={album.image_url}
               fallbackType="album"
-              width={100}
-              height={100}
+              width={500}
+              height={500}
               placeholder="blur"
               blurDataURL={genericBlur}
               className="w-full img-card"

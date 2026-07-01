@@ -34,8 +34,8 @@ export default function ArtistHeader({ artist }: Props) {
           src={artist.image_url}
           fallbackType="artist"
           alt="artist picture"
-          width={2000}
-          height={2000}
+          width={600}
+          height={600}
           placeholder="blur"
           blurDataURL={genericBlur}
           className="rounded-full! max-w-80 h-auto img-card"
