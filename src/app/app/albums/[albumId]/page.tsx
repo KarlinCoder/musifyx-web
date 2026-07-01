@@ -9,6 +9,7 @@ import {
 } from "@/lib/utils";
 import { getAverageColor } from "@/lib/get-average-color";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getAlbum, getAlbumTracks } from "../../_services/musify";
 import ImageWithFallback from "@/app/app/_components/image-with-fallback";
@@ -117,10 +118,18 @@ export default async function AlbumIdPage({
 }) {
   const { albumId } = await params;
 
-  const [album, albumTracks] = await Promise.all([
-    getAlbum(parseInt(albumId)),
-    getAlbumTracks(parseInt(albumId)),
-  ]);
+  let album;
+  let albumTracks;
+
+  try {
+    [album, albumTracks] = await Promise.all([
+      getAlbum(parseInt(albumId)),
+      getAlbumTracks(parseInt(albumId)),
+    ]);
+  } catch {
+    return notFound();
+  }
+
   const avgColor = (await getAverageColor(album.image_url)) || "#eee";
 
   console.log(album);

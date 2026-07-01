@@ -7,6 +7,7 @@ import {
 } from "@/lib/utils";
 import { getAverageColor } from "@/lib/get-average-color";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { RiVerifiedBadgeFill } from "react-icons/ri";
 import { getPlaylist } from "../../_services/musify";
 import TrackCard from "@/app/app/_components/track-card";
@@ -111,7 +112,13 @@ export default async function PlaylistIdPage({
 }) {
   const { playlistId } = await params;
 
-  const playlist = await getPlaylist(Number(playlistId));
+  let playlist;
+
+  try {
+    playlist = await getPlaylist(Number(playlistId));
+  } catch {
+    return notFound();
+  }
 
   const avgColor = (await getAverageColor(playlist.image_url)) || "#eee";
 

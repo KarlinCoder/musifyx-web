@@ -2,6 +2,7 @@ import AlbumCard from "@/app/app/_components/album-card";
 import BackButton from "@/app/app/_components/back-button";
 import { capitalize } from "@/lib/utils";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getArtistDiscography, getArtist } from "../../_services/musify";
 import { MFAlbum } from "../../_types/musify";
 
@@ -98,10 +99,17 @@ export default async function ArtistDiscographyPage({
 }) {
   const { artistId } = await params;
 
-  const [artistInfo, artistAlbums] = await Promise.all([
-    getArtist(parseInt(artistId)),
-    getArtistDiscography(parseInt(artistId)),
-  ]);
+  let artistInfo;
+  let artistAlbums;
+
+  try {
+    [artistInfo, artistAlbums] = await Promise.all([
+      getArtist(parseInt(artistId)),
+      getArtistDiscography(parseInt(artistId)),
+    ]);
+  } catch {
+    return notFound();
+  }
 
   const albumTypes = () => {
     const albumTypesSet = new Set<string>();

@@ -1,7 +1,6 @@
-import { getAverageColor } from "@/lib/get-average-color";
-import ArtistNavbar from "./_components/artist-navbar";
-import ArtistHeader from "./_components/artist-header";
-import { getArtist } from "../../_services/musify";
+import { Suspense } from "react";
+import ArtistLayoutContent from "./_components/artist-layout-content";
+import ArtistLoading from "./loading";
 
 export default async function ArtistLayout({
   params,
@@ -11,21 +10,12 @@ export default async function ArtistLayout({
   children: React.ReactNode;
 }) {
   const { artistId } = await params;
-  const artist = await getArtist(Number(artistId));
-  const avgColor = (await getAverageColor(artist.image_url)) || "#eee";
 
   return (
-    <div
-      style={{
-        background: `radial-gradient(circle 550px at 50% -20%, ${avgColor}, transparent)`,
-      }}
-      className="size-full p-8 max-w-300 mx-auto"
-    >
-      <ArtistHeader artist={artist} />
-
-      <ArtistNavbar artistId={artistId} />
-
-      <section className="mt-8 pb-10">{children}</section>
-    </div>
+    <Suspense fallback={<ArtistLoading />}>
+      <ArtistLayoutContent artistId={artistId}>
+        {children}
+      </ArtistLayoutContent>
+    </Suspense>
   );
 }
